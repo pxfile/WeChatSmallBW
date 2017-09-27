@@ -3,7 +3,7 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://6yecikui.qcloud.la';
+var host = '腾讯云的域名';
 
 var config = {
 
