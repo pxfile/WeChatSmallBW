@@ -1,0 +1,83 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+}
+
+.userinfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #ff0000;
+    width: 100%;
+}
+
+.userinfo-avatar {
+    width: 128rpx;
+    height: 128rpx;
+    margin: 5px 10px 15px 15px;
+    border-radius: 50%;
+}
+
+.userinfo-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: -20px;
+}
+
+.userinfo-nickname-phone {
+    color: #fff;
+}
+
+.badge {
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    background: #ff0000;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 8px;
+}
+
+.logout {
+    position: relative;
+    margin-top: 1.17647059em;
+    line-height: 1.41176471;
+    font-size: 17px;
+    padding: 10px 15px;
+    background: #fff;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.logout:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1rpx solid #D9D9D9;
+    color: #D9D9D9;
+}
+
+.logout:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1rpx solid #D9D9D9;
+    color: #D9D9D9;
+}
+
+.info_list{
+    width: 100%;
+    background: #ffffff;
+}

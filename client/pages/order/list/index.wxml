@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<view class="container">
+
+    <!--滑动tab-->
+    <view class="tab-display">
+        <view class="tab-nav">
+            <text wx:for="{{tab_info}}" bindtap="setTab" class="{{showtabtype==item.type?'active':''}}"
+                  data-tabindex="{{index}}" data-type="{{item.type}}" wx:key="{{item.type}}">{{item.name}}
+            </text>
+            <view class="tab-line" style="width:{{100/tabnav.tabnum}}%;transform:translateX({{100*showtab}}%);"></view>
+        </view>
+    </view>
+
+    <!--list列表-->
+    <scroll-view scroll-y="true">
+        <view class="goods-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
+              bindtouchend="scrollTouchend">
+            <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
+                <view class="goods-item-list">
+                    <!--下单时间-->
+                    <view class="top-order-time">
+                        <text class="top-order-time-text">下单时间：{{item.time}}</text>
+                        <view class="{{showtabtype==1 ? 'hidden' :''}}">
+                            <text class="top-order-hint-time-text">温馨提示：请在15分钟内完成支付，否则自动取消</text>
+                        </view>
+                    </view>
+                    <!--商品列表-->
+                    <block wx:for="{{item.goods_list}}" wx:for-index="index" wx:key="index">
+                        <navigator url="../detail/index?id={{item.id}}&type={{showtabtype}}">
+                            <view class="goods-item">
+                                <view class="goods-item-left">
+                                    <image src="{{item.images}}" class="goods-image"/>
+                                </view>
+                                <view>
+                                    <text class="goods-item-title">{{item.des}}</text>
+                                    <text class="goods-item-title-num">¥ {{item.price}}</text>
+                                    <view class="goods-item-bottom">
+                                        <text class="goods-item-num">x {{item.num}}</text>
+                                    </view>
+                                </view>
+                            </view>
+                        </navigator>
+                    </block>
+
+                    <!--商品总数，价格-->
+                    <view>
+                        <view class="goods-item-bottom">
+                            <text class="goods-item-count-price">¥ {{item.goods_price}}</text>
+                            <text class="goods-item-count-num">共{{item.goods_num}}件商品，实付</text>
+                        </view>
+                        <view class="{{showtabtype==1 ? 'hidden' :''}}">
+                            <view class="goods-item-bottom goods-item-bottom-btn">
+                                <text class="goods-btn-pick-goods">立即支付</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </scroll-view>
+</view>

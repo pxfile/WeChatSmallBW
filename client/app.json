@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/start/start",
+    "pages/index/index",
+    "pages/pickGoods/pickGoods",
+    "pages/personal/personal",
+    "pages/login/login",
+    "pages/order/list/index",
+    "pages/order/confirm/index",
+    "pages/order/detail/index",
+    "pages/logs/logs",
+    "pages/addCgi/addCgi",
+    "pages/test/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ff0000",
+    "navigationBarTitleText": "百威",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#9B9B9B",
+    "selectedColor": "#ff0000",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "assets/images/iconfont-home.png",
+        "selectedIconPath": "assets/images/iconfont-home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/pickGoods/pickGoods",
+        "iconPath": "assets/images/iconfont-list.png",
+        "selectedIconPath": "assets/images/iconfont-list-active.png",
+        "text": "取货"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "iconPath": "assets/images/iconfont-user.png",
+        "selectedIconPath": "assets/images/iconfont-user-active.png",
+        "text": "我"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 120000,
+    "downloadFile": 120000
+  }
+}

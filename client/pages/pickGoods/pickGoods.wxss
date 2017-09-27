@@ -1,0 +1,139 @@
+.goods-item-list {
+    background-color: #fff;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.goods-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    margin-top: 5px;
+}
+
+.goods-item-left {
+    width: 50px;
+    height: 50px;
+}
+
+.goods-image {
+    width: 50px;
+    height: 50px;
+}
+
+.goods-item-title {
+    font-size: 13px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /*限制在一个块元素显示的文本的行数*/
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #666;
+    margin-left: 10px;
+    width: 65%;
+    line-height: 1.5;
+    float: left;
+}
+
+.goods-item-title-num {
+    font-size: 13px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /*限制在一个块元素显示的文本的行数*/
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #666;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 1.5;
+    float: right;
+}
+
+.goods-item-bottom {
+    line-height: 1.5;
+    width: 100%;
+    padding-top: 5px;
+    float: left;
+}
+
+.goods-item-bottom-btn {
+    margin-bottom: 5px;
+}
+
+.goods-item-expiration-days {
+    color: #f00;
+    border: 1px #f00 solid;
+    text-align: center;
+    width: auto;
+    margin-left: 15px;
+    font-size: 8px;
+    float: left;
+}
+
+.goods-item-num {
+    color: #999;
+    margin-left: 5px;
+    text-align: center;
+    width: auto;
+    font-size: 11px;
+    margin-right: 5px;
+    float: right;
+}
+
+.top-order-time {
+    width: 100%;
+    height: 40px;
+    margin: 0;
+}
+
+.top-order-time-text {
+    color: #333;
+    line-height: 40px;
+    margin-left: 5px;
+    text-align: center;
+    width: 100%;
+    font-size: 11px;
+}
+
+.goods-item-count-num {
+    color: #999;
+    text-align: center;
+    width: auto;
+    font-size: 13px;
+    float: right;
+}
+
+.goods-item-count-price {
+    color: #333;
+    text-align: center;
+    width: auto;
+    font-size: 13px;
+    margin-right: 5px;
+    float: right;
+}
+
+.goods-btn-pick-goods {
+    color: #f00;
+    border: 1px #f00 solid;
+    text-align: center;
+    width: auto;
+    margin-right: 5px;
+    font-size: 13px;
+    float: right;
+    margin-top: 2px;
+    padding: 2px 3px;
+}
+
+.line {
+    background: #999999;
+    height: 1px;
+    width: 100%;
+    float: left;
+    clear: both;
+    margin-top: 5px;
+}
