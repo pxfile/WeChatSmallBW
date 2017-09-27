@@ -55,4 +55,6 @@ router.get('/order_list_1', controllers.order_list_1)
 router.get('/goods_detail_0', controllers.goods_detail_0)
 //订单详情-已完成
 router.get('/goods_detail_1', controllers.goods_detail_1)
+//订单确认
+router.get('/order_confirm',controllers.order_confirm)
 module.exports = router

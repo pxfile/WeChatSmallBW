@@ -1,116 +1,45 @@
-const App = getApp()
-
+//index.js
+//获取应用实例
+var app = getApp()
+var qcloud = require('../../../vendor/wafer2-client-sdk/index')
+var config = require('../../../config')
+var util = require('../../../utils/util.js')
 Page({
-    // data: {
-    //     hidden: !0,
-    //     carts: {},
-    //     address: {
-    //         item: {},
-    //     }
-    // },
-    // onLoad(option) {
-    //     console.log(option)
-    //     this.setData({
-    //         address_id: option.id
-    //     })
-    //
-    //     const carts = {
-    //         items: App.WxService.getStorageSync('confirmOrder'),
-    //         totalAmount: 0,
-    //     }
-    //
-    //     carts.items.forEach(n => carts.totalAmount+=n.totalAmount)
-    //
-    //     this.setData({
-    //         carts: carts
-    //     })
-    //
-    //     console.log(this.data.carts)
-    // },
-    // onShow() {
-    //     const address_id = this.data.address_id
-    //     if (address_id) {
-    //         this.getAddressDetail(address_id)
-    //     } else {
-    //         this.getDefalutAddress()
-    //     }
-    // },
-    // redirectTo(e) {
-    //     console.log(e)
-    //     App.WxService.redirectTo('/pages/address/confirm/index', {
-    //         ret: this.data.address_id
-    //     })
-    // },
-    // getDefalutAddress() {
-    //     App.HttpService.getDefalutAddress()
-    //     .then(res => {
-    //         const data = res.data
-    //         console.log(data)
-    //         if (data.meta.code == 0) {
-    //             this.setData({
-    //                 address_id: data.data._id,
-    //                 'address.item': data.data,
-    //             })
-    //         } else {
-    //             this.showModal()
-    //         }
-    //     })
-    // },
-    // showModal() {
-    //     App.WxService.showModal({
-    //         title: '友情提示',
-    //         content: '没有收货地址，请先设置',
-    //     })
-    //     .then(data => {
-    //         console.log(data)
-    //         if (data.confirm == 1) {
-    //             App.WxService.redirectTo('/pages/address/add/index')
-    //         } else {
-    //             App.WxService.navigateBack()
-    //         }
-    //     })
-    // },
-    // getAddressDetail(id) {
-    //     App.HttpService.getAddressDetail(id)
-    //     .then(res => {
-    //         const data = res.data
-    //         console.log(data)
-    //         if (data.meta.code == 0) {
-    //             this.setData({
-    //                 'address.item': data.data
-    //             })
-    //         }
-    //     })
-    // },
-    // addOrder() {
-    //     const address_id = this.data.address_id
-    //     const params = {
-    //         items: [],
-    //         address_id: address_id,
-    //     }
-    //     this.data.carts.items.forEach(n => {
-    //         params.items.push({
-    //             id: n.goods._id,
-    //             total: n.total,
-    //         })
-    //     })
-    //     console.log(params)
-    //     App.HttpService.postOrder(params)
-    //     .then(res => {
-    //         const data = res.data
-    //         console.log(data)
-    //         if (data.meta.code == 0) {
-    //             App.WxService.redirectTo('/pages/order/detail/index', {
-    //                 id: data.data._id
-    //             })
-    //         }
-    //     })
-    // },
-    // clear() {
-    //     App.HttpService.clearCartByUser()
-    //     .then(res => {
-    //         const data = res.data
-    //         console.log(data)
-    //     })
-    // },
+    data: {
+        goods_detail: {},
+    },
+
+    onLoad(option) {
+        this.setData({
+            id: option.id,
+        })
+        this.fetchListData(this.data.id)
+    },
+    /**
+     * 请求订单列表
+     */
+    fetchListData(id) {
+        util.showBusy('正在加载...')
+        var that = this
+        qcloud.request({
+            url: `${config.service.host}/weapp/order_confirm`,
+            login: false,
+            success(result) {
+                that.setData({
+                    goods_detail: result.data.data,
+                })
+            },
+            fail(error) {
+                util.showModel('加载失败', error);
+                console.log('request fail', error);
+            }
+        })
+    },
+
+    //事件处理函数
+    bindViewTap(e){
+        wx.navigateTo({
+            url: '../detail/detail?id=' + e.target.dataset.id
+        })
+    },
 })

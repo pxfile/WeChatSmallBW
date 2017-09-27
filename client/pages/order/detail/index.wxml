@@ -8,7 +8,7 @@
             <view class="detail-text">请在15分钟内完成支付，否则自动取消</view>
             <view class="detail-button">
                 <text class="cancel">取消订单</text>
-                <text class="confirm">立即支付</text>
+                <text class="confirm" data-id="{{ item.id }}" bindtap="clickConfirmBtn">立即支付</text>
             </view>
         </view>
     </view>

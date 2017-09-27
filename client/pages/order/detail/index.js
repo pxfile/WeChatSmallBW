@@ -14,8 +14,6 @@ Page({
             id: option.id,
             type: option.type
         })
-    },
-    onShow() {
         this.fetchListData(this.data.id, this.data.type)
     },
 
@@ -41,9 +39,9 @@ Page({
     },
 
     //事件处理函数
-    bindViewTap(e){
+    clickConfirmBtn(e){
         wx.navigateTo({
-            url: '../detail/detail?id=' + e.target.dataset.id
+            url: '../confirm/index?id=' + e.target.dataset.id
         })
     },
 })
