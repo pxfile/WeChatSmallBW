@@ -50,7 +50,7 @@
                         </view>
                         <view class="{{showtabtype==1 ? 'hidden' :''}}">
                             <view class="goods-item-bottom goods-item-bottom-btn">
-                                <text class="goods-btn-pick-goods">立即支付</text>
+                                <text class="goods-btn-pick-goods" data-id="{{ item.id }}" bindtap="clickPayBtn">立即支付</text>
                             </view>
                         </view>
                     </view>
