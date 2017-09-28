@@ -61,4 +61,6 @@ router.get('/order_confirm', controllers.order_confirm)
 router.get('/pick_goods_detail', controllers.pick_goods_detail)
 //取货订单确认
 router.get('/pick_goods_confirm', controllers.pick_goods_confirm)
+//地址
+router.get('/address_list', controllers.address_list)
 module.exports = router

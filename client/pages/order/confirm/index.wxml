@@ -7,14 +7,14 @@
                     <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                     <text class="address-text">自提地址</text>
                 </view>
-                <view>{{goods_detail.address}}</view>
+                <view>{{address}}</view>
                 <view>
                     <text>店长：{{goods_detail.store_manager}}\t\t\t</text>
                     <text>{{goods_detail.phone}}</text>
                 </view>
             </view>
         </view>
-        <image src="../../../assets/images/iconfont-addr-default.png" class="arrow-icon"/>
+        <image src="../../../assets/images/iconfont-addr-default.png" class="arrow-icon" bindtap="selectAddress"/>
     </view>
     <!--订单列表-->
     <view class="goods-container">

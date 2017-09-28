@@ -13,7 +13,8 @@
     "pages/order/detail/index",
     "pages/logs/logs",
     "pages/addCgi/addCgi",
-    "pages/test/index"
+    "pages/test/index",
+    "pages/address/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

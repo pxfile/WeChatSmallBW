@@ -8,6 +8,7 @@ var util = require('../../../utils/util.js')
 Page({
     data: {
         date: '',
+        address: '',
         showPickView: false,
         goods_detail: {},
     },
@@ -37,6 +38,7 @@ Page({
                 that.setData({
                     goods_detail: result.data.data,
                     date: result.data.data.time,
+                    address:result.data.data.address,
                 })
             },
             fail(error) {
@@ -53,10 +55,10 @@ Page({
         })
     },
 
-    //事件处理函数
-    bindViewTap(e){
+    //选择自提地址
+    selectAddress(e){
         wx.navigateTo({
-            url: '../detail/detail?id=' + e.target.dataset.id
+            url: '/pages/address/index'
         })
     },
 
