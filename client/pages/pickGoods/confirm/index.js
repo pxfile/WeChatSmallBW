@@ -6,7 +6,7 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 Page({
     data: {
-        goods_detail: {},
+        pick_goods_confirm: {},
     },
 
     onLoad(option) {
@@ -23,11 +23,11 @@ Page({
         util.showBusy('正在加载...')
         var that = this
         qcloud.request({
-            url: `${config.service.host}/weapp/pick_goods_detail`,
+            url: `${config.service.host}/weapp/pick_goods_confirm`,
             login: false,
             success(result) {
                 that.setData({
-                    goods_detail: result.data.data,
+                    pick_goods_confirm: result.data.data,
                 })
             },
             fail(error) {
@@ -38,7 +38,7 @@ Page({
     },
 
     //事件处理函数
-    clickPickBtn(e){
+    clickConfirmBtn(e){
         wx.navigateTo({
             url: '../confirm/index?id=' + e.target.dataset.id
         })

@@ -157,6 +157,11 @@
     float: right;
 }
 
+.goods-item-bottom-view{
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 .goods-item-bottom {
     line-height: 1.5;
     width: 100%;

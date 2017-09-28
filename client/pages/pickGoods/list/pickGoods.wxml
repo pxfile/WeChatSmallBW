@@ -29,13 +29,13 @@
                 </block>
 
                 <!--商品总数，价格-->
-                <view>
+                <view class="goods-item-bottom-view">
                     <view class="goods-item-bottom">
                         <text class="goods-item-count-price">¥ {{item.goods_price}}</text>
                         <text class="goods-item-count-num">共{{item.goods_num}}件商品，实付</text>
                     </view>
                     <view class="goods-item-bottom goods-item-bottom-btn">
-                        <text class="goods-btn-pick-goods">立即取货</text>
+                        <text class="goods-btn-pick-goods" bindtap="clickPickBtn">立即取货</text>
                     </view>
                 </view>
             </view>

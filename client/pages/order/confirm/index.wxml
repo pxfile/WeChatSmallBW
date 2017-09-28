@@ -9,7 +9,7 @@
                 </view>
                 <view>{{goods_detail.address}}</view>
                 <view>
-                    <text>店长：{{goods_detail.store_manager}}</text>
+                    <text>店长：{{goods_detail.store_manager}}\t\t\t</text>
                     <text>{{goods_detail.phone}}</text>
                 </view>
             </view>

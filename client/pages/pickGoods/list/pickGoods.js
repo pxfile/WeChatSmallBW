@@ -82,10 +82,9 @@ Page({
     },
 
     //事件处理函数
-    bindViewTap(e) {
+    clickPickBtn(e){
         wx.navigateTo({
-            url: '../detail/detail?id=' + e.target.dataset.id
+            url: '../confirm/index?id=' + e.target.dataset.id
         })
     },
-
 })
