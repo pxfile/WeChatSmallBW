@@ -38,9 +38,9 @@ Page({
     },
 
     //事件处理函数
-    clickConfirmBtn(e){
+    sweepCode(e){
         wx.navigateTo({
-            url: '../confirm/index?id=' + e.target.dataset.id
+            url: '../complete/index'
         })
     },
 })

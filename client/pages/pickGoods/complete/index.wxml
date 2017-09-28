@@ -1,0 +1,8 @@
+<view class="container">
+    <!--自提二维码-->
+    <view class="container-icon">
+        <image src="../../../assets/images/iconfont-complete.png" class="complete-icon"/>
+        <text class="complete-text">取货成功</text>
+    </view>
+    <text class="complete-hint-text">温馨提示：临走时请检查确认您购买的商品已经携带齐全，感谢您对我们的支持！</text>
+</view>
