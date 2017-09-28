@@ -12,19 +12,18 @@ Page({
     onLoad(option) {
         this.setData({
             id: option.id,
-            type: option.type
         })
-        this.fetchListData(this.data.id, this.data.type)
+        this.fetchListData(this.data.id)
     },
 
     /**
      * 请求订单列表
      */
-    fetchListData(id, type) {
+    fetchListData(id) {
         util.showBusy('正在加载...')
         var that = this
         qcloud.request({
-            url: `${config.service.host}/weapp/order_detail_` + type,
+            url: `${config.service.host}/weapp/pick_goods_detail`,
             login: false,
             success(result) {
                 that.setData({

@@ -52,9 +52,11 @@ router.get('/order_list_0', controllers.order_list_0)
 //订单-已完成
 router.get('/order_list_1', controllers.order_list_1)
 //订单详情-待付款
-router.get('/goods_detail_0', controllers.goods_detail_0)
+router.get('/order_detail_0', controllers.order_detail_0)
 //订单详情-已完成
-router.get('/goods_detail_1', controllers.goods_detail_1)
+router.get('/order_detail_1', controllers.order_detail_1)
 //订单确认
-router.get('/order_confirm',controllers.order_confirm)
+router.get('/order_confirm', controllers.order_confirm)
+//取货订单详情
+router.get('/pick_goods_detail', controllers.pick_goods_detail)
 module.exports = router

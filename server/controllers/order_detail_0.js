@@ -5,7 +5,8 @@ module.exports = ctx => {
         "address": "天津市北辰区海吉星农贸批发市场",
         "store_manager": "李小姐",
         "phone": "400-9199",
-        "time": "2017-08-31（周六）",
+        "order_time": "2017-8-22 20:15",
+        "pick_time": "2017-08-31（周六）",
         "total_amount": 1234.00,
         "goods_list": [
             {

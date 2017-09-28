@@ -1,0 +1,255 @@
+.container {
+    width: 100%;
+}
+
+.top-container-finish {
+    height: auto;
+    width: 100%;
+    background-color: #fff;
+    color: #868686;
+    margin-bottom: 10px;
+}
+
+.top-container-finish .time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 15px;
+}
+
+.top-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #868686;
+    margin-bottom: 10px;
+}
+
+.detail-message {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.detail-message .detail-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.detail-message .detail-waiting-time {
+    color: #FF0000;
+    margin-left: 5px;
+}
+
+.detail-message .detail-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 2px 0;
+}
+
+.detail-message .detail-text {
+    margin-top: 5px;
+}
+
+.detail-message .detail-button {
+    font-size: 16px;
+    margin: 15px auto;
+    text-align: center;
+    width: auto;
+}
+
+.detail-message .detail-button .cancel {
+    border: 1px #999999 solid;
+    color: #333;
+    padding: 4px 5px;
+}
+
+.detail-message .detail-button .confirm {
+    color: #fff;
+    background-color: #FF0000;
+    padding: 5px 6px;
+    margin-left: 15px;
+}
+
+.address-container {
+    display: flex;
+    height: auto;
+    width: 100%;
+    flex-direction: column;
+    background-color: #fff;
+    color: #868686;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.address-sub-container {
+    margin: 10px 15px;
+}
+
+.address-des {
+    display: flex;
+    flex-direction: row;
+}
+
+.address-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.address-text {
+    color: #333;
+}
+
+.goods-container {
+    margin-bottom: 55px;
+}
+
+.goods-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    padding: 10px 15px 5px 15px;
+}
+
+.goods-item-left {
+    width: 50px;
+    height: 50px;
+}
+
+.goods-image {
+    width: 50px;
+    height: 50px;
+}
+
+.goods-item-title {
+    font-size: 13px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /*限制在一个块元素显示的文本的行数*/
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #666;
+    margin-left: 10px;
+    width: 65%;
+    line-height: 1.5;
+    float: left;
+}
+
+.goods-item-title-num {
+    font-size: 13px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /*限制在一个块元素显示的文本的行数*/
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #666;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 1.5;
+    float: right;
+}
+
+.goods-item-bottom {
+    line-height: 1.5;
+    width: 100%;
+    padding-top: 5px;
+    float: left;
+}
+
+.goods-item-bottom-btn {
+    margin-bottom: 5px;
+}
+
+.goods-item-expiration-days {
+    color: #f00;
+    text-align: center;
+    width: auto;
+    margin-left: 15px;
+    float: left;
+}
+
+.goods-item-num {
+    color: #999;
+    margin-left: 5px;
+    text-align: center;
+    width: auto;
+    margin-right: 5px;
+    float: right;
+}
+
+.goods-bottom-suspension {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #fff;
+    width: 100%;
+    height: 45px;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+}
+
+.goods-bottom-suspension .price {
+    background-color: #fff;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.goods-suspension-time-text {
+    line-height: 45px;
+    margin-right: 15px;
+    text-align: center;
+    width: auto;
+    height: 45px;
+    color: #333333;
+    font-size: 16px;
+    margin-left: 15px;
+}
+
+.goods-suspension-time {
+    line-height: 45px;
+    margin-right: 15px;
+    text-align: center;
+    width: auto;
+    height: 45px;
+    font-size: 16px;
+    margin-left: 15px;
+    color: #868686;
+}
+
+.goods-suspension-price-text {
+    line-height: 45px;
+    margin-right: 5px;
+    text-align: center;
+    width: auto;
+    height: 45px;
+    font-size: 16px;
+}
+
+.goods-suspension-price {
+    color: #ff0000;
+}
+
+.goods-suspension-pay {
+    color: #ffffff;
+    background-color: #ff0000;
+    line-height: 45px;
+    text-align: center;
+    width: auto;
+    height: 45px;
+    font-size: 16px;
+    padding: 0 25px;
+}

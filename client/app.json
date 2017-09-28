@@ -3,6 +3,7 @@
     "pages/start/start",
     "pages/index/index",
     "pages/pickGoods/list/pickGoods",
+    "pages/pickGoods/detail/index",
     "pages/personal/personal",
     "pages/login/login",
     "pages/order/list/index",
