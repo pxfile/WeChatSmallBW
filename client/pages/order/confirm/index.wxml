@@ -37,9 +37,11 @@
     </view>
     <!--总价-->
     <view class='goods-bottom-suspension'>
-        <view class="select-time">
+        <view class="select-time" bindchange="bindDateChange">
             <text class="goods-suspension-time-text">请选择自提时间</text>
-            <text class='goods-suspension-time'>{{goods_detail.time}}</text>
+            <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+                <text class='goods-suspension-time'>{{date}}</text>
+            </picker>
         </view>
         <view class="price">
             <view class="goods-suspension-time">

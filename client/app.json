@@ -2,7 +2,7 @@
   "pages": [
     "pages/start/start",
     "pages/index/index",
-    "pages/pickGoods/pickGoods",
+    "pages/pickGoods/list/pickGoods",
     "pages/personal/personal",
     "pages/login/login",
     "pages/order/list/index",
@@ -32,7 +32,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/pickGoods/pickGoods",
+        "pagePath": "pages/pickGoods/list/pickGoods",
         "iconPath": "assets/images/iconfont-list.png",
         "selectedIconPath": "assets/images/iconfont-list-active.png",
         "text": "取货"

@@ -4,9 +4,18 @@ var app = getApp()
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+
 Page({
     data: {
+        date: '',
+        showPickView: false,
         goods_detail: {},
+    },
+
+    bindDateChange: function (e) {
+        this.setData({
+            date: e.detail.value
+        })
     },
 
     onLoad(option) {
@@ -27,6 +36,7 @@ Page({
             success(result) {
                 that.setData({
                     goods_detail: result.data.data,
+                    date: result.data.data.time,
                 })
             },
             fail(error) {
@@ -36,10 +46,18 @@ Page({
         })
     },
 
+    //选择自提时间
+    selectPickTime(e){
+        this.setData({
+            showPickView: true,
+        })
+    },
+
     //事件处理函数
     bindViewTap(e){
         wx.navigateTo({
             url: '../detail/detail?id=' + e.target.dataset.id
         })
     },
+
 })
