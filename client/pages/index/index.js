@@ -8,6 +8,8 @@ Page({
     data: {
         start_num: 0,
         list: [],
+        buyCount: 0,
+        sumPrice: 0,
         showtab: 0,  //顶部选项卡索引
         showtabtype: '0', //选中类型
         tabnav: {},  //顶部选项卡数据
@@ -57,7 +59,6 @@ Page({
             url: `${config.service.host}/weapp/index_tab`,
             login: false,
             success(result) {
-                util.showSuccess('加载成功')
                 that.setData({
                     tabnav: {
                         tabnum: 5,
@@ -66,6 +67,7 @@ Page({
                     tab_info: result.data.data,
                 })
                 that.fetchListData(that.data.showtabtype, false)
+                that.removeStorageData();
             },
             fail(error) {
                 util.showModel('加载失败', error);
@@ -88,7 +90,6 @@ Page({
             url: `${config.service.host}/weapp/goods_list_` + tabType,
             login: false,
             success(result) {
-                util.showSuccess('加载成功')
                 that.setData({
                     list: that.data.list.concat(result.data.data),
                 })
@@ -115,11 +116,11 @@ Page({
             login: false,
             success(result) {
                 if (showLoading) {
-                    util.showSuccess('加载成功')
                 }
                 that.setData({
                     list: result.data.data,
                 })
+                wx.setStorageSync('shoppingcar' + that.data.showtabtype, that.data.list);
             },
             fail(error) {
                 if (showLoading) {
@@ -128,6 +129,22 @@ Page({
                 console.log('request fail', error);
             }
         })
+    },
+
+    /**
+     * 获取每个TAB下的数据
+     * @param tabType
+     * @param showLoading
+     */
+    fetchTabListData(tabType, showLoading) {
+        var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
+        if (null == allGoods || allGoods.length == 0) {
+            this.fetchListData(tabType, showLoading)
+        } else {
+            this.setData({
+                list: allGoods,
+            });
+        }
     },
 
     showLoading(titleStr) {
@@ -141,13 +158,95 @@ Page({
         wx.hideToast()
     },
 
-    //事件处理函数
-    bindViewTap(e){
-        wx.navigateTo({
-            url: '../detail/detail?id=' + e.target.dataset.id
-        })
+    /**
+     * 减
+     * @param e
+     */
+    decrease(e) {
+        this.jiaj(e, false)
+    },
+    /**
+     * 加
+     * @param e
+     */
+    increase(e) {
+        this.jiaj(e, true)
+    },
+    /**
+     * 添加商品操作
+     * @param e
+     * @param boo
+     */
+    jiaj(e, boo){
+        var id = e.currentTarget.dataset.id;
+        var s = 0;
+        var allGoods = this.data.list;
+        for (var i = 0; i < allGoods.length; i++) {
+            if (allGoods[i].id == id) {
+                if (boo) {
+                    s = allGoods[i].total + 1;
+                } else if (allGoods[i].total > 0) {
+                    s = allGoods[i].total - 1;
+                }
+                allGoods[i].total = s;
+                break;
+            }
+        }
+        wx.setStorageSync('shoppingcar' + this.data.showtabtype, allGoods);
+        this.setData({
+            list: allGoods,
+        });
+        this.showAllGoods(id, boo);
+    },
+    /**
+     * 商品总价，总个数操作
+     * @param id
+     * @param boo
+     */
+    showAllGoods(id, boo){
+        var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
+        var payCount = this.data.buyCount;
+        var priceCount = this.data.sumPrice;
+        for (var i = 0; i < allGoods.length; i++) {
+            if (allGoods[i].id == id) {
+                var price = allGoods[i].price;
+                if (boo) {
+                    priceCount = priceCount + price;
+                    payCount = payCount + 1;
+                } else if (allGoods[i].total > 0 && payCount > 0 && priceCount > 0) {
+                    priceCount = priceCount - price;
+                    payCount = payCount - 1;
+                }
+                break;
+            }
+        }
+        this.setData({
+            list: allGoods,
+            buyCount: payCount,
+            sumPrice: priceCount,
+        });
     },
 
+    /**
+     * 清除缓存数据
+     */
+    removeStorageData(){
+        var allTabs = this.data.tab_info;
+        for (var i = 0; i < allTabs.length; i++) {
+            try {
+                wx.removeStorageSync('shoppingcar' + allTabs[i].type)
+            } catch (e) {
+                console.log("shoppingcar")
+            }
+        }
+    },
+    /**
+     * 去结算
+     * @param e
+     */
+    goToOrder(e) {
+        app.WxService.navigateTo("/pages/order/list/index")
+    },
     //------------------------------------------------------TAB------------------------------------------------------------------
     setTab: function (e) { //设置选项卡选中索引
         const edata = e.currentTarget.dataset;
@@ -156,7 +255,7 @@ Page({
             showtab: Number(edata.tabindex),
             showtabtype: edata.type,
         })
-        this.fetchListData(edata.type, true);
+        this.fetchTabListData(edata.type, true);
     },
     scrollTouchstart: function (e) {
         let px = e.touches[0].pageX;

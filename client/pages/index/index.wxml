@@ -16,32 +16,31 @@
         <view class="news-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
               bindtouchend="scrollTouchend">
             <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
-                <navigator url="../detail/detail?id={{item.id}}">
-                    <view class="news-item">
-                        <view class="news-item-left">
-                            <image src="{{item.images}}" class="news-image"/>
-                        </view>
-                        <view class="news-item-right">
-                            <text class="news-item-title">{{item.des}}</text>
-                            <view class="news-item-title news-item-bottom">
-                                <text class="news-item-expiration-days">已过期{{item.expiration_days}}天</text>
-                                <view class='news-item-bottom-right'>
-                                    <text class="news-item-num-operation">+</text>
-                                    <text class="news-item-num">{{item.expiration_days}}</text>
-                                    <text class="news-item-num-operation">-</text>
-                                </view>
+                <view class="news-item">
+                    <view class="news-item-left">
+                        <image src="{{item.images}}" class="news-image"/>
+                    </view>
+                    <view class="news-item-right">
+                        <text class="news-item-title">{{item.des}}</text>
+                        <text class="news-item-price">¥{{item.price}}</text>
+                        <view class="news-item-bottom">
+                            <text class="news-item-expiration-days">已过期{{item.expiration_days}}天</text>
+                            <view class='news-item-bottom-right'>
+                                <text class="news-item-num-operation" bindtap="decrease" data-id="{{ item.id }}">-</text>
+                                <text class="news-item-num" type="number" data-id="{{ item.id }}">{{item.total}}</text>
+                                <text class="news-item-num-operation" bindtap="increase" data-id="{{ item.id }}">+</text>
                             </view>
                         </view>
                     </view>
-                </navigator>
+                </view>
             </block>
         </view>
     </scroll-view>
 
     <!--总价-->
     <view class='bottom-suspension'>
-        <text class='news-suspension-price'>总价：¥228</text>
-        <text class='news-suspension-num'>去结算（3）</text>
+        <text class='news-suspension-price'>总价：¥{{sumPrice}}</text>
+        <text class='news-suspension-num' bindtap="goToOrder">去结算（{{buyCount}}）</text>
     </view>
 
 </view>

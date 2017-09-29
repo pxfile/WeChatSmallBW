@@ -153,8 +153,12 @@
 }
 
 .news-item-bottom {
-    width: auto;
-    margin-top: 10px;
+    width: 100%;
+    height: 20px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .news-item-expiration-days {
@@ -165,16 +169,19 @@
     margin-right: 15px;
     padding: 1px 10px;
     font-size: 11px;
+    margin-left: 10px;
     background-color: #FFFFFF;
 }
 
 .news-item-bottom-right {
-    float: right;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .news-item-num {
     color: #999;
-    line-height: 1.5;
     margin-left: 5px;
     padding: 2px 4px;
     text-align: center;
@@ -222,4 +229,11 @@
     height: 45px;
     font-size: 15px;
     float: right;
+}
+
+.news-item-price {
+    font-size: 13px;
+    color: #f00;
+    margin-top: 3px;
+    margin-left: 10px;
 }
