@@ -2,7 +2,7 @@
     <!--支付成功-->
     <view class="pay-success-container">
         <view class="pay-icon-container">
-            <image src="../../../assets/images/iconfont-complete.png" class="pay-icon-icon"/>
+            <image src="../../assets/images/iconfont-complete.png" class="pay-icon-icon"/>
             <text class="pay-icon-text">支付成功</text>
         </view>
         <view class="pay-hint-text">下单时间：{{goods_detail.order_time}}</view>
@@ -11,7 +11,7 @@
     <view class="address-container">
         <view class="address-sub-container">
             <view class="address-des">
-                <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
+                <image src="../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                 <text class="address-text">自提地址</text>
             </view>
             <view>{{goods_detail.address}}</view>
@@ -25,7 +25,7 @@
     <view class="address-container">
         <view class="address-sub-container">
             <view class="address-des">
-                <image src="../../../assets/images/iconfont-about.png" class="address-icon"/>
+                <image src="../../assets/images/iconfont-about.png" class="address-icon"/>
                 <text class="address-text">自提时间</text>
             </view>
             <view>{{goods_detail.pick_time}}</view>
