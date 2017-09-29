@@ -19,20 +19,18 @@
     <!--订单列表-->
     <view class="goods-container">
         <block wx:for="{{goods_detail.goods_list}}" wx:for-index="index" wx:key="index">
-            <navigator url="../detail/detail?id={{item.id}}">
-                <view class="goods-item">
-                    <view class="goods-item-left">
-                        <image src="{{item.images}}" class="goods-image"/>
-                    </view>
-                    <view>
-                        <text class="goods-item-title">{{item.des}}</text>
-                        <view class="goods-item-bottom">
-                            <text class="goods-item-expiration-days">¥ {{item.price}}</text>
-                            <text class="goods-item-num">x {{item.num}}</text>
-                        </view>
+            <view class="goods-item">
+                <view class="goods-item-left">
+                    <image src="{{item.images}}" class="goods-image"/>
+                </view>
+                <view>
+                    <text class="goods-item-title">{{item.des}}</text>
+                    <view class="goods-item-bottom">
+                        <text class="goods-item-expiration-days">¥ {{item.price}}</text>
+                        <text class="goods-item-num">x {{item.num}}</text>
                     </view>
                 </view>
-            </navigator>
+            </view>
         </block>
     </view>
     <!--总价-->
@@ -48,7 +46,7 @@
                 <text>实付金额：</text>
                 <text class="goods-suspension-price">¥{{goods_detail.total_amount}}</text>
             </view>
-            <text class='goods-suspension-pay'>立即支付</text>
+            <text class='goods-suspension-pay' bindtap="paySuccess" data-id="{{item.id}}">立即支付</text>
         </view>
     </view>
 </view>

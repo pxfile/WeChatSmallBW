@@ -63,4 +63,6 @@ router.get('/pick_goods_detail', controllers.pick_goods_detail)
 router.get('/pick_goods_confirm', controllers.pick_goods_confirm)
 //地址
 router.get('/address_list', controllers.address_list)
+//支付成功
+router.get('/order_pay_0',controllers.order_pay_0)
 module.exports = router

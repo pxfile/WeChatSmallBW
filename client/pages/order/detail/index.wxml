@@ -1,5 +1,5 @@
 <view class="container">
-    <!--头部提示语-->
+    <!--待付款-->
     <view class="top-container {{type==1 ? 'hidden' :''}}">
         <view class="detail-message">
             <image src="../../../assets/images/iconfont-about.png" class="detail-icon"/>
@@ -12,7 +12,7 @@
             </view>
         </view>
     </view>
-
+    <!--已完成-->
     <view class="top-container-finish {{type==0 ? 'hidden' :''}}">
         <view class="time">
             <text>下单时间：{{goods_detail.order_time}}</text>
@@ -47,20 +47,18 @@
     <!--订单列表-->
     <view class="goods-container">
         <block wx:for="{{goods_detail.goods_list}}" wx:for-index="index" wx:key="index">
-            <navigator url="../detail/detail?id={{item.id}}">
-                <view class="goods-item">
-                    <view class="goods-item-left">
-                        <image src="{{item.images}}" class="goods-image"/>
-                    </view>
-                    <view>
-                        <text class="goods-item-title">{{item.des}}</text>
-                        <view class="goods-item-bottom">
-                            <text class="goods-item-expiration-days">¥ {{item.price}}</text>
-                            <text class="goods-item-num">x {{item.num}}</text>
-                        </view>
+            <view class="goods-item">
+                <view class="goods-item-left">
+                    <image src="{{item.images}}" class="goods-image"/>
+                </view>
+                <view>
+                    <text class="goods-item-title">{{item.des}}</text>
+                    <view class="goods-item-bottom">
+                        <text class="goods-item-expiration-days">¥ {{item.price}}</text>
+                        <text class="goods-item-num">x {{item.num}}</text>
                     </view>
                 </view>
-            </navigator>
+            </view>
         </block>
     </view>
     <!--总价-->

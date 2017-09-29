@@ -38,7 +38,7 @@ Page({
                 that.setData({
                     goods_detail: result.data.data,
                     date: result.data.data.time,
-                    address:result.data.data.address,
+                    address: result.data.data.address,
                 })
             },
             fail(error) {
@@ -62,4 +62,10 @@ Page({
         })
     },
 
+    //支付成功
+    paySuccess(e){
+        wx.navigateTo({
+            url: '/pages/pay/index?id=' + e.target.dataset.id
+        })
+    }
 })
