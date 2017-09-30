@@ -1,0 +1,16 @@
+<view>
+    <view class="container">
+        <view class="sub-container">
+            <text class="text-view">手机号</text>
+            <input type="number" bindinput="phoneInput"/>
+            <button class="send-auth-code">发送验证码</button>
+        </view>
+        <view class="sub-container-code">
+            <text class="text-view">验证码</text>
+            <input type="number" bindinput="autoCodeInput"/>
+        </view>
+        <view class="hint-text">温馨提示：未注册的手机号，登录时将自动注册，且代表您已同意《用户注册协议</view>
+        <button class="btn-login" bindtap="login" formType="submit" bindtap="loginBtnClick">登录</button>
+    </view>
+    <view class="tishi">{{infoMess}}</view>
+</view>

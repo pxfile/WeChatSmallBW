@@ -14,7 +14,7 @@
                 </view>
             </view>
         </view>
-        <image src="../../../assets/images/iconfont-addr-default.png" class="arrow-icon" bindtap="selectAddress"/>
+        <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>
     </view>
     <!--订单列表-->
     <view class="goods-container">

@@ -15,7 +15,8 @@
     "pages/addCgi/addCgi",
     "pages/test/index",
     "pages/address/index",
-    "pages/pay/index"
+    "pages/pay/index",
+    "pages/changeAccount/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -193,10 +193,12 @@
     color: #999;
     border: 1px #ddd solid;
     margin-left: 5px;
-    padding: 1px 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 3px;
     text-align: center;
     width: auto;
-    font-size: 11px;
+    font-size: 12px;
     background-color: #FFFFFF;
 }
 
@@ -221,14 +223,16 @@
 }
 
 .news-suspension-num {
-    color: #f00;
+    color: #ffffff;
     line-height: 45px;
-    margin-right: 5px;
     text-align: center;
+    padding-left: 10px;
+    padding-right: 5px;
     width: auto;
     height: 45px;
     font-size: 15px;
     float: right;
+    background-color: #f00;
 }
 
 .news-item-price {

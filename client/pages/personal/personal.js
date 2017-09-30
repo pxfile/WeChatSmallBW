@@ -17,7 +17,7 @@ Page({
             {
                 icon: '../../assets/images/iconfont-help.png',
                 text: '更换账号',
-                path: ''
+                path: '/pages/changeAccount/index'
             },
             {
                 icon: '../../assets/images/iconfont-kefu.png',
