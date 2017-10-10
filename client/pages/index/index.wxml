@@ -4,8 +4,8 @@
     <!--滑动tab-->
     <view class="tab-display">
         <view class="tab-nav">
-            <text wx:for="{{tab_info}}" bindtap="setTab" class="{{showtabtype==item.type?'active':''}}"
-                  data-tabindex="{{index}}" data-type="{{item.type}}" wx:key="{{item.type}}">{{item.name}}
+            <text wx:for="{{tab_info}}" bindtap="setTab" class="{{showtabtype==item.seriesId?'active':''}}"
+                  data-tabindex="{{index}}" data-type="{{item.seriesId}}" wx:key="{{item.seriesId}}">{{item.seriesName}}
             </text>
             <view class="tab-line" style="width:{{100/tabnav.tabnum}}%;transform:translateX({{100*showtab}}%);"></view>
         </view>
@@ -18,17 +18,17 @@
             <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
                 <view class="news-item">
                     <view class="news-item-left">
-                        <image src="{{item.images}}" class="news-image"/>
+                        <image src="{{item.goodsPic}}" class="news-image"/>
                     </view>
                     <view class="news-item-right">
-                        <text class="news-item-title">{{item.des}}</text>
-                        <text class="news-item-price">¥{{item.price}}</text>
+                        <text class="news-item-title">{{item.goodsName}}</text>
+                        <text class="news-item-price">¥{{item.goodsPrice}}</text>
                         <view class="news-item-bottom">
-                            <text class="news-item-expiration-days">已过期{{item.expiration_days}}天</text>
+                            <text class="news-item-expiration-days">已过期{{item.expirationTime}}天</text>
                             <view class='news-item-bottom-right'>
-                                <text class="news-item-num-operation" bindtap="decrease" data-id="{{ item.id }}">-</text>
-                                <text class="news-item-num" type="number" data-id="{{ item.id }}">{{item.total}}</text>
-                                <text class="news-item-num-operation" bindtap="increase" data-id="{{ item.id }}">+</text>
+                                <text class="news-item-num-operation" bindtap="decrease" data-id="{{ item.goodsId }}">-</text>
+                                <text class="news-item-num" type="number" data-id="{{ item.goodsId }}">{{item.total}}</text>
+                                <text class="news-item-num-operation" bindtap="increase" data-id="{{ item.goodsId }}">+</text>
                             </view>
                         </view>
                     </view>

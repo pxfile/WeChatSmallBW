@@ -21,7 +21,7 @@ const CONF = {
         port: 3306,
         user: 'root',
         db: 'cAuth',
-        pass: '微信小程序 appid',
+        pass: 'wxfc2624f5aa6f0217',
         char: 'utf8mb4'
     },
 

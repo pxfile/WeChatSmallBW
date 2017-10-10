@@ -52,28 +52,25 @@ Page({
      */
     fetchTabData(tabtype) {
         console.log(this.data.start_num + tabtype);
-
-        util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/index_tab`,
-            login: false,
-            success(result) {
-                that.setData({
-                    tabnav: {
-                        tabnum: 5,
-                        tabitem: JSON.stringify(result.data),
-                    },
-                    tab_info: result.data.data,
-                })
-                that.fetchListData(that.data.showtabtype, false)
-                that.removeStorageData();
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
+
+        app.HttpService.getTabs()
+            .then(res => {
+                const data = res.data
+                console.log(data)
+                if (data.code == 0) {
+                    that.setData({
+                        tabnav: {
+                            tabnum: 5,
+                            tabitem: JSON.stringify(data.data),
+                        },
+                        tab_info: data.data,
+                    })
+
+                    that.fetchListData(that.data.tab_info[0].seriesId, false)
+                    that.removeStorageData();
+                }
+            })
     },
 
     /**
@@ -83,22 +80,7 @@ Page({
     fetchListDataMore(tabType) {
         console.log(this.data.start_num + tabType);
         if (this.data.list.length === 0) return
-
-        util.showBusy('正在加载...')
-        var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/goods_list_` + tabType,
-            login: false,
-            success(result) {
-                that.setData({
-                    list: that.data.list.concat(result.data.data),
-                })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
+        this.fetchListData(tabType, true, false)
     },
 
     /**
@@ -106,26 +88,29 @@ Page({
      * @param tabType
      * @param showLoading
      */
-    fetchListData(tabType, showLoading) {
+    fetchListData(tabType, showLoading, isReachBottom) {
         if (showLoading) {
             util.showBusy('正在加载...')
         }
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/goods_list_` + tabType,
-            login: false,
-            success(result) {
-                if (showLoading) {
+        app.HttpService.getGoodsList({
+            seriesId: tabType,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        list: that.data.list.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        list: data.data,
+                    })
                 }
-                that.setData({
-                    list: result.data.data,
-                })
                 wx.setStorageSync('shoppingcar' + that.data.showtabtype, that.data.list);
-            },
-            fail(error) {
-                if (showLoading) {
-                    util.showModel('加载失败', error);
-                }
+            } else {
+                util.showModel('加载失败', error);
                 console.log('request fail', error);
             }
         })
@@ -138,12 +123,12 @@ Page({
      */
     fetchTabListData(tabType, showLoading) {
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
-        if (null == allGoods || allGoods.length == 0) {
-            this.fetchListData(tabType, showLoading)
-        } else {
+        if (allGoods) {
             this.setData({
                 list: allGoods,
             });
+        } else {
+            this.fetchListData(tabType, showLoading, false)
         }
     },
 
@@ -283,14 +268,14 @@ Page({
         //         showtab: d.showtab - 1,
         //         showtabtype: d.tab_info[d.showtab - 1].type,
         //     });
-        //     this.fetchListData(d.showtabtype, true);
+        //     this.fetchListData(d.showtabtype, true,false);
         // } else if (d.endx - d.startx < -d.critical && d.showtab < this.data.tabnav.tabnum - 1) {
         //     this.setData({
         //         start_num: 0,
         //         showtab: d.showtab + 1,
         //         showtabtype: d.tab_info[d.showtab + 1].type,
         //     });
-        //     this.fetchListData(d.showtabtype, true);
+        //     this.fetchListData(d.showtabtype, true,false);
         // }
         // this.setData({
         //     startx: 0,

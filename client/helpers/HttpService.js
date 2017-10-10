@@ -1,42 +1,42 @@
 import WxRequest from '../assets/plugins/wx-request/lib/index'
 
 class HttpService extends WxRequest {
-	constructor(options) {
-		super(options)
-		this.$$prefix = ''
-		this.$$path = {
-			wechatSignUp: '/user/wechat/sign/up',
-			wechatSignIn: '/user/wechat/sign/in',
-			decryptData : '/user/wechat/decrypt/data',
-			signIn      : '/user/sign/in',
-			signOut     : '/user/sign/out',
-			banner      : '/banner', 
-			classify    : '/classify', 
-			goods       : '/goods', 
-			search      : '/goods/search/all', 
-			cart        : '/cart', 
-			address     : '/address', 
-			order       : '/order', 
+    constructor(options) {
+        super(options)
+        this.$$prefix = ''
+        this.$$path = {
+            wechatSignUp: '/user/wechat/sign/up',
+            wechatSignIn: '/user/wechat/sign/in',
+            decryptData: '/user/wechat/decrypt/data',
+            signIn: '/user/userLogin',
+            signOut: '/user/sign/out',
+            index_tab: '/brand/getAll',
+            goods_list: '/brand/goodsList',
+            take_delivery_list: '/order/takeDeliveryList?userId=adfiwenr',
+            search: '/goods/search/all',
+            cart: '/cart',
+            address: '/address',
+            order: '/order',
         }
         this.interceptors.use({
             request(request) {
-            	request.header = request.header || {}
-            	request.header['content-type'] = 'application/json'
+                request.header = request.header || {}
+                request.header['content-type'] = 'application/json'
                 if (request.url.indexOf('/api') !== -1 && wx.getStorageSync('token')) {
                     request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
                 }
                 wx.showLoading({
-                    title: '加载中', 
+                    title: '加载中',
                 })
                 return request
             },
             requestError(requestError) {
-            	wx.hideLoading()
+                wx.hideLoading()
                 return Promise.reject(requestError)
             },
             response(response) {
-            	wx.hideLoading()
-            	if(response.statusCode === 401) {
+                wx.hideLoading()
+                if (response.statusCode === 401) {
                     wx.removeStorageSync('token')
                     wx.redirectTo({
                         url: '/pages/login/index'
@@ -45,151 +45,159 @@ class HttpService extends WxRequest {
                 return response
             },
             responseError(responseError) {
-            	wx.hideLoading()
+                wx.hideLoading()
                 return Promise.reject(responseError)
             },
         })
-	}
+    }
 
-	wechatSignUp(params) {
-		return this.postRequest(this.$$path.wechatSignUp, {
-			data: params,
-		})
-	}
+    wechatSignUp(params) {
+        return this.postRequest(this.$$path.wechatSignUp, {
+            data: params,
+        })
+    }
 
-	wechatSignIn(params) {
-		return this.postRequest(this.$$path.wechatSignIn, {
-			data: params,
-		})
-	}
+    wechatSignIn(params) {
+        return this.postRequest(this.$$path.wechatSignIn, {
+            data: params,
+        })
+    }
 
-	wechatDecryptData(params) {
-		return this.postRequest(this.$$path.decryptData, {
-			data: params,
-		})
-	}
-	
-	signIn(params) {
-		return this.postRequest(this.$$path.signIn, {
-			data: params,
-		}) 
-	}
+    wechatDecryptData(params) {
+        return this.postRequest(this.$$path.decryptData, {
+            data: params,
+        })
+    }
 
-	signOut() {
-		return this.postRequest(this.$$path.signOut) 
-	}
+    signIn(params) {
+        return this.postRequest(this.$$path.signIn, {
+            data: params,
+        })
+    }
 
-	getBanners(params) {
-		return this.getRequest(this.$$path.banner, {
-			data: params,
-		})
-	}
+    signOut() {
+        return this.postRequest(this.$$path.signOut)
+    }
 
-	search(params) {
-		return this.getRequest(this.$$path.search, {
-			data: params,
-		})
-	}
+    //品牌系列
+    getTabs() {
+        return this.postRequest(this.$$path.index_tab)
+    }
 
-	getGoods(params) {
-		return this.getRequest(this.$$path.goods, {
-			data: params,
-		})
-	}
+    //系列商品列表
+    getGoodsList(params) {
+        return this.postRequest(this.$$path.goods_list, {
+            data: params,
+        })
+    }
 
-	getClassify(params) {
-		return this.getRequest(this.$$path.classify, {
-			data: params,
-		})
-	}
+    //待取货列表
+    getDeliveryList(params) {
+        return this.postRequest(this.$$path.take_delivery_list, {
+            data: params,
+        })
+    }
 
-	getDetail(id) {
-		return this.getRequest(`${this.$$path.goods}/${id}`)
-	}
+    search(params) {
+        return this.getRequest(this.$$path.search, {
+            data: params,
+        })
+    }
 
-	getCartByUser() {
-		return this.getRequest(this.$$path.cart)
-	}
+    getGoods(params) {
+        return this.getRequest(this.$$path.goods, {
+            data: params,
+        })
+    }
 
-	addCartByUser(goods) {
-		return this.postRequest(this.$$path.cart, {
-			data: {
-				goods,
-			},
-		})
-	}
 
-	putCartByUser(id, params) {
-		return this.putRequest(`${this.$$path.cart}/${id}`, {
-			data: params,
-		})
-	}
+    getDetail(id) {
+        return this.getRequest(`${this.$$path.goods}/${id}`)
+    }
 
-	delCartByUser(id) {
-		return this.deleteRequest(`${this.$$path.cart}/${id}`)
-	}
+    getCartByUser() {
+        return this.getRequest(this.$$path.cart)
+    }
 
-	clearCartByUser() {
-		return this.postRequest(`${this.$$path.cart}/clear`)
-	}
+    addCartByUser(goods) {
+        return this.postRequest(this.$$path.cart, {
+            data: {
+                goods,
+            },
+        })
+    }
 
-	getAddressList(params) {
-		return this.getRequest(this.$$path.address, {
-			data: params,
-		})
-	}
+    putCartByUser(id, params) {
+        return this.putRequest(`${this.$$path.cart}/${id}`, {
+            data: params,
+        })
+    }
 
-	getAddressDetail(id) {
-		return this.getRequest(`${this.$$path.address}/${id}`)
-	}
+    delCartByUser(id) {
+        return this.deleteRequest(`${this.$$path.cart}/${id}`)
+    }
 
-	postAddress(params) {
-		return this.postRequest(this.$$path.address, params)
-	}
+    clearCartByUser() {
+        return this.postRequest(`${this.$$path.cart}/clear`)
+    }
 
-	putAddress(id, params) {
-		return this.putRequest(`${this.$$path.address}/${id}`, {
-			data: params,
-		})
-	}
+    getAddressList(params) {
+        return this.getRequest(this.$$path.address, {
+            data: params,
+        })
+    }
 
-	deleteAddress(id, params) {
-		return this.deleteRequest(`${this.$$path.address}/${id}`)
-	}
+    getAddressDetail(id) {
+        return this.getRequest(`${this.$$path.address}/${id}`)
+    }
 
-	getDefalutAddress() {
-		return this.getRequest(`${this.$$path.address}/default`)
-	}
+    postAddress(params) {
+        return this.postRequest(this.$$path.address, params)
+    }
 
-	setDefalutAddress(id) {
-		return this.postRequest(`${this.$$path.address}/default/${id}`)
-	}
+    putAddress(id, params) {
+        return this.putRequest(`${this.$$path.address}/${id}`, {
+            data: params,
+        })
+    }
 
-	getOrderList(params) {
-		return this.getRequest(this.$$path.order, {
-			data: params,
-		})
-	}
+    deleteAddress(id, params) {
+        return this.deleteRequest(`${this.$$path.address}/${id}`)
+    }
 
-	getOrderDetail(id) {
-		return this.getRequest(`${this.$$path.order}/${id}`)
-	}
+    getDefalutAddress() {
+        return this.getRequest(`${this.$$path.address}/default`)
+    }
 
-	postOrder(params) {
-		return this.postRequest(this.$$path.order, {
-			data: params,
-		})
-	}
+    setDefalutAddress(id) {
+        return this.postRequest(`${this.$$path.address}/default/${id}`)
+    }
 
-	putOrder(id, params) {
-		return this.putRequest(`${this.$$path.order}/${id}`, {
-			data: params,
-		})
-	}
+    getOrderList(params) {
+        return this.getRequest(this.$$path.order, {
+            data: params,
+        })
+    }
 
-	deleteOrder(id, params) {
-		return this.deleteRequest(`${this.$$path.order}/${id}`)
-	}
+    getOrderDetail(id) {
+        return this.getRequest(`${this.$$path.order}/${id}`)
+    }
+
+    postOrder(params) {
+        return this.postRequest(this.$$path.order, {
+            data: params,
+        })
+    }
+
+    putOrder(id, params) {
+        return this.putRequest(`${this.$$path.order}/${id}`, {
+            data: params,
+        })
+    }
+
+    deleteOrder(id, params) {
+        return this.deleteRequest(`${this.$$path.order}/${id}`)
+    }
 }
 
 export default HttpService

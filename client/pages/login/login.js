@@ -94,10 +94,12 @@ Page({
     },
     signIn(cb) {
         if (App.WxService.getStorageSync('token')) return
-        this.loginWx(cb)
+        this.loginByWX(cb)
         // App.HttpService.signIn({
-        //     username: 'admin',
-        //     password: '123456',
+        //     mobile: '18722268416',
+        //     verificationCode: '20123123',
+        //     userName: '测试',
+        //     userAvatar: 'http://ww2.sinaimg.cn/large/0060lm7Tly1fk0qakca4kj3068068q35.jpg'
         // })
         //     .then(res => {
         //         const data = res.data
@@ -153,4 +155,18 @@ Page({
             }
         })
     },
+
+    loginByWX(cb) {
+        var that = this
+        wx.login({
+            success: function (res) {
+                App.globalData.hasLogin = true
+                that.setData({
+                    hasLogin: true
+                })
+                that.update()
+                cb()
+            }
+        })
+    }
 })

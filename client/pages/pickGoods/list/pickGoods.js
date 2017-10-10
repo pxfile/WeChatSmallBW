@@ -11,7 +11,7 @@ Page({
     },
 
     onLoad() {
-        this.fetchTabData();
+        this.fetchListData(false);
     },
 
     /**
@@ -21,7 +21,7 @@ Page({
         this.setData({
             start_num: 0,
         }),
-            this.fetchTabData();
+            this.fetchListData(false);
         wx.stopPullDownRefresh();
     },
     /**
@@ -37,21 +37,26 @@ Page({
     /**
      * 请求商品列表
      */
-    fetchTabData: function () {
-        console.log(this.data.start_num);
-
+    fetchListData(isReachBottom) {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/pick_goods_list`,
-            login: false,
-            success(result) {
-                util.showSuccess('加载成功')
-                that.setData({
-                    list: result.data.data,
-                })
-            },
-            fail(error) {
+        app.HttpService.getDeliveryList({
+            userId: 'adfiwenr',
+                // app.WxService.getStorageSync('token'),
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        list: that.data.list.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        list: data.data,
+                    })
+                }
+            } else {
                 util.showModel('加载失败', error);
                 console.log('request fail', error);
             }
@@ -63,22 +68,7 @@ Page({
      */
     fetchListDataMore() {
         if (this.data.list.length === 0) return
-        util.showBusy('正在加载...')
-        var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/pick_goods_list`,
-            login: false,
-            success(result) {
-                util.showSuccess('加载成功')
-                that.setData({
-                    list: that.data.list.concat(result.data.data),
-                })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
+        this.fetchListData(true);
     },
 
     //事件处理函数

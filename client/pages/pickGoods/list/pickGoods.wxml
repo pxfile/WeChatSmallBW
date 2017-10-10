@@ -7,21 +7,21 @@
             <view class="goods-item-list">
                 <!--下单时间-->
                 <view class="top-order-time">
-                    <text class="top-order-time-text">下单时间：{{item.time}}</text>
+                    <text class="top-order-time-text">下单时间：{{item.orderTime}}</text>
                 </view>
                 <!--商品列表-->
-                <block wx:for="{{item.goods_list}}" wx:for-index="index" wx:key="index">
-                    <navigator url="../detail/index?id={{item.id}}">
+                <block wx:for="{{item.goodsList}}" wx:for-index="index" wx:key="index">
+                    <navigator url="../detail/index?id={{item.goodsId}}">
                         <view class="goods-item">
                             <view class="goods-item-left">
-                                <image src="{{item.images}}" class="goods-image"/>
+                                <image src="{{item.goodsPic}}" class="goods-image"/>
                             </view>
                             <view>
-                                <text class="goods-item-title">{{item.des}}</text>
-                                <text class="goods-item-title-num">¥ {{item.price}}</text>
+                                <text class="goods-item-title">{{item.goodsName}}</text>
+                                <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
                                 <view class="goods-item-bottom">
-                                    <text class="goods-item-expiration-days">{{item.exchange_day}}天退换</text>
-                                    <text class="goods-item-num">x {{item.num}}</text>
+                                    <!--<text class="goods-item-expiration-days">{{item.exchange_day}}天退换</text>-->
+                                    <text class="goods-item-num">x {{item.goodsNum}}</text>
                                 </view>
                             </view>
                         </view>
