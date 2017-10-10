@@ -9,8 +9,8 @@
                 </view>
                 <view>{{address}}</view>
                 <view>
-                    <text>店长：{{goods_detail.store_manager}}\t\t\t</text>
-                    <text>{{goods_detail.phone}}</text>
+                    <text>店长：李小姐\t\t\t</text>
+                    <text>400-9199</text>
                 </view>
             </view>
         </view>
@@ -18,16 +18,16 @@
     </view>
     <!--订单列表-->
     <view class="goods-container">
-        <block wx:for="{{goods_detail.goods_list}}" wx:for-index="index" wx:key="index">
+        <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
-                    <image src="{{item.images}}" class="goods-image"/>
+                    <image src="{{item.goodsPic}}" class="goods-image"/>
                 </view>
                 <view>
-                    <text class="goods-item-title">{{item.des}}</text>
+                    <text class="goods-item-title">{{item.goodsName}}</text>
                     <view class="goods-item-bottom">
-                        <text class="goods-item-expiration-days">¥ {{item.price}}</text>
-                        <text class="goods-item-num">x {{item.num}}</text>
+                        <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
+                        <text class="goods-item-num">x {{item.goodsNum}}</text>
                     </view>
                 </view>
             </view>

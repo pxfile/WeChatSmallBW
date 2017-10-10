@@ -13,7 +13,7 @@ Page({
     },
 
     onLoad() {
-        this.fetchListData();
+        this.fetchListData(this.data.longitude, this.data.dimension, false);
     },
 
     /**
@@ -23,7 +23,7 @@ Page({
         this.setData({
             start_num: 0,
         }),
-            this.fetchListData(this.data.longitude, this.data.dimension),
+            this.fetchListData(this.data.longitude, this.data.dimension, false),
             wx.stopPullDownRefresh();
     },
 
@@ -38,22 +38,30 @@ Page({
     },
 
     /**
-     * 请求订单列表
+     * 请求自提地址列表
      * @param tabType
      * @param showLoading
      */
-    fetchListData(longitude, dimension) {
+    fetchListData(longitude, dimension, isReachBottom) {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/address_list`,
-            login: false,
-            success(result) {
-                that.setData({
-                    list: result.data.data,
-                })
-            },
-            fail(error) {
+        app.HttpService.getAllStore({
+            lat: '41.046854',
+            lng: '127.070082'
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        list: that.data.list.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        list: data.data,
+                    })
+                }
+            } else {
                 util.showModel('加载失败', error);
                 console.log('request fail', error);
             }
@@ -67,22 +75,7 @@ Page({
     fetchListDataMore(longitude, dimension) {
         console.log(this.data.start_num + tabType);
         if (this.data.list.length === 0) return
-
-        util.showBusy('正在加载...')
-        var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/order_list_` + tabType,
-            login: false,
-            success(result) {
-                that.setData({
-                    list: that.data.list.concat(result.data.data),
-                })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
+        this.fetchListData(longitude, dimension, true)
     },
 
     //选择地址
@@ -95,6 +88,6 @@ Page({
         prevPage.setData({
             address: edata.address
         }),
-        wx.navigateBack()
+            wx.navigateBack()
     },
 })

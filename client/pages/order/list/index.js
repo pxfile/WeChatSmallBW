@@ -44,7 +44,7 @@ Page({
                     }],
             },
         })
-        this.fetchListData(this.data.showtabtype);
+        this.fetchListData(this.data.showtabtype, false);
     },
 
     /**
@@ -54,7 +54,7 @@ Page({
         this.setData({
             start_num: 0,
         }),
-            this.fetchListData(this.data.showtabtype),
+            this.fetchListData(this.data.showtabtype, false),
             wx.stopPullDownRefresh();
     },
 
@@ -73,23 +73,57 @@ Page({
      * @param tabType
      * @param showLoading
      */
-    fetchListData(tabType) {
+    fetchListData(tabType, isReachBottom) {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/order_list_` + tabType,
-            login: false,
-            success(result) {
-                // util.showSuccess('加载成功')
-                that.setData({
-                    list: result.data.data,
-                })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
+        if (tabType > 0) {
+            //完成订单列表
+            app.HttpService.getOrderComplete({
+                userId: 'adfiwenr',
+                // app.WxService.getStorageSync('token'),
+            }).then(res => {
+                const data = res.data
+                console.log(data)
+                if (data.code == 0) {
+                    if (isReachBottom) {
+                        that.setData({
+                            list: that.data.list.concat(data.data),
+                        })
+                    } else {
+                        that.setData({
+                            list: data.data,
+                        })
+                    }
+                } else {
+                    util.showModel('加载失败', error);
+                    console.log('request fail', error);
+                }
+            })
+        } else {
+            //待付款列表
+            app.HttpService.getOrderPayList({
+                userId: 'adfiwenr',
+                // app.WxService.getStorageSync('token'),
+            }).then(res => {
+                const data = res.data
+                console.log(data)
+                if (data.code == 0) {
+                    if (isReachBottom) {
+                        that.setData({
+                            list: that.data.list.concat(data.data),
+                        })
+                    } else {
+                        that.setData({
+                            list: data.data,
+                        })
+                    }
+                } else {
+                    util.showModel('加载失败', error);
+                    console.log('request fail', error);
+                }
+            })
+        }
+
     },
 
     /**
@@ -99,23 +133,7 @@ Page({
     fetchListDataMore(tabType) {
         console.log(this.data.start_num + tabType);
         if (this.data.list.length === 0) return
-
-        util.showBusy('正在加载...')
-        var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/order_list_` + tabType,
-            login: false,
-            success(result) {
-                // util.showSuccess('加载成功')
-                that.setData({
-                    list: that.data.list.concat(result.data.data),
-                })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
+        this.fetchListData(tabType, true)
     },
 
     //立即支付
@@ -134,7 +152,7 @@ Page({
             showtab: Number(edata.tabindex),
             showtabtype: edata.type,
         })
-        this.fetchListData(edata.type, true);
+        this.fetchListData(edata.type, false);
     },
     scrollTouchstart: function (e) {
         let px = e.touches[0].pageX;
@@ -163,7 +181,7 @@ Page({
         //         showtab: d.showtab - 1,
         //         showtabtype: d.tab_info[d.showtab - 1].type,
         //     });
-        //     this.fetchListData(d.showtabtype, true);
+        //     this.fetchListData(d.showtabtype, false);
         // } else if (d.endx - d.startx < -d.critical && d.showtab < this.data.tabnav.tabnum - 1) {
         //     console.log("scrollTouchend--2");
         //     this.setData({
@@ -171,7 +189,7 @@ Page({
         //         showtab: d.showtab + 1,
         //         showtabtype: d.tab_info[d.showtab + 1].type,
         //     });
-        //     this.fetchListData(d.showtabtype, true);
+        //     this.fetchListData(d.showtabtype, false);
         // }
         // this.setData({
         //     startx: 0,

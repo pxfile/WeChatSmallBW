@@ -12,16 +12,17 @@ class HttpService extends WxRequest {
             signOut: '/user/sign/out',
             index_tab: '/brand/getAll',
             goods_list: '/brand/goodsList',
-            take_delivery_list: '/order/takeDeliveryList?userId=adfiwenr',
-            search: '/goods/search/all',
-            cart: '/cart',
-            address: '/address',
-            order: '/order',
+            take_delivery_list: '/order/takeDeliveryList',
+            order_complete: '/order/orderComplete',
+            order_pay_list: '/order/orderPayList',
+            order_detail: '/order/orderDetail',
+            get_all_store: '/store/getAll',
         }
         this.interceptors.use({
             request(request) {
                 request.header = request.header || {}
-                request.header['content-type'] = 'application/json'
+                // request.header['content-type'] = 'application/json'
+                request.header['content-type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
                 if (request.url.indexOf('/api') !== -1 && wx.getStorageSync('token')) {
                     request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
                 }
@@ -98,25 +99,32 @@ class HttpService extends WxRequest {
         })
     }
 
-    search(params) {
-        return this.getRequest(this.$$path.search, {
+    //完成订单列表
+    getOrderComplete(params) {
+        return this.postRequest(this.$$path.order_complete, {
             data: params,
         })
     }
 
-    getGoods(params) {
-        return this.getRequest(this.$$path.goods, {
+    //待付款列表
+    getOrderPayList(params) {
+        return this.postRequest(this.$$path.order_pay_list, {
             data: params,
         })
     }
 
-
-    getDetail(id) {
-        return this.getRequest(`${this.$$path.goods}/${id}`)
+    //订单详情
+    getOrderDetail(params) {
+        return this.postRequest(this.$$path.order_detail, {
+            data: params,
+        })
     }
 
-    getCartByUser() {
-        return this.getRequest(this.$$path.cart)
+    //自提地址列表
+    getAllStore(params) {
+        return this.postRequest(this.$$path.get_all_store, {
+            data: params,
+        })
     }
 
     addCartByUser(goods) {
@@ -179,9 +187,9 @@ class HttpService extends WxRequest {
         })
     }
 
-    getOrderDetail(id) {
-        return this.getRequest(`${this.$$path.order}/${id}`)
-    }
+    // getOrderDetail(id) {
+    //     return this.getRequest(`${this.$$path.order}/${id}`)
+    // }
 
     postOrder(params) {
         return this.postRequest(this.$$path.order, {

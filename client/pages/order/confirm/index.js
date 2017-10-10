@@ -10,7 +10,7 @@ Page({
         date: '',
         address: '',
         showPickView: false,
-        goods_detail: {},
+        list: [],
     },
 
     bindDateChange: function (e) {
@@ -28,20 +28,22 @@ Page({
     /**
      * 请求订单列表
      */
-    fetchListData(id) {
+    fetchListData() {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/order_confirm`,
-            login: false,
-            success(result) {
+        app.HttpService.getOrderComplete({
+            userId: 'adfiwenr',
+            // app.WxService.getStorageSync('token'),
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
                 that.setData({
-                    goods_detail: result.data.data,
-                    date: result.data.data.time,
-                    address: result.data.data.address,
+                    list: data.data,
+                    date: '2017-08-31',
+                    address: '天津市北辰区海吉星农贸批发市场',
                 })
-            },
-            fail(error) {
+            } else {
                 util.showModel('加载失败', error);
                 console.log('request fail', error);
             }

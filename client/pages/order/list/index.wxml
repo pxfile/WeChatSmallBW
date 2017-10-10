@@ -19,23 +19,23 @@
                 <view class="goods-item-list">
                     <!--下单时间-->
                     <view class="top-order-time">
-                        <text class="top-order-time-text">下单时间：{{item.time}}</text>
+                        <text class="top-order-time-text">下单时间：{{item.orderTime}}</text>
                         <view class="{{showtabtype==1 ? 'hidden' :''}}">
                             <text class="top-order-hint-time-text">温馨提示：请在15分钟内完成支付，否则自动取消</text>
                         </view>
                     </view>
                     <!--商品列表-->
-                    <block wx:for="{{item.goods_list}}" wx:for-index="index" wx:key="index">
-                        <navigator url="../detail/index?id={{item.id}}&type={{showtabtype}}">
+                    <block wx:for="{{item.goodsList}}" wx:for-index="index" wx:key="index">
+                        <navigator url="../detail/index?id={{item.goodsId}}&type={{showtabtype}}">
                             <view class="goods-item">
                                 <view class="goods-item-left">
-                                    <image src="{{item.images}}" class="goods-image"/>
+                                    <image src="{{item.goodsPic}}" class="goods-image"/>
                                 </view>
                                 <view>
-                                    <text class="goods-item-title">{{item.des}}</text>
-                                    <text class="goods-item-title-num">¥ {{item.price}}</text>
+                                    <text class="goods-item-title">{{item.goodsName}}</text>
+                                    <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
                                     <view class="goods-item-bottom">
-                                        <text class="goods-item-num">x {{item.num}}</text>
+                                        <text class="goods-item-num">x {{item.goodsNum}}</text>
                                     </view>
                                 </view>
                             </view>
@@ -46,11 +46,12 @@
                     <view>
                         <view class="goods-item-bottom">
                             <text class="goods-item-count-price">¥ {{item.goods_price}}</text>
-                            <text class="goods-item-count-num">共{{item.goods_num}}件商品，实付</text>
+                            <text class="goods-item-count-num">共{{item.goodsList.length}}件商品，实付</text>
                         </view>
                         <view class="{{showtabtype==1 ? 'hidden' :''}}">
                             <view class="goods-item-bottom goods-item-bottom-btn">
-                                <text class="goods-btn-pick-goods" data-id="{{ item.id }}" bindtap="clickPayBtn">立即支付</text>
+                                <text class="goods-btn-pick-goods" data-id="{{ item.orderId }}" bindtap="clickPayBtn">立即支付
+                                </text>
                             </view>
                         </view>
                     </view>

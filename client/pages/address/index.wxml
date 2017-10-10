@@ -5,13 +5,13 @@
         <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
             <view class="item-container" bindtap="selectAddress" data-address="{{ item.address }}">
                 <view class="item-info">
-                    <text>店长：{{item.store_manager}}\t\t\t\t\t{{item.phone}}</text>
+                    <text>店长：{{item.storeManagerName}}\t\t\t\t\t{{item.storePhone}}</text>
                     <text class="top">{{item.distance}}</text>
                 </view>
                 <view class="item-info">
                     <view class="address-des">
                         <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                        <text class="address-text">{{item.address}}</text>
+                        <text class="address-text">{{item.storeAddress}}</text>
                     </view>
                     <text class="item-suggest {{index!=0 ? 'hidden' :''}}">推荐</text>
                 </view>
