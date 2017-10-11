@@ -8,6 +8,7 @@ Page({
     data: {
         start_num: 0,
         list: [],
+        selectList: [],
         buyCount: 0,
         sumPrice: 0,
         showtab: 0,  //顶部选项卡索引
@@ -109,6 +110,8 @@ Page({
                     })
                 }
                 wx.setStorageSync('shoppingcar' + that.data.showtabtype, that.data.list);
+                //TODO
+                wx.setStorageSync('confirmGoods', that.data.list);
             } else {
                 util.showModel('加载失败', error);
                 console.log('request fail', error);
@@ -192,15 +195,18 @@ Page({
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
         var payCount = this.data.buyCount;
         var priceCount = this.data.sumPrice;
+        var selectGoods = this.data.selectList;
         for (var i = 0; i < allGoods.length; i++) {
             if (allGoods[i].id == id) {
                 var price = allGoods[i].price;
                 if (boo) {
                     priceCount = priceCount + price;
                     payCount = payCount + 1;
+                    selectGoods.concat(allGoods[i]);
                 } else if (allGoods[i].total > 0 && payCount > 0 && priceCount > 0) {
                     priceCount = priceCount - price;
                     payCount = payCount - 1;
+                    selectGoods.delete(allGoods[i])
                 }
                 break;
             }
@@ -209,7 +215,9 @@ Page({
             list: allGoods,
             buyCount: payCount,
             sumPrice: priceCount,
+            selectList: selectGoods,
         });
+        wx.setStorageSync('confirmGoods', selectGoods);
     },
 
     /**
@@ -225,43 +233,12 @@ Page({
             }
         }
     },
-
-    //事件处理函数
-    clickConfirmBtn(e){
-        this.fetchConfirmOrder()
-    },
-
     /**
-     * 预下单
+     * 去结算 预下单
+     * @param e
      */
-    fetchConfirmOrder(storeId, userId, pickTime, goodsList) {
-        util.showBusy('正在加载...')
-        var that = this
-        app.HttpService.getConfirmOrder({
-            storeId: 'S21c2d5c2ce67467fbf113bbc92b16bc8',
-            userId: app.WxService.getStorageSync('user_id'),
-            pickTime: '2017-10-1',
-            goodsList: '[{ "goodsId" : "G9e363fae1b08493286acd4d862f7a5e3", "goodsNum" : 20 }, { "goodsId" : "G1de330af1b3e41dda4a47be656f739ce", "goodsNum" : 50 } ]'
-        }).then(res => {
-            const data = res.data
-            console.log(data)
-            if (data.code == 0) {
-                that.setData({
-                    goods_detail: data.data,
-                })
-                that.goToOrder();
-            } else {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
-            }
-        })
-    },
-
-    /**
-     * 去结算
-     */
-    goToOrder() {
-        app.WxService.navigateTo("/pages/order/list/index")
+    goToOrder(e) {
+        app.WxService.navigateTo('/pages/pay/pre/index?payMoney=' + this.data.sumPrice)
     },
 
     //------------------------------------------------------TAB------------------------------------------------------------------

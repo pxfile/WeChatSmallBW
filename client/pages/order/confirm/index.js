@@ -15,6 +15,10 @@ Page({
         goods_detail: {},
     },
 
+    /**
+     * 选择时间
+     * @param e
+     */
     bindDateChange: function (e) {
         this.setData({
             date: e.detail.value
@@ -68,9 +72,9 @@ Page({
     },
 
     //支付成功
-    paySuccess(e){
+    clickPay(e){
         wx.navigateTo({
-            url: '/pages/pay/index?id=' + e.target.dataset.id
+            url: '/pages/pay/confirm/index?id=' + e.target.dataset.id
         })
     }
 })

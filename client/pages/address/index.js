@@ -89,6 +89,7 @@ Page({
             address: edata.address,
             storeManagerName: edata.storemanagermame,
             storePhone: edata.storephone,
+            selectAddress: false
         }),
             wx.navigateBack()
     },

@@ -2,7 +2,7 @@
     <!--自提地址-->
     <view class="address-container-top">
         <view class="address-container">
-            <view class="address-sub-container">
+            <view class="address-sub-container {{selectAddress ? 'hidden' :''}}">
                 <view class="address-des">
                     <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                     <text class="address-text">自提地址</text>
@@ -13,12 +13,15 @@
                     <text>{{storePhone}}</text>
                 </view>
             </view>
+            <view class="address-sub-container {{!selectAddress ? 'hidden' :''}}">
+                请选择自提地址
+            </view>
         </view>
         <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>
     </view>
     <!--订单列表-->
     <view class="goods-container">
-        <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
+        <block wx:for="{{goodsList}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
                     <image src="{{item.goodsPic}}" class="goods-image"/>
@@ -27,7 +30,7 @@
                     <text class="goods-item-title">{{item.goodsName}}</text>
                     <view class="goods-item-bottom">
                         <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
-                        <text class="goods-item-num">x {{item.goodsNum}}</text>
+                        <text class="goods-item-num">x {{item.total}}</text>
                     </view>
                 </view>
             </view>
@@ -44,9 +47,9 @@
         <view class="price">
             <view class="goods-suspension-time">
                 <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{goods_detail.payMoney}}</text>
+                <text class="goods-suspension-price">¥{{payMoney}}</text>
             </view>
-            <text class='goods-suspension-pay' bindtap="clickPay" data-id="{{item.orderId}}">立即支付</text>
+            <text class='goods-suspension-pay' bindtap="getConfirmOrder" data-id="{{item.orderId}}">立即下单</text>
         </view>
     </view>
 </view>
