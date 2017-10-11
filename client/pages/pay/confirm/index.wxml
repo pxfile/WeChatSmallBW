@@ -2,22 +2,22 @@
     <!--支付成功-->
     <view class="pay-success-container">
         <view class="pay-icon-container">
-            <image src="../../assets/images/iconfont-complete.png" class="pay-icon-icon"/>
+            <image src="../../../assets/images/iconfont-complete.png" class="pay-icon-icon"/>
             <text class="pay-icon-text">支付成功</text>
         </view>
-        <view class="pay-hint-text">下单时间：{{goods_detail.order_time}}</view>
+        <view class="pay-hint-text">下单时间：{{goods_detail.orderTime}}</view>
     </view>
     <!--自提地址-->
     <view class="address-container">
         <view class="address-sub-container">
             <view class="address-des">
-                <image src="../../assets/images/iconfont-addr-default.png" class="address-icon"/>
+                <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                 <text class="address-text">自提地址</text>
             </view>
-            <view>{{goods_detail.address}}</view>
+            <view>{{goods_detail.storeAddress}}</view>
             <view>
-                <text>店长：{{goods_detail.store_manager}}\t\t\t</text>
-                <text>{{goods_detail.phone}}</text>
+                <text>店长：{{goods_detail.storeManagerName}}\t\t\t</text>
+                <text>{{goods_detail.storePhone}}</text>
             </view>
         </view>
     </view>
@@ -25,25 +25,25 @@
     <view class="address-container">
         <view class="address-sub-container">
             <view class="address-des">
-                <image src="../../assets/images/iconfont-about.png" class="address-icon"/>
+                <image src="../../../assets/images/iconfont-about.png" class="address-icon"/>
                 <text class="address-text">自提时间</text>
             </view>
-            <view>{{goods_detail.pick_time}}</view>
+            <view>{{goods_detail.pickTime}}</view>
             <view class="{{type==1 ? 'hidden' :''}}">提示：请选择在自提时间之后去取货</view>
         </view>
     </view>
     <!--订单列表-->
     <view class="goods-container">
-        <block wx:for="{{goods_detail.goods_list}}" wx:for-index="index" wx:key="index">
+        <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
-                    <image src="{{item.images}}" class="goods-image"/>
+                    <image src="{{item.goodsPic}}" class="goods-image"/>
                 </view>
                 <view>
-                    <text class="goods-item-title">{{item.des}}</text>
+                    <text class="goods-item-title">{{item.goodsName}}</text>
                     <view class="goods-item-bottom">
-                        <text class="goods-item-expiration-days">¥ {{item.price}}</text>
-                        <text class="goods-item-num">x {{item.num}}</text>
+                        <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
+                        <text class="goods-item-num">x {{item.goodsNum}}</text>
                     </view>
                 </view>
             </view>
@@ -52,6 +52,6 @@
     <!--总价-->
     <view class='goods-bottom-suspension'>
         <text class="goods-suspension-price-text">实付金额：</text>
-        <text class='goods-suspension-price'>¥{{goods_detail.total_amount}}</text>
+        <text class='goods-suspension-price'>¥{{goods_detail.payMoney}}</text>
     </view>
 </view>

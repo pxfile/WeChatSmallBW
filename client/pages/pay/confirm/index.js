@@ -23,25 +23,19 @@ Page({
     fetchListData(id, type) {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/order_pay_0`,
-            login: false,
-            success(result) {
+        app.HttpService.getOrderDetail({
+            orderId: 'O340865160adc4e3193d279cc7dcde707',
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
                 that.setData({
-                    goods_detail: result.data.data,
+                    goods_detail: data.data,
                 })
-            },
-            fail(error) {
+            } else {
                 util.showModel('加载失败', error);
                 console.log('request fail', error);
             }
-        })
-    },
-
-    //事件处理函数
-    clickConfirmBtn(e){
-        wx.navigateTo({
-            url: '../confirm/index?id=' + e.target.dataset.id
         })
     },
 })
