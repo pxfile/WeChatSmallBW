@@ -4,35 +4,48 @@ var app = getApp()
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+var QR = require('../../../utils/wxqrcode.js')
 Page({
     data: {
-        pick_goods_confirm: {},
+        orderTime: '',
+        address: '',
+        storeManagerName: '',
+        storePhone: '',
+        orderQrCode: '',
+        qrcode: ''
     },
 
     onLoad(option) {
         this.setData({
             id: option.id,
+            orderTime: option.orderTime,
+            address: option.address,
+            storeManagerName: option.storeManagerName,
+            storePhone: option.storePhone
         })
-        this.fetchListData(this.data.id)
+        this.getQrCode(this.data.id)
     },
 
     /**
-     * 请求订单列表
+     * 获取取货二维码
      */
-    fetchListData(id) {
+    getQrCode(orderId) {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/pick_goods_confirm`,
-            login: false,
-            success(result) {
+        let qrcodeSize = that.getQRCodeSize()
+        app.HttpService.getQrCode({
+            orderId: 'O340865160adc4e3193d279cc7dcde707',
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
                 that.setData({
-                    pick_goods_confirm: result.data.data,
+                    orderQrCode: data.data.orderQrCode,
                 })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
+                that.createQRCode(that.data.orderQrCode, qrcodeSize)
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
             }
         })
     },
@@ -41,6 +54,34 @@ Page({
     sweepCode(e){
         wx.navigateTo({
             url: '../complete/index'
+        })
+    },
+
+    //适配不同屏幕大小的canvas
+    getQRCodeSize: function () {
+        var size = 0;
+        try {
+            var res = wx.getSystemInfoSync();
+            var scale = 750 / 163; //不同屏幕下QRcode的适配比例；设计稿是750宽
+            var width = res.windowWidth / scale;
+            size = width;
+
+        } catch (e) {
+            // Do something when catch error
+            console.log("获取设备信息失败" + e);
+        }
+        return size;
+    },
+    createQRCode: function (text, size) {
+        //调用插件中的draw方法，绘制二维码图片
+        let that = this
+        console.log('QRcode: ', text, size)
+        let _img = QR.createQrCodeImg(text, {
+            size: parseInt(size)
+        })
+
+        that.setData({
+            'qrcode': _img
         })
     },
 })

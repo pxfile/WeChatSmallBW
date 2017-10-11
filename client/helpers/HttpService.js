@@ -18,6 +18,8 @@ class HttpService extends WxRequest {
             order_detail: '/order/orderDetail',
             get_all_store: '/store/getAll',
             confirm_order: '/order/confirmOrder',
+            pay_order: '/order/payOrder',
+            get_qr_code: '/order/getQrCode',
         }
         this.interceptors.use({
             request(request) {
@@ -135,16 +137,16 @@ class HttpService extends WxRequest {
         })
     }
 
-    addCartByUser(goods) {
-        return this.postRequest(this.$$path.cart, {
-            data: {
-                goods,
-            },
+    //订单支付
+    getPayOrder(params) {
+        return this.postRequest(this.$$path.pay_order, {
+            data: params,
         })
     }
 
-    putCartByUser(id, params) {
-        return this.putRequest(`${this.$$path.cart}/${id}`, {
+    //获取取货二维码
+    getQrCode(params) {
+        return this.postRequest(this.$$path.get_qr_code, {
             data: params,
         })
     }

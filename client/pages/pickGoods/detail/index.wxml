@@ -2,7 +2,7 @@
     <!--头部提示语-->
     <view class="top-container-finish">
         <view class="time">
-            <text>下单时间：{{goods_detail.order_time}}</text>
+            <text>下单时间：{{goods_detail.orderTime}}</text>
             <text>待取货</text>
         </view>
     </view>
@@ -13,10 +13,10 @@
                 <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                 <text class="address-text">自提地址</text>
             </view>
-            <view>{{goods_detail.address}}</view>
+            <view>{{goods_detail.storeAddress}}</view>
             <view>
-                <text>店长：{{goods_detail.store_manager}}\t\t\t</text>
-                <text>{{goods_detail.phone}}</text>
+                <text>店长：{{goods_detail.storeManagerName}}\t\t\t</text>
+                <text>{{goods_detail.storePhone}}</text>
             </view>
         </view>
     </view>
@@ -27,21 +27,21 @@
                 <image src="../../../assets/images/iconfont-about.png" class="address-icon"/>
                 <text class="address-text">自提时间</text>
             </view>
-            <view>{{goods_detail.pick_time}}</view>
+            <view>{{goods_detail.pickTime}}</view>
         </view>
     </view>
     <!--订单列表-->
     <view class="goods-container">
-        <block wx:for="{{goods_detail.goods_list}}" wx:for-index="index" wx:key="index">
+        <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
-                    <image src="{{item.images}}" class="goods-image"/>
+                    <image src="{{item.goodsPic}}" class="goods-image"/>
                 </view>
                 <view>
-                    <text class="goods-item-title">{{item.des}}</text>
+                    <text class="goods-item-title">{{item.goodsName}}</text>
                     <view class="goods-item-bottom">
-                        <text class="goods-item-expiration-days">¥ {{item.price}}</text>
-                        <text class="goods-item-num">x {{item.num}}</text>
+                        <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
+                        <text class="goods-item-num">x {{item.goodsNum}}</text>
                     </view>
                 </view>
             </view>
@@ -52,9 +52,14 @@
         <view class="price">
             <view class="goods-suspension-time">
                 <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{goods_detail.total_amount}}</text>
+                <text class="goods-suspension-price">¥{{goods_detail.payMoney}}</text>
             </view>
-            <text class='goods-suspension-pay' bindtap="clickPickBtn">立即取货</text>
+            <text class='goods-suspension-pay' bindtap="clickPickBtn" data-id="{{goods_detail.orderId}}"
+                  data-ordertime="{{goods_detail.orderTime}}"
+                  data-address="{{ goods_detail.storeAddress }}"
+                  data-storemanagermame="{{goods_detail.storeManagerName}}"
+                  data-storephone="{{goods_detail.storePhone}}">立即取货
+            </text>
         </view>
     </view>
 </view>

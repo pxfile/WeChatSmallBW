@@ -13,6 +13,8 @@ Page({
         storePhone: '',
         showPickView: false,
         goods_detail: {},
+        orderId: '',
+        price: '',
     },
 
     /**
@@ -49,10 +51,12 @@ Page({
                     storeManagerName: data.data.storeManagerName,
                     storePhone: data.data.storePhone,
                     goods_detail: data.data,
+                    orderId: data.data.orderId,
+                    price: data.data.payMoney,
                 })
             } else {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
             }
         })
     },
@@ -73,6 +77,30 @@ Page({
 
     //支付成功
     clickPay(e){
+        this.fetchPayOrder(this.data.orderId, this.data.price);
+    },
+    /**
+     * 订单支付
+     */
+    fetchPayOrder(orderId, price) {
+        util.showBusy('正在加载...')
+        var that = this
+        app.HttpService.getPayOrder({
+            orderId: orderId,
+            price: price,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                that.goToPaySuccess()
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
+        })
+    },
+
+    goToPaySuccess(){
         wx.navigateTo({
             url: '/pages/pay/confirm/index?id=' + e.target.dataset.id
         })

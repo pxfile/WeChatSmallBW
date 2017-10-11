@@ -110,11 +110,9 @@ Page({
                     })
                 }
                 wx.setStorageSync('shoppingcar' + that.data.showtabtype, that.data.list);
-                //TODO
-                wx.setStorageSync('confirmGoods', that.data.list);
             } else {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
+                // util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
             }
         })
     },
@@ -170,13 +168,13 @@ Page({
         var s = 0;
         var allGoods = this.data.list;
         for (var i = 0; i < allGoods.length; i++) {
-            if (allGoods[i].id == id) {
+            if (allGoods[i].goodsId == id) {
                 if (boo) {
-                    s = allGoods[i].total + 1;
-                } else if (allGoods[i].total > 0) {
-                    s = allGoods[i].total - 1;
+                    s = allGoods[i].num + 1;
+                } else if (allGoods[i].num > 0) {
+                    s = allGoods[i].num - 1;
                 }
-                allGoods[i].total = s;
+                allGoods[i].num = s;
                 break;
             }
         }
@@ -197,13 +195,13 @@ Page({
         var priceCount = this.data.sumPrice;
         var selectGoods = this.data.selectList;
         for (var i = 0; i < allGoods.length; i++) {
-            if (allGoods[i].id == id) {
-                var price = allGoods[i].price;
+            if (allGoods[i].goodsId == id) {
+                var price = allGoods[i].goodsPrice;
                 if (boo) {
                     priceCount = priceCount + price;
                     payCount = payCount + 1;
                     selectGoods.concat(allGoods[i]);
-                } else if (allGoods[i].total > 0 && payCount > 0 && priceCount > 0) {
+                } else if (allGoods[i].num > 0 && payCount > 0 && priceCount > 0) {
                     priceCount = priceCount - price;
                     payCount = payCount - 1;
                     selectGoods.delete(allGoods[i])
@@ -217,7 +215,8 @@ Page({
             sumPrice: priceCount,
             selectList: selectGoods,
         });
-        wx.setStorageSync('confirmGoods', selectGoods);
+        console.log("selectList--" + this.data.selectList.length)
+        wx.setStorageSync('confirmGoods', this.data.list);
     },
 
     /**

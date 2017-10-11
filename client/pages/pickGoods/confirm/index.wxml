@@ -2,7 +2,7 @@
     <!--头部提示语-->
     <view class="top-container-finish">
         <view class="time">
-            <text>下单时间：{{pick_goods_confirm.order_time}}</text>
+            <text>下单时间：{{orderTime}}</text>
             <text>待取货</text>
         </view>
     </view>
@@ -13,17 +13,17 @@
                 <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                 <text class="address-text">自提地址</text>
             </view>
-            <view>{{pick_goods_confirm.address}}</view>
+            <view>{{address}}</view>
             <view>
-                <text>店长：{{pick_goods_confirm.store_manager}}\t\t\t</text>
-                <text>{{pick_goods_confirm.phone}}</text>
+                <text>店长：{{storeManagerName}}\t\t\t</text>
+                <text>{{storePhone}}</text>
             </view>
         </view>
     </view>
     <!--自提二维码-->
     <view class="qr-container">
         <text class="qr-text">取货二维码</text>
-        <image src="{{pick_goods_confirm.qr_url}}" class="qr-icon" bindtap="sweepCode"/>
+        <image src="{{qrcode}}" class="qr-icon" bindtap="sweepCode"/>
         <text class="qr-hint-text">重要提示：该二维码是取货时的唯一凭证，请勿随意给他人查看或者截图转发他人！！！</text>
     </view>
 </view>

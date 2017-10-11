@@ -52,16 +52,21 @@
     font-size: 14px;
 }
 
+.btn-login-view {
+    width: 270px;
+    height: 38px;
+    margin: 0 15px;
+}
+
 .btn-login {
     border: #ff0000 1px solid;
-    width: 340px;
+    width: 270px;
     height: 38px;
     background-color: #ffffff;
     line-height: 38px;
     align-content: center;
     font-size: 18px;
     border-radius: 3px;
-    margin: 0 15px;
     color: #ff0000;
 }
 

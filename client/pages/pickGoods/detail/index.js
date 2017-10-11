@@ -22,25 +22,27 @@ Page({
     fetchListData(id) {
         util.showBusy('正在加载...')
         var that = this
-        qcloud.request({
-            url: `${config.service.host}/weapp/pick_goods_detail`,
-            login: false,
-            success(result) {
+        app.HttpService.getOrderDetail({
+            orderId: 'O340865160adc4e3193d279cc7dcde707',
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
                 that.setData({
-                    goods_detail: result.data.data,
+                    goods_detail: data.data,
                 })
-            },
-            fail(error) {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
             }
         })
     },
 
     //事件处理函数
     clickPickBtn(e){
+        const edata = e.currentTarget.dataset;
         wx.navigateTo({
-            url: '../confirm/index?id=' + e.target.dataset.id
+            url: '../confirm/index?id=' + edata.id + '&orderTime=' + edata.ordertime + '&address=' + edata.address + '&storeManagerName=' + edata.storemanagermame + '&storePhone=' + edata.storephone
         })
     },
 })

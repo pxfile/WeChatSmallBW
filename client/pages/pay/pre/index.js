@@ -33,7 +33,7 @@ Page({
     onLoad(option) {
         var list = wx.getStorageSync('confirmGoods');
         var pickTime = util.formatDate(new Date());
-        console.log("pickTime--" + pickTime)
+        console.log("list--" + list.length)
         this.setData({
             date: pickTime,
             address: '请选择自提地址',
@@ -62,8 +62,8 @@ Page({
                     storePhone: data.data.storePhone,
                 })
             } else {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
             }
         })
     },
@@ -110,8 +110,8 @@ Page({
                 })
                 that.goToOrderDetail();
             } else {
-                util.showModel('加载失败', error);
-                console.log('request fail', error);
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
             }
         })
     },

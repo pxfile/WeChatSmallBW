@@ -130,6 +130,7 @@
     width: 163px;
     height: 163px;
     margin-top: 20px;
+    display: block;
 }
 
 .qr-hint-text {

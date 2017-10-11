@@ -94,8 +94,8 @@ Page({
                         })
                     }
                 } else {
-                    util.showModel('加载失败', error);
-                    console.log('request fail', error);
+                    util.showModel('加载失败', data.message);
+                    console.log('request fail', data.message);
                 }
             })
         } else {
@@ -116,8 +116,8 @@ Page({
                         })
                     }
                 } else {
-                    util.showModel('加载失败', error);
-                    console.log('request fail', error);
+                    util.showModel('加载失败', data.message);
+                    console.log('request fail', data.message);
                 }
             })
         }
