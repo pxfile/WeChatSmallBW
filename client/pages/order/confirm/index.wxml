@@ -9,8 +9,8 @@
                 </view>
                 <view>{{address}}</view>
                 <view>
-                    <text>店长：李小姐\t\t\t</text>
-                    <text>400-9199</text>
+                    <text>店长：{{storeManagerName}}\t\t\t</text>
+                    <text>{{storePhone}}</text>
                 </view>
             </view>
         </view>
@@ -18,7 +18,7 @@
     </view>
     <!--订单列表-->
     <view class="goods-container">
-        <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
+        <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
                     <image src="{{item.goodsPic}}" class="goods-image"/>
@@ -44,9 +44,9 @@
         <view class="price">
             <view class="goods-suspension-time">
                 <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{goods_detail.total_amount}}</text>
+                <text class="goods-suspension-price">¥{{goods_detail.payMoney}}</text>
             </view>
-            <text class='goods-suspension-pay' bindtap="paySuccess" data-id="{{item.id}}">立即支付</text>
+            <text class='goods-suspension-pay' bindtap="paySuccess" data-id="{{item.orderId}}">立即支付</text>
         </view>
     </view>
 </view>

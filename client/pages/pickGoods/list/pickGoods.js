@@ -41,8 +41,7 @@ Page({
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getDeliveryList({
-            userId: 'adfiwenr',
-                // app.WxService.getStorageSync('token'),
+            userId: app.WxService.getStorageSync('user_id'),
         }).then(res => {
             const data = res.data
             console.log(data)

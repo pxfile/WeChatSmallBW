@@ -13,10 +13,11 @@ class HttpService extends WxRequest {
             index_tab: '/brand/getAll',
             goods_list: '/brand/goodsList',
             take_delivery_list: '/order/takeDeliveryList',
-            order_complete: '/order/orderComplete',
+            order_complete_list: '/order/orderComplete',
             order_pay_list: '/order/orderPayList',
             order_detail: '/order/orderDetail',
             get_all_store: '/store/getAll',
+            confirm_order: '/order/confirmOrder',
         }
         this.interceptors.use({
             request(request) {
@@ -100,8 +101,8 @@ class HttpService extends WxRequest {
     }
 
     //完成订单列表
-    getOrderComplete(params) {
-        return this.postRequest(this.$$path.order_complete, {
+    getOrderCompleteList(params) {
+        return this.postRequest(this.$$path.order_complete_list, {
             data: params,
         })
     }
@@ -116,6 +117,13 @@ class HttpService extends WxRequest {
     //订单详情
     getOrderDetail(params) {
         return this.postRequest(this.$$path.order_detail, {
+            data: params,
+        })
+    }
+
+    //预下单
+    getConfirmOrder(params) {
+        return this.postRequest(this.$$path.confirm_order, {
             data: params,
         })
     }

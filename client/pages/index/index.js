@@ -61,7 +61,7 @@ Page({
                 if (data.code == 0) {
                     that.setData({
                         tabnav: {
-                            tabnum: 5,
+                            tabnum: data.data.length,
                             tabitem: JSON.stringify(data.data),
                         },
                         tab_info: data.data,
@@ -225,13 +225,45 @@ Page({
             }
         }
     },
+
+    //事件处理函数
+    clickConfirmBtn(e){
+        this.fetchConfirmOrder()
+    },
+
+    /**
+     * 预下单
+     */
+    fetchConfirmOrder(storeId, userId, pickTime, goodsList) {
+        util.showBusy('正在加载...')
+        var that = this
+        app.HttpService.getConfirmOrder({
+            storeId: 'S21c2d5c2ce67467fbf113bbc92b16bc8',
+            userId: app.WxService.getStorageSync('user_id'),
+            pickTime: '2017-10-1',
+            goodsList: '[{ "goodsId" : "G9e363fae1b08493286acd4d862f7a5e3", "goodsNum" : 20 }, { "goodsId" : "G1de330af1b3e41dda4a47be656f739ce", "goodsNum" : 50 } ]'
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                that.setData({
+                    goods_detail: data.data,
+                })
+                that.goToOrder();
+            } else {
+                util.showModel('加载失败', error);
+                console.log('request fail', error);
+            }
+        })
+    },
+
     /**
      * 去结算
-     * @param e
      */
-    goToOrder(e) {
+    goToOrder() {
         app.WxService.navigateTo("/pages/order/list/index")
     },
+
     //------------------------------------------------------TAB------------------------------------------------------------------
     setTab: function (e) { //设置选项卡选中索引
         const edata = e.currentTarget.dataset;

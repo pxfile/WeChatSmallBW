@@ -9,8 +9,10 @@ Page({
     data: {
         date: '',
         address: '',
+        storeManagerName: '',
+        storePhone: '',
         showPickView: false,
-        list: [],
+        goods_detail: {},
     },
 
     bindDateChange: function (e) {
@@ -28,20 +30,21 @@ Page({
     /**
      * 请求订单列表
      */
-    fetchListData() {
+    fetchListData(orderId) {
         util.showBusy('正在加载...')
         var that = this
-        app.HttpService.getOrderComplete({
-            userId: 'adfiwenr',
-            // app.WxService.getStorageSync('token'),
+        app.HttpService.getOrderDetail({
+            orderId: 'O340865160adc4e3193d279cc7dcde707',
         }).then(res => {
             const data = res.data
             console.log(data)
             if (data.code == 0) {
                 that.setData({
-                    list: data.data,
-                    date: '2017-08-31',
-                    address: '天津市北辰区海吉星农贸批发市场',
+                    date: data.data.pickTime,
+                    address: data.data.storeAddress,
+                    storeManagerName: data.data.storeManagerName,
+                    storePhone: data.data.storePhone,
+                    goods_detail: data.data,
                 })
             } else {
                 util.showModel('加载失败', error);

@@ -78,9 +78,8 @@ Page({
         var that = this
         if (tabType > 0) {
             //完成订单列表
-            app.HttpService.getOrderComplete({
-                userId: 'adfiwenr',
-                // app.WxService.getStorageSync('token'),
+            app.HttpService.getOrderCompleteList({
+                userId: app.WxService.getStorageSync('user_id'),
             }).then(res => {
                 const data = res.data
                 console.log(data)
@@ -102,8 +101,7 @@ Page({
         } else {
             //待付款列表
             app.HttpService.getOrderPayList({
-                userId: 'adfiwenr',
-                // app.WxService.getStorageSync('token'),
+                userId: app.WxService.getStorageSync('user_id'),
             }).then(res => {
                 const data = res.data
                 console.log(data)

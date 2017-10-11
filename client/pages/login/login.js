@@ -166,6 +166,7 @@ Page({
                 })
                 that.update()
                 cb()
+                App.WxService.setStorageSync('user_id', 'adfiwenr')
             }
         })
     }
