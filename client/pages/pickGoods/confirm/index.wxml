@@ -23,7 +23,7 @@
     <!--自提二维码-->
     <view class="qr-container">
         <text class="qr-text">取货二维码</text>
-        <image src="{{qrcode}}" class="qr-icon" bindtap="sweepCode"/>
+        <image wx:if="{{qrcode}}" src="{{qrcode}}" class="qr-icon" bindtap="sweepCode"/>
         <text class="qr-hint-text">重要提示：该二维码是取货时的唯一凭证，请勿随意给他人查看或者截图转发他人！！！</text>
     </view>
 </view>

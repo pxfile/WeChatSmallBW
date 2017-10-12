@@ -102,7 +102,7 @@ Page({
             if (data.code == 0) {
                 if (isReachBottom) {
                     that.setData({
-                        list: that.data.list.concat(data.data),
+                        list: data.data.concat(that.data.list),
                     })
                 } else {
                     that.setData({
@@ -123,6 +123,9 @@ Page({
      * @param showLoading
      */
     fetchTabListData(tabType, showLoading) {
+        this.setData({
+            list: [],
+        });
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
         if (allGoods) {
             this.setData({
@@ -200,11 +203,18 @@ Page({
                 if (boo) {
                     priceCount = priceCount + price;
                     payCount = payCount + 1;
-                    selectGoods.concat(allGoods[i]);
+                    selectGoods = this.data.selectList.concat(allGoods[i]);
                 } else if (allGoods[i].num > 0 && payCount > 0 && priceCount > 0) {
                     priceCount = priceCount - price;
                     payCount = payCount - 1;
-                    selectGoods.delete(allGoods[i])
+                    if (allGoods[i].num > 1) {
+                        selectGoods.pop()
+                    } else {
+                        selectGoods = []
+                        payCount = 0
+                        priceCount = 0
+                    }
+
                 }
                 break;
             }
@@ -216,7 +226,7 @@ Page({
             selectList: selectGoods,
         });
         console.log("selectList--" + this.data.selectList.length)
-        wx.setStorageSync('confirmGoods', this.data.list);
+        wx.setStorageSync('confirmGoods', this.data.selectList);
     },
 
     /**

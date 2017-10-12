@@ -45,7 +45,7 @@
                     <!--商品总数，价格-->
                     <view>
                         <view class="goods-item-bottom">
-                            <text class="goods-item-count-price">¥ {{item.goods_price}}</text>
+                            <text class="goods-item-count-price">¥ {{item.totalPrice}}</text>
                             <text class="goods-item-count-num">共{{item.goodsList.length}}件商品，实付</text>
                         </view>
                         <view class="{{showtabtype==1 ? 'hidden' :''}}">
