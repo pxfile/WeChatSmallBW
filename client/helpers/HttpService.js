@@ -20,6 +20,8 @@ class HttpService extends WxRequest {
             confirm_order: '/order/confirmOrder',
             pay_order: '/order/payOrder',
             get_qr_code: '/order/getQrCode',
+            send_code: 'user/sendCode',
+            user_login:'user/userLogin'
         }
         this.interceptors.use({
             request(request) {
@@ -147,6 +149,20 @@ class HttpService extends WxRequest {
     //获取取货二维码
     getQrCode(params) {
         return this.postRequest(this.$$path.get_qr_code, {
+            data: params,
+        })
+    }
+
+    //发送验证码
+    sendCode(params) {
+        return this.postRequest(this.$$path.send_code, {
+            data: params,
+        })
+    }
+
+    //用户登录
+    userLogin(params) {
+        return this.postRequest(this.$$path.user_login, {
             data: params,
         })
     }

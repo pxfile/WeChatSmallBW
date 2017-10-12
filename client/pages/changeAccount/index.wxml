@@ -3,7 +3,7 @@
         <view class="sub-container">
             <text class="text-view">手机号</text>
             <input type="number" bindinput="phoneInput"/>
-            <button class="send-auth-code">发送验证码</button>
+            <button class="send-auth-code" bindtap="sendCode">发送验证码</button>
         </view>
         <view class="sub-container-code">
             <text class="text-view">验证码</text>
