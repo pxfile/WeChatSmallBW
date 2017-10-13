@@ -21,7 +21,9 @@ class HttpService extends WxRequest {
             pay_order: '/order/payOrder',
             get_qr_code: '/order/getQrCode',
             send_code: 'user/sendCode',
-            user_login:'user/userLogin'
+            user_login: 'user/userLogin',
+            user_logout: 'user/userLogout',
+
         }
         this.interceptors.use({
             request(request) {
@@ -163,6 +165,13 @@ class HttpService extends WxRequest {
     //用户登录
     userLogin(params) {
         return this.postRequest(this.$$path.user_login, {
+            data: params,
+        })
+    }
+
+    //用户退出登录
+    userLogout(params) {
+        return this.postRequest(this.$$path.user_logout, {
             data: params,
         })
     }

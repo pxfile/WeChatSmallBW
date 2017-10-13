@@ -5,7 +5,6 @@ import HttpResource from './helpers/HttpResource'
 import HttpService from './helpers/HttpService'
 import __config from './etc/config'
 
-var qcloud = require('./vendor/wafer2-client-sdk/index')
 var config = require('./config')
 
 App({

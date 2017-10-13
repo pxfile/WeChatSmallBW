@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
 Page({
@@ -20,10 +19,16 @@ Page({
         marginleft: 0,  //滑动距离
         onpulldownrefresh: '下拉刷新...',
         onreachbottom: '上拉加载更多...',
+        prompt: {
+            hidden: !0,
+        },
+    },
+    bindtap(e) {
+        this.fetchListData(this.data.showtabtype, true, false)
     },
 
     onLoad() {
-        this.fetchTabData(this.data.showtabtype);
+        this.fetchTabData();
     },
 
     /**
@@ -33,7 +38,7 @@ Page({
         this.setData({
             start_num: 0,
         }),
-            this.fetchTabData(this.data.showtabtype),
+            this.fetchListData(this.data.showtabtype, true, false),
             wx.stopPullDownRefresh();
     },
 
@@ -49,10 +54,8 @@ Page({
 
     /**
      * 请求TAB数据
-     * @param tabtype
      */
-    fetchTabData(tabtype) {
-        console.log(this.data.start_num + tabtype);
+    fetchTabData() {
         var that = this
 
         app.HttpService.getTabs()
@@ -134,6 +137,9 @@ Page({
         } else {
             this.fetchListData(tabType, showLoading, false)
         }
+        this.setData({
+            'prompt.hidden': this.data.list.length,
+        })
     },
 
     showLoading(titleStr) {
@@ -247,7 +253,11 @@ Page({
      * @param e
      */
     goToOrder(e) {
-        app.WxService.navigateTo('/pages/pay/pre/index?payMoney=' + this.data.sumPrice)
+        if (this.data.sumPrice == 0) {
+            util.showModel('温馨提示', '请选择您需要购买的商品！');
+        } else {
+            app.WxService.navigateTo('/pages/pay/pre/index?payMoney=' + this.data.sumPrice)
+        }
     },
 
     //------------------------------------------------------TAB------------------------------------------------------------------

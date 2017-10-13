@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 
@@ -61,7 +60,6 @@ Page({
 
     //确认订单
     getConfirmOrder(e){
-        console.log("this.data.storeId.length--" + this.data.storeId.length)
         if (this.data.storeId.length == 0) {
             util.showModel('温馨提示', '自提地址不能为空！');
         } else {

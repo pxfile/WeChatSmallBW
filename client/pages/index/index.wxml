@@ -1,6 +1,7 @@
 <!--index.wxml-->
+<import src="../common/prompt.wxml"/>
+<template is="prompt" data="{{ prompt }}"/>
 <view class="container">
-
     <!--滑动tab-->
     <view class="tab-display">
         <view class="tab-nav">

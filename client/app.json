@@ -12,8 +12,6 @@
     "pages/order/confirm/index",
     "pages/order/detail/index",
     "pages/logs/logs",
-    "pages/addCgi/addCgi",
-    "pages/test/index",
     "pages/address/index",
     "pages/pay/confirm/index",
     "pages/pay/pre/index",

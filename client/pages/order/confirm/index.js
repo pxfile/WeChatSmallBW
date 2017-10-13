@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 
@@ -77,7 +76,11 @@ Page({
 
     //支付成功
     clickPay(e){
-        this.fetchPayOrder(this.data.orderId, this.data.price);
+        if (this.data.orderId.length == 0 || this.data.price.length == 0) {
+            util.showModel('温馨提示', '查无订单！');
+        } else {
+            this.fetchPayOrder(this.data.orderId, this.data.price);
+        }
     },
     /**
      * 订单支付

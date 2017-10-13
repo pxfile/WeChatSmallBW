@@ -1,6 +1,5 @@
 //获取应用实例
 var app = getApp()
-var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
 
@@ -117,19 +116,21 @@ Page({
             .then(data => data.confirm == 1 && this.signOut())
     },
     signOut() {
-        // app.HttpService.signOut()
-        //     .then(res => {
-        //         const data = res.data
-        //         console.log(data)
-        //         if (data.meta.code == 0) {
-        //             app.WxService.removeStorageSync('user_id')
-        //             app.WxService.removeStorageSync('token')
-        //             app.WxService.redirectTo('/pages/login/index')
-        //         }
-        //     })
-
-        app.WxService.removeStorageSync('user_id')
-        app.WxService.removeStorageSync('token')
-        app.WxService.redirectTo('/pages/login/login')
+        util.showBusy('正在退出登录...')
+        app.HttpService.userLogout({
+            mobile: mobile,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+                app.WxService.removeStorageSync('user_id')
+                app.WxService.removeStorageSync('token')
+                app.WxService.redirectTo('/pages/login/login')
+            } else {
+                util.showModel('退出登录失败', data.message);
+                console.log('request fail', data.message);
+            }
+        })
     },
 })
