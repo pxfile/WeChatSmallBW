@@ -17,6 +17,9 @@ Page({
         marginleft: 0,  //滑动距离
         onpulldownrefresh: '下拉刷新...',
         onreachbottom: '上拉加载更多...',
+        prompt: {
+            hidden: !0,
+        },
     },
 
     onLoad() {
@@ -90,11 +93,15 @@ Page({
                     } else {
                         that.setData({
                             list: data.data,
+                            'prompt.hidden': data.data.length,
                         })
                     }
                 } else {
                     util.showModel('加载失败', data.message);
                     console.log('request fail', data.message);
+                    that.setData({
+                        'prompt.hidden': 0 && !isReachBottom,
+                    })
                 }
             })
         } else {
@@ -112,11 +119,15 @@ Page({
                     } else {
                         that.setData({
                             list: data.data,
+                            'prompt.hidden': data.data.length,
                         })
                     }
                 } else {
                     util.showModel('加载失败', data.message);
                     console.log('request fail', data.message);
+                    that.setData({
+                        'prompt.hidden': 0 && !isReachBottom,
+                    })
                 }
             })
         }
@@ -128,7 +139,6 @@ Page({
      * @param tabtype
      */
     fetchListDataMore(tabType) {
-        console.log(this.data.start_num + tabType);
         if (this.data.list.length === 0) return
         this.fetchListData(tabType, true)
     },

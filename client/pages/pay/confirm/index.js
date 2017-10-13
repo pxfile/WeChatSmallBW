@@ -6,6 +6,9 @@ var util = require('../../../utils/util.js')
 Page({
     data: {
         goods_detail: {},
+        prompt: {
+            hidden: !0,
+        },
     },
 
     onLoad(option) {
@@ -35,6 +38,9 @@ Page({
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
+            that.setData({
+                'prompt.hidden': !data.code,
+            })
         })
     },
 })

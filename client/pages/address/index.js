@@ -9,6 +9,9 @@ Page({
         dimension: "",
         start_num: 0,
         list: [],
+        prompt: {
+            hidden: !0,
+        },
     },
 
     onLoad() {
@@ -61,9 +64,12 @@ Page({
                     })
                 }
             } else {
-                util.showModel('加载失败', data.message);
+                // util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
+            that.setData({
+                'prompt.hidden': !data.code && (!isReachBottom || that.data.list),
+            })
         })
     },
 
@@ -72,7 +78,6 @@ Page({
      * @param tabtype
      */
     fetchListDataMore(longitude, dimension) {
-        console.log(this.data.start_num + tabType);
         if (this.data.list.length === 0) return
         this.fetchListData(longitude, dimension, true)
     },

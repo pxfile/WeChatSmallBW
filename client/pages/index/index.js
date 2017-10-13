@@ -23,8 +23,13 @@ Page({
             hidden: !0,
         },
     },
-    bindtap(e) {
-        this.fetchListData(this.data.showtabtype, true, false)
+
+    bindtapTab(e) {
+        this.fetchTabData();
+    },
+
+    bindtapList(e){
+        this.fetchTabData(this.data.showtabtype, true, false)
     },
 
     onLoad() {
@@ -74,6 +79,19 @@ Page({
                     that.fetchListData(that.data.tab_info[0].seriesId, false)
                     that.removeStorageData();
                 }
+                // that.setData({
+                //     prompt: {
+                //         hidden: !data.code,
+                //         title: '加载失败',
+                //         text: '网络或服务器异常了,请检查网络状态,或稍后再试',
+                //         buttons: [
+                //             {
+                //                 text: '点击重新加载',
+                //                 bindtap: 'bindtapTab',
+                //             },
+                //         ],
+                //     },
+                // })
             })
     },
 
@@ -114,10 +132,13 @@ Page({
                 }
                 wx.setStorageSync('shoppingcar' + that.data.showtabtype, that.data.list);
             } else {
-                // util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
+            that.setData({
+                'prompt.hidden': !data.code && (!isReachBottom || that.data.list),
+            })
         })
+
     },
 
     /**
@@ -130,16 +151,16 @@ Page({
             list: [],
         });
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
-        if (allGoods) {
+        if (allGoods.length > 0) {
             this.setData({
                 list: allGoods,
             });
+            this.setData({
+                'prompt.hidden': this.data.list.length,
+            })
         } else {
             this.fetchListData(tabType, showLoading, false)
         }
-        this.setData({
-            'prompt.hidden': this.data.list.length,
-        })
     },
 
     showLoading(titleStr) {
@@ -242,7 +263,7 @@ Page({
         var allTabs = this.data.tab_info;
         for (var i = 0; i < allTabs.length; i++) {
             try {
-                wx.removeStorageSync('shoppingcar' + allTabs[i].type)
+                wx.removeStorageSync('shoppingcar' + allTabs[i].seriesId)
             } catch (e) {
                 console.log("shoppingcar")
             }

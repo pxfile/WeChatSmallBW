@@ -1,5 +1,7 @@
 <!--index.wxml-->
-<view class="container">
+<import src="../common/prompt.wxml"/>
+<template is="prompt" data="{{ prompt }}"/>
+<view class="container" hidden="{{ !prompt.hidden }}">
     <!--list列表-->
     <view class="item-list-container">
         <block wx:for="{{list}}" wx:for-index="index" wx:key="index">

@@ -1,4 +1,6 @@
-<view class="container">
+<import src="../../common/prompt.wxml"/>
+<template is="prompt" data="{{ prompt }}"/>
+<view class="container" hidden="{{ !prompt.hidden }}">
     <!--头部提示语-->
     <view class="top-container-finish">
         <view class="time">

@@ -7,6 +7,9 @@ Page({
         list: [],
         onpulldownrefresh: '下拉刷新...',
         onreachbottom: '上拉加载更多...',
+        prompt: {
+            hidden: !0,
+        },
     },
 
     onLoad() {
@@ -52,11 +55,15 @@ Page({
                 } else {
                     that.setData({
                         list: data.data,
+                        'prompt.hidden': data.data.length,
                     })
                 }
             } else {
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
+                that.setData({
+                    'prompt.hidden': 0 && !isReachBottom,
+                })
             }
         })
     },

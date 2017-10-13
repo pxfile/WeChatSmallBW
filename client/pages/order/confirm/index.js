@@ -14,6 +14,9 @@ Page({
         goods_detail: {},
         orderId: '',
         price: '',
+        prompt: {
+            hidden: !0,
+        },
     },
 
     /**
@@ -57,6 +60,9 @@ Page({
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
+            that.setData({
+                'prompt.hidden': !data.code,
+            })
         })
     },
 

@@ -1,4 +1,6 @@
 <!--index.wxml-->
+<import src="../../common/prompt.wxml"/>
+<template is="prompt" data="{{ prompt }}"/>
 <view class="container">
 
     <!--滑动tab-->
@@ -12,7 +14,7 @@
     </view>
 
     <!--list列表-->
-    <scroll-view scroll-y="true">
+    <scroll-view scroll-y="true" hidden="{{ !prompt.hidden }}">
         <view class="goods-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
               bindtouchend="scrollTouchend">
             <block wx:for="{{list}}" wx:for-index="index" wx:key="index">

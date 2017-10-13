@@ -1,4 +1,6 @@
-<view class="container">
+<import src="../../common/prompt.wxml"/>
+<template is="prompt" data="{{ prompt }}"/>
+<view class="container" hidden="{{ !prompt.hidden }}">
     <!--支付成功-->
     <view class="pay-success-container">
         <view class="pay-icon-container">

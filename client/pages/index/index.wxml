@@ -13,7 +13,7 @@
     </view>
 
     <!--list列表-->
-    <scroll-view scroll-y="true">
+    <scroll-view scroll-y="true" hidden="{{ !prompt.hidden }}">
         <view class="news-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
               bindtouchend="scrollTouchend">
             <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
