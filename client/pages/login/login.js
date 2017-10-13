@@ -64,23 +64,27 @@ Page({
      * 发送验证码
      */
     sendAuthCode(mobile) {
-        util.showBusy('正在发送验证码...')
         var that = this
-        App.HttpService.sendCode({
-            mobile: mobile,
-        }).then(res => {
-            const data = res.data
-            console.log(data)
-            if (data.code == 0) {
-                util.showSuccess(data.message)
-                that.setData({
-                    authCode: data.data.verificationCode
-                })
-            } else {
-                util.showModel('正在发送验证码失败', data.message);
-                console.log('request fail', data.message);
-            }
-        })
+        if (this.data.phoneNumber.length == 0) {
+            util.showModel('温馨提示', '手机号不能为空！')
+        } else {
+            util.showBusy('正在发送验证码...')
+            App.HttpService.sendCode({
+                mobile: mobile,
+            }).then(res => {
+                const data = res.data
+                console.log(data)
+                if (data.code == 0) {
+                    util.showSuccess(data.message)
+                    that.setData({
+                        authCode: data.data.verificationCode
+                    })
+                } else {
+                    util.showModel('正在发送验证码失败', data.message);
+                    console.log('request fail', data.message);
+                }
+            })
+        }
     },
 
     /**
@@ -89,9 +93,7 @@ Page({
     getUserLogin(mobile, verificationCode, userName, userAvatar){
         var that = this
         if (this.data.phoneNumber.length == 0 || this.data.authCode.length == 0) {
-            this.setData({
-                infoMess: '温馨提示：用户名或验证码不能为空！',
-            })
+            util.showModel('温馨提示', '手机号或验证码不能为空！')
         } else {
             util.showBusy('正在登录...')
             App.HttpService.userLogin({

@@ -40,7 +40,7 @@ Page({
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getOrderDetail({
-            orderId: 'O340865160adc4e3193d279cc7dcde707',
+            orderId: orderId,
         }).then(res => {
             const data = res.data
             console.log(data)
@@ -92,7 +92,7 @@ Page({
             const data = res.data
             console.log(data)
             if (data.code == 0) {
-                that.goToPaySuccess()
+                that.goToPaySuccess(orderId)
             } else {
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
@@ -100,9 +100,9 @@ Page({
         })
     },
 
-    goToPaySuccess(){
+    goToPaySuccess(orderId){
         wx.navigateTo({
-            url: '/pages/pay/confirm/index?id=' + e.target.dataset.id
+            url: '/pages/pay/confirm/index?id=' + orderId
         })
     }
 })

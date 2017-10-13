@@ -46,7 +46,7 @@
                 <text>实付金额：</text>
                 <text class="goods-suspension-price">¥{{goods_detail.payMoney}}</text>
             </view>
-            <text class='goods-suspension-pay' bindtap="clickPay" data-id="{{item.orderId}}">立即支付</text>
+            <text class='goods-suspension-pay' bindtap="clickPay" data-id="{{goods_detail.orderId}}">立即支付</text>
         </view>
     </view>
 </view>

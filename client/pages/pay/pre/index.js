@@ -14,6 +14,7 @@ Page({
         storePhone: '',
         showPickView: false,
         goodsList: [],
+        selectGoods: [],
         payMoney: 0,
         orderId: '',
         price: '',
@@ -43,30 +44,6 @@ Page({
             payMoney: option.payMoney,
         })
     },
-    /**
-     * 请求订单列表
-     */
-    fetchListData(orderId) {
-        util.showBusy('正在加载...')
-        var that = this
-        app.HttpService.getOrderDetail({
-            orderId: 'O340865160adc4e3193d279cc7dcde707',
-        }).then(res => {
-            const data = res.data
-            console.log(data)
-            if (data.code == 0) {
-                that.setData({
-                    date: data.data.pickTime,
-                    address: data.data.storeAddress,
-                    storeManagerName: data.data.storeManagerName,
-                    storePhone: data.data.storePhone,
-                })
-            } else {
-                util.showModel('加载失败', data.message);
-                console.log('request fail', data.message);
-            }
-        })
-    },
 
     //选择自提时间
     selectPickTime(e){
@@ -84,26 +61,55 @@ Page({
 
     //确认订单
     getConfirmOrder(e){
-        var userId = app.WxService.getStorageSync('user_id')
-        this.fetchConfirmOrder(this.data.storeId, userId, this.data.date, this.data.goodsList);
+        console.log("this.data.storeId.length--" + this.data.storeId.length)
+        if (this.data.storeId.length == 0) {
+            util.showModel('温馨提示', '自提地址不能为空！');
+        } else {
+            this.getSelectGoods()
+            this.fetchConfirmOrder(this.data.storeId, app.WxService.getStorageSync('user_id'), this.data.date, JSON.stringify(this.data.selectGoods));
+        }
+    },
+
+    getSelectGoods(){
+        var allGoods = this.data.goodsList;
+        var selectList = [];
+        for (var i = 0; i < allGoods.length; i++) {
+            var goodsParam = new this.GoodsParam(allGoods[i].goodsId, allGoods[i].num)
+            selectList.push(goodsParam)
+        }
+
+        this.setData({
+            selectGoods: selectList
+        })
+    },
+
+    /**
+     * 选择商品列表的参数
+     * @param goodsId
+     * @param goodsNum
+     * @constructor
+     */
+    GoodsParam(goodsId, goodsNum){
+        this.goodsId = goodsId;
+        this.goodsNum = goodsNum;
     },
 
     /**
      * 预下单
      */
-    fetchConfirmOrder(storeId, userId, pickTime, goodsList) {
+    fetchConfirmOrder(storeId, userId, pickTime, goodsList)
+    {
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getConfirmOrder({
-            storeId: 'S21c2d5c2ce67467fbf113bbc92b16bc8',
+            storeId: storeId,
             userId: userId,
-            pickTime: '2017-10-1',
-            goodsList: '[{ "goodsId" : "G9e363fae1b08493286acd4d862f7a5e3", "goodsNum" : 20 }, { "goodsId" : "G1de330af1b3e41dda4a47be656f739ce", "goodsNum" : 50 } ]'
+            pickTime: pickTime,
+            goodsList: goodsList
         }).then(res => {
             const data = res.data
             console.log(data)
             if (data.code == 0) {
-                //TODO
                 that.setData({
                     orderId: data.data.orderId,
                     price: data.data.price
@@ -114,11 +120,13 @@ Page({
                 console.log('request fail', data.message);
             }
         })
-    },
+    }
+    ,
     /**
      * 跳转订单详情
      */
-    goToOrderDetail(){
+    goToOrderDetail()
+    {
         app.WxService.navigateTo('/pages/order/detail/index?id=' + this.data.orderId + '&type=0')
     }
 })

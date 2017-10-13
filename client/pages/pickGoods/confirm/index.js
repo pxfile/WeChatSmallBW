@@ -34,7 +34,7 @@ Page({
         var that = this
         let qrcodeSize = that.getQRCodeSize()
         app.HttpService.getQrCode({
-            orderId: 'O340865160adc4e3193d279cc7dcde707',
+            orderId: orderId,
         }).then(res => {
             const data = res.data
             console.log(data)

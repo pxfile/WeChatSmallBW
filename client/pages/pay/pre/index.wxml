@@ -30,7 +30,7 @@
                     <text class="goods-item-title">{{item.goodsName}}</text>
                     <view class="goods-item-bottom">
                         <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
-                        <text class="goods-item-num">x {{item.total}}</text>
+                        <text class="goods-item-num">x {{item.num}}</text>
                     </view>
                 </view>
             </view>

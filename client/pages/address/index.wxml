@@ -3,7 +3,7 @@
     <!--list列表-->
     <view class="item-list-container">
         <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
-            <view class="item-container" bindtap="selectAddress" data-address="{{ item.storeAddress }}"
+            <view class="item-container" bindtap="selectAddress" data-storeid="{{item.storeId}}" data-address="{{ item.storeAddress }}"
                   data-storemanagermame="{{item.storeManagerName}}" data-storephone="{{item.storePhone}}">
                 <view class="item-info">
                     <text>店长：{{item.storeManagerName}}\t\t\t\t\t{{item.storePhone}}</text>
