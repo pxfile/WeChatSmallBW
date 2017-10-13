@@ -8,6 +8,7 @@ Page({
         goods_detail: {},
         prompt: {
             hidden: !0,
+            icon: '../../../assets/images/iconfont-empty.png',
         },
     },
 

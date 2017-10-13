@@ -19,6 +19,7 @@ Page({
         onreachbottom: '上拉加载更多...',
         prompt: {
             hidden: !0,
+            icon: '../../../assets/images/iconfont-empty.png',
         },
     },
 
