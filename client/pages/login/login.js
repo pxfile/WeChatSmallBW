@@ -74,7 +74,7 @@ Page({
             if (data.code == 0) {
                 util.showSuccess(data.message)
                 that.setData({
-                    authCode: data.verificationCode
+                    authCode: data.data.verificationCode
                 })
             } else {
                 util.showModel('正在发送验证码失败', data.message);
@@ -104,7 +104,7 @@ Page({
                 console.log(data)
                 if (data.code == 0) {
                     util.showSuccess(data.message)
-                    that.setStorageSyncData(data.mobile, data.userId, data.userPic, data.userName)
+                    that.setStorageSyncData(data.data.userId, data.data.mobile, data.data.userPic, data.data.userName)
                     that.goIndex()
                 } else {
                     util.showModel('登录失败', data.message);
@@ -121,8 +121,6 @@ Page({
         App.WxService.setStorageSync('mobile', mobile)
         App.WxService.setStorageSync('userPic', userPic)
         App.WxService.setStorageSync('userName', userName)
-        console.log('user_id', userId);
-        console.log('user_id-2', App.WxService.getStorageSync('user_id'));
     },
     /**
      * 跳转首页
