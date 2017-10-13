@@ -1,81 +1,80 @@
-.login-container {
-	height: 100%;
-	padding: 10px 30px;
-	background: #fff;
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    font-size: 16px;
+    color: #5E5E5E;
+    margin-top: 15px;
 }
 
-.app-info {
-	position: relative;
-	padding: 20px;
-	text-align: center;
+.sub-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    margin-bottom: 2px;
+    padding: 6px 20px;
 }
 
-.app-info:after {
-	content: " ";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 1px;
-    border-bottom: 1px solid #E5E5E5;
-    color: #E5E5E5;
-    -webkit-transform-origin: 0 100%;
-    transform-origin: 0 100%;
-    -webkit-transform: scaleY(0.5);
-    transform: scaleY(0.5);
+.sub-container-code {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    background-color: #ffffff;
+    margin-bottom: 1px;
+    padding: 10px 20px;
 }
 
-.app-info .app-logo {
-	display: block;
-	width: 64px;
-	height: 64px;
-	margin: 10px auto;
-	border-radius: 4px;
+.text-view {
+    margin: 0 15px;
+    width: 60px;
 }
 
-.app-info .app-name {
-	font-weight: bold;
-	font-size: 18px;
-	color: #000;
+.send-auth-code {
+    border: #ff0000 1px solid;
+    width: auto;
+    height: 30px;
+    color: #ff0000;
+    padding: 0 5px;
+    line-height: 30px;
+    align-content: center;
+    font-size: 15px;
+    margin-right: 15px;
+    background-color: #ffffff;
 }
 
-.alert {
-	margin: 20px 0 30px;
+.hint-text {
+    margin: 10px 15px 30px 15px;
+    font-size: 14px;
 }
 
-.alert .alert-title {
-	font-weight: 400;
-	font-size: 16px;
-	color: #000;
-	margin-bottom: 10px;
+.btn-login-view {
+    width: 270px;
+    height: 38px;
+    margin: 0 15px;
 }
 
-.alert-desc {
-	display: block;
-    list-style: disc inside none;
+.btn-login {
+    border: #ff0000 1px solid;
+    width: 270px;
+    height: 38px;
+    background-color: #ffffff;
+    line-height: 38px;
+    align-content: center;
+    font-size: 18px;
+    border-radius: 3px;
+    color: #ff0000;
 }
 
-.alert .alert-text {
-	display: list-item;
-    text-align: -webkit-match-parent;
-	font-size: 14px;
-	color: #999;
+.tishi {
+    color: red;
+    font-size: 12px;
+    padding-top: 8px;
+    margin: 5px 15px;
 }
 
-.logged {
-	margin-top: 100px;
-}
 
-.logged .logged-icon {
-	display: block;
-	width: 64px;
-	height: 64px;
-	margin: 20px auto;
-}
-
-.logged .logged-text {
-	font-size: 14px;
-	color: #000;
-	text-align: center;
-	margin: 10px 0;
-}

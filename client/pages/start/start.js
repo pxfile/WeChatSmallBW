@@ -9,10 +9,12 @@ Page({
         duration: 1000,
         circular: !1,
     },
-    onLoad() {},
-    onShow() {},
+    onLoad() {
+    },
+    onShow() {
+    },
     bindload(e) {
-    	setTimeout(App.WxService.getStorageSync('token') ? this.goIndex : this.goLogin, 3000)
+        setTimeout(App.WxService.getStorageSync('user_id') ? this.goIndex : this.goLogin, 3000)
     },
     goIndex() {
         App.WxService.switchTab('/pages/index/index')

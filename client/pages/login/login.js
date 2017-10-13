@@ -5,169 +5,129 @@ const App = getApp()
 
 Page({
     data: {
-        logged: !1
+        logged: !1,
+        phoneNumber: '',
+        authCode: '',
+        infoMess: '',
+        userInfo: {},
     },
     onLoad() {
+        this.getUserInfo()
     },
-    onShow() {
-        const token = App.WxService.getStorageSync('token')
+    /**
+     * 获取用户信息
+     */
+    getUserInfo() {
+        const userInfo = App.globalData.userInfo
+
+        if (userInfo) {
+            this.setData({
+                userInfo: userInfo
+            })
+            return
+        }
+
+        App.getUserInfo()
+            .then(data => {
+                console.log(data)
+                this.setData({
+                    userInfo: data
+                })
+            })
+    },
+
+    //发送验证码
+    sendCode(e){
+        this.sendAuthCode(this.data.phoneNumber)
+    },
+
+    //用户名和密码输入框事件
+    phoneInput(e){
+        console.log(e)
         this.setData({
-            logged: !!token
+            phoneNumber: e.detail.value
         })
-        token && setTimeout(this.goIndex, 1500)
     },
-    login() {
-        this.signIn(this.goIndex)
+    //验证码输入框事件
+    autoCodeInput(e) {
+        this.setData({
+            authCode: e.detail.value
+        })
     },
+    //登录按钮点击事件，调用参数要用：this.data.参数；
+    //设置参数值，要使用this.setData({}）方法
+    loginBtnClick(a) {
+        console.log(a)
+        this.getUserLogin(this.data.phoneNumber, this.data.authCode, this.data.userInfo.nickName, this.data.userInfo.avatarUrl)
+    },
+    /**
+     * 发送验证码
+     */
+    sendAuthCode(mobile) {
+        util.showBusy('正在发送验证码...')
+        var that = this
+        App.HttpService.sendCode({
+            mobile: mobile,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+                that.setData({
+                    authCode: data.verificationCode
+                })
+            } else {
+                util.showModel('正在发送验证码失败', data.message);
+                console.log('request fail', data.message);
+            }
+        })
+    },
+
+    /**
+     *用户登录
+     */
+    getUserLogin(mobile, verificationCode, userName, userAvatar){
+        var that = this
+        if (this.data.phoneNumber.length == 0 || this.data.authCode.length == 0) {
+            this.setData({
+                infoMess: '温馨提示：用户名或验证码不能为空！',
+            })
+        } else {
+            util.showBusy('正在登录...')
+            App.HttpService.userLogin({
+                mobile: mobile,
+                verificationCode: verificationCode,
+                userName: userName,
+                userAvatar: userAvatar
+            }).then(res => {
+                const data = res.data
+                console.log(data)
+                if (data.code == 0) {
+                    util.showSuccess(data.message)
+                    that.setStorageSyncData(data.mobile, data.userId, data.userPic, data.userName)
+                    that.goIndex()
+                } else {
+                    util.showModel('登录失败', data.message);
+                    console.log('request fail', data.message);
+                }
+            })
+        }
+    },
+    /**
+     * 保存用户信息
+     */
+    setStorageSyncData(userId, mobile, userPic, userName){
+        App.WxService.setStorageSync('user_id', userId)
+        App.WxService.setStorageSync('mobile', mobile)
+        App.WxService.setStorageSync('userPic', userPic)
+        App.WxService.setStorageSync('userName', userName)
+        console.log('user_id', userId);
+        console.log('user_id-2', App.WxService.getStorageSync('user_id'));
+    },
+    /**
+     * 跳转首页
+     */
     goIndex() {
         App.WxService.switchTab('/pages/index/index')
     },
-    showModal() {
-        App.WxService.showModal({
-            title: '友情提示',
-            content: '获取用户登录状态失败，请重新登录',
-            showCancel: !1,
-        })
-    },
-    wechatDecryptData() {
-        let code
-
-        App.WxService.login()
-            .then(data => {
-                console.log('wechatDecryptData', data.code)
-                code = data.code
-                return App.WxService.getUserInfo()
-            })
-            .then(data => {
-                return App.HttpService.wechatDecryptData({
-                    encryptedData: data.encryptedData,
-                    iv: data.iv,
-                    rawData: data.rawData,
-                    signature: data.signature,
-                    code: code,
-                })
-            })
-            .then(data => {
-                console.log(data)
-            })
-    },
-    wechatSignIn(cb) {
-        if (App.WxService.getStorageSync('token')) return
-        App.WxService.login()
-            .then(data => {
-                console.log('wechatSignIn', data.code)
-                return App.HttpService.wechatSignIn({
-                    code: data.code
-                })
-            })
-            .then(res => {
-                const data = res.data
-                console.log('wechatSignIn', data)
-                if (data.meta.code == 0) {
-                    App.WxService.setStorageSync('token', data.data.token)
-                    cb()
-                } else if (data.meta.code == 40029) {
-                    App.showModal()
-                } else {
-                    App.wechatSignUp(cb)
-                }
-            })
-    },
-    wechatSignUp(cb) {
-        App.WxService.login()
-            .then(data => {
-                console.log('wechatSignUp', data.code)
-                return App.HttpService.wechatSignUp({
-                    code: data.code
-                })
-            })
-            .then(res => {
-                const data = res.data
-                console.log('wechatSignUp', data)
-                if (data.meta.code == 0) {
-                    App.WxService.setStorageSync('token', data.data.token)
-                    cb()
-                } else if (data.meta.code == 40029) {
-                    App.showModal()
-                }
-            })
-    },
-    signIn(cb) {
-        if (App.WxService.getStorageSync('token')) return
-        this.loginByWX(cb)
-        // App.HttpService.signIn({
-        //     mobile: '18722268416',
-        //     verificationCode: '20123123',
-        //     userName: '测试',
-        //     userAvatar: 'http://ww2.sinaimg.cn/large/0060lm7Tly1fk0qakca4kj3068068q35.jpg'
-        // })
-        //     .then(res => {
-        //         const data = res.data
-        //         console.log(data)
-        //         if (data.meta.code == 0) {
-        //             App.WxService.setStorageSync('token', data.data.token)
-        //             cb()
-        //         }
-        //     })
-    },
-    // 用户登录示例
-    loginWx(cb) {
-        if (this.data.logged) return
-
-        util.showBusy('正在登录')
-        var that = this
-
-        // 调用登录接口
-        qcloud.login({
-            success(result) {
-                if (result) {
-                    util.showSuccess('登录成功')
-                    that.setData({
-                        userInfo: result,
-                        logged: true
-                    })
-                } else {
-                    // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-                    qcloud.request({
-                        url: config.service.requestUrl,
-                        login: true,
-                        success(result) {
-                            util.showSuccess('登录成功')
-                            that.setData({
-                                userInfo: result.data.data,
-                                logged: true
-                            })
-                            App.WxService.setStorageSync('token', result.data.data)
-                        },
-
-                        fail(error) {
-                            util.showModel('加载失败', error)
-                            console.log('request fail', error)
-                        }
-                    })
-                }
-                cb()
-            },
-
-            fail(error) {
-                util.showModel('登录失败', error)
-                console.log('登录失败', error)
-            }
-        })
-    },
-
-    loginByWX(cb) {
-        var that = this
-        wx.login({
-            success: function (res) {
-                App.globalData.hasLogin = true
-                that.setData({
-                    hasLogin: true
-                })
-                that.update()
-                cb()
-                App.WxService.setStorageSync('user_id', 'adfiwenr')
-            }
-        })
-    }
 })

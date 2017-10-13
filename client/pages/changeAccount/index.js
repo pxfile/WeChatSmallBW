@@ -19,14 +19,12 @@ Page({
      */
     getUserInfo() {
         const userInfo = App.globalData.userInfo
-
         if (userInfo) {
             this.setData({
                 userInfo: userInfo
             })
             return
         }
-
         App.getUserInfo()
             .then(data => {
                 console.log(data)
@@ -104,11 +102,7 @@ Page({
                 console.log(data)
                 if (data.code == 0) {
                     util.showSuccess(data.message)
-                    //存用户session
-                    wx.setStorageSync('user_id', data.userId)
-                    wx.setStorageSync('mobile', data.mobile)
-                    wx.setStorageSync('userPic', data.userPic)
-                    wx.setStorageSync('userName', data.userName)
+                    that.setStorageSyncData(data.mobile, data.userId, data.userPic, data.userName)
                     that.goIndex()
                 } else {
                     util.showModel('登录失败', data.message);
@@ -117,6 +111,20 @@ Page({
             })
         }
     },
+    /**
+     * 保存用户信息
+     */
+    setStorageSyncData(userId, mobile, userPic, userName){
+        App.WxService.setStorageSync('user_id', userId)
+        App.WxService.setStorageSync('mobile', mobile)
+        App.WxService.setStorageSync('userPic', userPic)
+        App.WxService.setStorageSync('userName', userName)
+        console.log('user_id', userId);
+        console.log('user_id-2', App.WxService.getStorageSync('user_id'));
+    },
+    /**
+     * 跳转首页
+     */
     goIndex() {
         App.WxService.switchTab('/pages/index/index')
     },
