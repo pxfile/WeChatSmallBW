@@ -1,12 +1,11 @@
 //获取应用实例
 var app = getApp()
-var config = require('../../config')
 var util = require('../../utils/util.js')
 
 Page({
     data: {
         userInfo: {},
-        phone: "150****2483",
+        phone: '',
         items: [
             {
                 icon: '../../assets/images/iconfont-order.png',
@@ -48,6 +47,9 @@ Page({
         ]
     },
     onLoad() {
+        this.setData({
+            phone: app.WxService.getStorageSync('mobile')
+        })
         this.getUserInfo()
         this.getStorageInfo()
     },

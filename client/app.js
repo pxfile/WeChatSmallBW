@@ -4,9 +4,6 @@ import WxService from './assets/plugins/wx-service/WxService'
 import HttpResource from './helpers/HttpResource'
 import HttpService from './helpers/HttpService'
 import __config from './etc/config'
-
-var config = require('./config')
-
 App({
     onLaunch() {
         console.log('onLaunch')

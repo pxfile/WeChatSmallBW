@@ -1,4 +1,3 @@
-var config = require('../../config')
 var util = require('../../utils/util.js')
 const App = getApp()
 

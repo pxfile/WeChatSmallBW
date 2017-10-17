@@ -1,5 +1,4 @@
 var app = getApp()
-var config = require('../../../config')
 var util = require('../../../utils/util.js')
 Page({
     data: {
