@@ -27,9 +27,9 @@ Page({
                     latitude: latitude,
                     longitude: longitude,
                 })
+                that.fetchListData(latitude, longitude, false);
             }
         })
-        this.fetchListData(this.data.latitude, this.data.longitude, false);
     },
 
     /**

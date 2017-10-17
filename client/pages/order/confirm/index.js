@@ -85,9 +85,88 @@ Page({
         if (this.data.orderId.length == 0 || this.data.price.length == 0) {
             util.showModel('温馨提示', '查无订单！');
         } else {
-            this.fetchPayOrder(this.data.orderId, this.data.price);
+            this.payOff()
         }
     },
+
+    /**
+     * 发起支付
+     */
+    payOff() {
+        var that = this;
+        wx.login({
+            success: function (res) {
+                that.getOpenId(res.code);
+            }
+        });
+
+    },
+    //获取openid
+    getOpenId (code) {
+        var that = this;
+        wx.request({
+            url: 'https://www.see-source.com/weixinpay/GetOpenId',
+            method: 'POST',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {'code': code},
+            success: function (res) {
+                var openId = res.data.openid;
+                that.xiadan(openId);
+            }
+        })
+    },
+    //下单
+    xiadan (openId) {
+        var that = this;
+        wx.request({
+            url: 'https://www.see-source.com/weixinpay/xiadan',
+            method: 'POST',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {'openid': openId},
+            success: function (res) {
+                var prepay_id = res.data.prepay_id;
+                console.log("统一下单返回 prepay_id:" + prepay_id);
+                that.sign(prepay_id);
+            }
+        })
+    },
+    //签名
+    sign (prepay_id) {
+        var that = this;
+        wx.request({
+            url: 'https://www.see-source.com/weixinpay/sign',
+            method: 'POST',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {'repay_id': prepay_id},
+            success: function (res) {
+                that.requestPayment(res.data);
+
+            }
+        })
+    },
+    //申请支付
+    requestPayment (obj) {
+        var that = this
+        wx.requestPayment({
+            'timeStamp': obj.timeStamp,
+            'nonceStr': obj.nonceStr,
+            'package': obj.package,
+            'signType': obj.signType,
+            'paySign': obj.paySign,
+            'success': function (res) {
+                that.fetchPayOrder(this.data.orderId, this.data.price);
+            },
+            'fail': function (res) {
+            }
+        })
+    },
+
     /**
      * 订单支付
      */
