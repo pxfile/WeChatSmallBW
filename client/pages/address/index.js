@@ -4,8 +4,8 @@ var app = getApp()
 var util = require('../../utils/util.js')
 Page({
     data: {
+        latitude: "",
         longitude: "",
-        dimension: "",
         start_num: 0,
         list: [],
         prompt: {
@@ -14,7 +14,22 @@ Page({
     },
 
     onLoad() {
-        this.fetchListData(this.data.longitude, this.data.dimension, false);
+        var that = this
+        wx.getLocation({
+            type: 'wgs84',
+            success: function (res) {
+                console.log('定位：---》》' + JSON.stringify(res))
+                var latitude = res.latitude
+                var longitude = res.longitude
+                var speed = res.speed
+                var accuracy = res.accuracy
+                that.setData({
+                    latitude: latitude,
+                    longitude: longitude,
+                })
+            }
+        })
+        this.fetchListData(this.data.latitude, this.data.longitude, false);
     },
 
     /**
@@ -24,7 +39,7 @@ Page({
         this.setData({
             start_num: 0,
         }),
-            this.fetchListData(this.data.longitude, this.data.dimension, false),
+            this.fetchListData(this.data.latitude, this.data.longitude, false),
             wx.stopPullDownRefresh();
     },
 
@@ -35,7 +50,7 @@ Page({
         this.setData({
             start_num: this.data.list.length,
         }),
-            this.fetchListDataMore(this.data.longitude, this.data.dimension);
+            this.fetchListDataMore(this.data.latitude, this.data.longitude);
     },
 
     /**
@@ -43,12 +58,12 @@ Page({
      * @param tabType
      * @param showLoading
      */
-    fetchListData(longitude, dimension, isReachBottom) {
+    fetchListData(latitude, longitude, isReachBottom) {
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getAllStore({
-            lat: '41.046854',
-            lng: '127.070082'
+            lat: latitude,
+            lng: longitude
         }).then(res => {
             const data = res.data
             console.log(data)
