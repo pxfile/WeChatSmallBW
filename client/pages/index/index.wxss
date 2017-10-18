@@ -166,7 +166,7 @@
     border: 1px #f00 solid;
     text-align: center;
     width: auto;
-    margin-right: 15px;
+    margin-right: 10px;
     padding: 1px 10px;
     font-size: 11px;
     margin-left: 10px;
@@ -183,10 +183,10 @@
 .news-item-num {
     color: #999;
     margin-left: 5px;
-    padding: 2px 4px;
     text-align: center;
-    width: auto;
+    width: 25px;
     font-size: 11px;
+    border-bottom: 1px #ddd solid;
 }
 
 .news-item-num-operation {

@@ -6,11 +6,10 @@ Page({
     data: {
         start_num: 0,
         list: [],
-        selectList: [],
         buyCount: 0,
         sumPrice: 0,
         showtab: 0,  //顶部选项卡索引
-        showtabtype: '0', //选中类型
+        showtabtype: '', //选中类型
         tabnav: {},  //顶部选项卡数据
         startx: 0,  //开始的位置x
         endx: 0, //结束的位置x
@@ -73,10 +72,10 @@ Page({
                             tabitem: JSON.stringify(data.data),
                         },
                         tab_info: data.data,
+                        showtabtype: data.data[0].seriesId
                     })
-
-                    that.fetchListData(that.data.tab_info[0].seriesId, false)
                     that.removeStorageData();
+                    that.fetchListData(that.data.tab_info[0].seriesId, false, false)
                 }
                 // that.setData({
                 //     prompt: {
@@ -129,6 +128,7 @@ Page({
                         list: data.data,
                     })
                 }
+                console.log("tabType--length--" + that.data.list.length)
                 wx.setStorageSync('shoppingcar' + that.data.showtabtype, that.data.list);
             } else {
                 console.log('request fail', data.message);
@@ -137,7 +137,6 @@ Page({
                 'prompt.hidden': !data.code && (!isReachBottom || that.data.list),
             })
         })
-
     },
 
     /**
@@ -150,6 +149,7 @@ Page({
             list: [],
         });
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
+        console.log("allGoods.length" + allGoods.length)
         if (allGoods.length > 0) {
             this.setData({
                 list: allGoods,
@@ -171,6 +171,30 @@ Page({
 
     hideLoading(){
         wx.hideToast()
+    },
+
+    //商品数目输入框事件
+    numInput(e){
+        console.log(e.detail.value)
+        var id = e.currentTarget.dataset.id;
+        var goodNum = parseInt(e.detail.value)
+        var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
+        var payCount = 0;
+        var priceCount = 0;
+        for (var i = 0; i < allGoods.length; i++) {
+            if (allGoods[i].goodsId == id) {
+                var price = parseInt(allGoods[i].goodsPrice);
+                priceCount = priceCount + price * goodNum;
+                payCount = payCount + goodNum;
+                allGoods[i].num = goodNum;
+            }
+        }
+        this.setData({
+            buyCount: payCount,
+            sumPrice: priceCount,
+            list: allGoods,
+        });
+        wx.setStorageSync('shoppingcar' + this.data.showtabtype, allGoods);
     },
 
     /**
@@ -222,37 +246,34 @@ Page({
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
         var payCount = this.data.buyCount;
         var priceCount = this.data.sumPrice;
-        var selectGoods = this.data.selectList;
+        // var selectGoods = this.data.selectList;
         for (var i = 0; i < allGoods.length; i++) {
             if (allGoods[i].goodsId == id) {
                 var price = allGoods[i].goodsPrice;
                 if (boo) {
                     priceCount = priceCount + price;
                     payCount = payCount + 1;
-                    selectGoods = this.data.selectList.concat(allGoods[i]);
-                } else if (allGoods[i].num > 0 && payCount > 0 && priceCount > 0) {
+                    // selectGoods = this.data.selectList.concat(allGoods[i]);
+                } else if (payCount > 0 && priceCount > 0) {
                     priceCount = priceCount - price;
                     payCount = payCount - 1;
                     if (allGoods[i].num > 1) {
-                        selectGoods.pop()
+                        // selectGoods.pop()
                     } else {
-                        selectGoods = []
-                        payCount = 0
-                        priceCount = 0
+                        // selectGoods = []
+                        // payCount = 0
+                        // priceCount = 0
                     }
-
                 }
-                break;
             }
         }
         this.setData({
-            list: allGoods,
             buyCount: payCount,
             sumPrice: priceCount,
-            selectList: selectGoods,
+            // selectList: selectGoods,
         });
-        console.log("selectList--" + this.data.selectList.length)
-        wx.setStorageSync('confirmGoods', this.data.selectList);
+        // console.log("selectList--" + this.data.selectList.length)
+        // wx.setStorageSync('confirmGoods', this.data.selectList);
     },
 
     /**
@@ -276,11 +297,30 @@ Page({
         if (this.data.sumPrice == 0) {
             util.showModel('温馨提示', '请选择您需要购买的商品！');
         } else {
+            this.getSelectList()
             app.WxService.navigateTo('/pages/pay/pre/index?payMoney=' + this.data.sumPrice)
         }
     },
 
-    //------------------------------------------------------TAB------------------------------------------------------------------
+    /**
+     * 获取用户选择的商品
+     */
+    getSelectList(){
+        var selectGoods = [];
+        var allTabs = this.data.tab_info;
+        for (var i = 0; i < allTabs.length; i++) {
+            var allGoods = wx.getStorageSync('shoppingcar' + allTabs[i].seriesId);
+            for (var j = 0; j < allGoods.length; j++) {
+                if (allGoods[j].num > 0) {
+                    selectGoods = selectGoods.concat(allGoods[j]);
+                }
+            }
+        }
+        console.log("selectGoods--" + selectGoods.length)
+        wx.setStorageSync('confirmGoods', selectGoods);
+    },
+
+//------------------------------------------------------TAB------------------------------------------------------------------
     setTab: function (e) { //设置选项卡选中索引
         const edata = e.currentTarget.dataset;
         this.setData({
@@ -289,13 +329,15 @@ Page({
             showtabtype: edata.type,
         })
         this.fetchTabListData(edata.type, true);
-    },
+    }
+    ,
     scrollTouchstart: function (e) {
         let px = e.touches[0].pageX;
         this.setData({
             startx: px
         })
-    },
+    }
+    ,
     scrollTouchmove: function (e) {
         let px = e.touches[0].pageX;
         let d = this.data;
@@ -307,7 +349,8 @@ Page({
                 marginleft: px - d.startx
             })
         }
-    },
+    }
+    ,
     scrollTouchend: function (e) {
         // let d = this.data;
         // if (d.endx - d.startx > d.critical && d.showtab > 0) {
@@ -330,5 +373,6 @@ Page({
         //     endx: 0,
         //     marginleft: 0
         // })
-    },
+    }
+    ,
 })
