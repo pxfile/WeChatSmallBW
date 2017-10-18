@@ -90,14 +90,18 @@ Page({
     },
 
     /**
-     * 发起支付
+     * 登录发起支付
      */
     payOff() {
         var that = this;
         wx.login({
             success: function (res) {
                 that.getOpenId(res.code);
-            }
+                console.log('登录发起支付：---》》' + JSON.stringify(res))
+            },
+            fail: (res)=> {
+                console.log('登录发起支付：---》》' + JSON.stringify(res))
+            },
         });
 
     },
@@ -111,10 +115,14 @@ Page({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             data: {'code': code},
-            success: function (res) {
+            success (res) {
                 var openId = res.data.openid;
                 that.xiadan(openId);
-            }
+                console.log('发起支付：---》》' + JSON.stringify(res))
+            },
+            fail: (res)=> {
+                console.log('获取openid：---》》' + JSON.stringify(res))
+            },
         })
     },
     //下单
@@ -127,11 +135,14 @@ Page({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             data: {'openid': openId},
-            success: function (res) {
+            success (res) {
                 var prepay_id = res.data.prepay_id;
                 console.log("统一下单返回 prepay_id:" + prepay_id);
                 that.sign(prepay_id);
-            }
+            },
+            fail: (res)=> {
+                console.log('下单：---》》' + JSON.stringify(res))
+            },
         })
     },
     //签名
@@ -144,10 +155,13 @@ Page({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             data: {'repay_id': prepay_id},
-            success: function (res) {
+            success (res) {
                 that.requestPayment(res.data);
-
-            }
+                console.log('发起支付：---》》' + JSON.stringify(res))
+            },
+            fail: (res)=> {
+                console.log('签名：---》》' + JSON.stringify(res))
+            },
         })
     },
     //申请支付
@@ -159,10 +173,14 @@ Page({
             'package': obj.package,
             'signType': obj.signType,
             'paySign': obj.paySign,
-            'success': function (res) {
+            'success' (res) {
                 that.fetchPayOrder(this.data.orderId, this.data.price);
             },
             'fail': function (res) {
+                console.log('申请支付：---》》' + JSON.stringify(res))
+            },
+            complete: ()=> {
+                that.fetchPayOrder(this.data.orderId, this.data.price);
             }
         })
     },
@@ -180,17 +198,18 @@ Page({
             const data = res.data
             console.log(data)
             if (data.code == 0) {
-                that.goToPaySuccess(orderId)
+                util.showSuccess(data.message)
             } else {
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
+            that.goToPaySuccess(orderId, data.code)
         })
     },
 
-    goToPaySuccess(orderId){
+    goToPaySuccess(orderId, type){
         wx.navigateTo({
-            url: '/pages/pay/confirm/index?id=' + orderId
+            url: '/pages/pay/confirm/index?id=' + orderId + "&type=" + type
         })
     }
 })

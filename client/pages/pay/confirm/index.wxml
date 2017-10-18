@@ -4,8 +4,8 @@
     <!--支付成功-->
     <view class="pay-success-container">
         <view class="pay-icon-container">
-            <image src="../../../assets/images/iconfont-complete.png" class="pay-icon-icon"/>
-            <text class="pay-icon-text">支付成功</text>
+            <image src="{{icon_src}}" class="pay-icon-icon"/>
+            <text class="pay-icon-text">{{pay_des}}</text>
         </view>
         <view class="pay-hint-text">下单时间：{{goods_detail.orderTime}}</view>
     </view>

@@ -9,12 +9,16 @@ Page({
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
         },
+        icon_src: '',
+        pay_des: '',
     },
 
     onLoad(option) {
         this.setData({
             id: option.id,
-            type: option.type
+            type: option.type,
+            icon_src: option.type == 0 ? '../../../assets/images/iconfont-complete.png' : '../../../assets/images/iconfont-warning.png',
+            pay_des: option.type == 0 ? '支付成功' : '支付失败',
         })
         this.fetchListData(this.data.id, this.data.type)
     },
