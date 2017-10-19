@@ -102,7 +102,7 @@ page{
 }
 
 .text-orangered {
-    color: orangered;
+    color: #FF4500;
 }
 
 .weui-cell.weui-cell_textarea {

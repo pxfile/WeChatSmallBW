@@ -71,7 +71,7 @@
 }
 
 .tishi {
-    color: red;
+    color: #FF0000;
     font-size: 12px;
     padding-top: 8px;
     margin: 5px 15px;
