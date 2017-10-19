@@ -43,7 +43,7 @@ Page({
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getDeliveryList({
-            userId: app.WxService.getStorageSync('user_id'),
+            userId: 'adfiwenr',
         }).then(res => {
             const data = res.data
             console.log(data)
@@ -79,7 +79,7 @@ Page({
     //事件处理函数
     clickPickBtn(e){
         wx.navigateTo({
-            url: '../confirm/index?id=' + e.target.dataset.id
+            url: '../confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
         })
     },
 })

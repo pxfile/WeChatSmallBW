@@ -31,7 +31,7 @@ Page({
 
     onLoad(option) {
         this.setData({
-            id: option.id,
+            id: decodeURIComponent(option.id),
         })
         this.fetchListData(this.data.id)
     },
@@ -209,7 +209,7 @@ Page({
 
     goToPaySuccess(orderId, type){
         wx.navigateTo({
-            url: '/pages/pay/confirm/index?id=' + orderId + "&type=" + type
+            url: '/pages/pay/confirm/index?id=' + encodeURIComponent(orderId) + "&type=" + encodeURIComponent(type)
         })
     }
 })

@@ -13,7 +13,7 @@ Page({
 
     onLoad(option) {
         this.setData({
-            id: option.id,
+            id: decodeURIComponent(option.id),
             type: option.type
         })
         this.fetchListData(this.data.id, this.data.type)
@@ -47,7 +47,7 @@ Page({
     //事件处理函数
     clickConfirmBtn(e){
         wx.navigateTo({
-            url: '../confirm/index?id=' + e.target.dataset.id
+            url: '../confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
         })
     },
 })

@@ -21,7 +21,7 @@
                                 <text class="goods-item-title">{{item.goodsName}}</text>
                                 <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
                                 <view class="goods-item-bottom">
-                                    <text class="goods-item-expiration-days">{{item.exchange_day}}天退换</text>
+                                    <!--<text class="goods-item-expiration-days">{{item.exchange_day}}天退换</text>-->
                                     <text class="goods-item-num">x {{item.goodsNum}}</text>
                                 </view>
                             </view>
@@ -36,7 +36,7 @@
                         <text class="goods-item-count-num">共{{item.goodsList.length}}件商品，实付</text>
                     </view>
                     <view class="goods-item-bottom goods-item-bottom-btn">
-                        <text class="goods-btn-pick-goods" bindtap="clickPickBtn">立即取货</text>
+                        <text class="goods-btn-pick-goods" bindtap="clickPickBtn" data-id="{{item.orderId}}">立即取货</text>
                     </view>
                 </view>
             </view>

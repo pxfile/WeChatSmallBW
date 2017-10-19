@@ -2,7 +2,7 @@
     <!--头部提示语-->
     <view class="top-container-finish">
         <view class="time">
-            <text>下单时间：{{orderTime}}</text>
+            <text>下单时间：{{goods_detail.orderTime}}</text>
             <text>待取货</text>
         </view>
     </view>
@@ -13,10 +13,10 @@
                 <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                 <text class="address-text">自提地址</text>
             </view>
-            <view>{{address}}</view>
+            <view>{{goods_detail.storeAddress}}</view>
             <view>
-                <text>店长：{{storeManagerName}}\t\t\t</text>
-                <text>{{storePhone}}</text>
+                <text>店长：{{goods_detail.storeManagerName}}\t\t\t</text>
+                <text>{{goods_detail.storePhone}}</text>
             </view>
         </view>
     </view>

@@ -298,7 +298,7 @@ Page({
             util.showModel('温馨提示', '请选择您需要购买的商品！');
         } else {
             this.getSelectList()
-            app.WxService.navigateTo('/pages/pay/pre/index?payMoney=' + this.data.sumPrice)
+            app.WxService.navigateTo('/pages/pay/pre/index?payMoney=' + encodeURIComponent(this.data.sumPrice))
         }
     },
 

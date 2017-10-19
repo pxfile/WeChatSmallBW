@@ -33,13 +33,14 @@ Page({
         var list = wx.getStorageSync('confirmGoods');
         var pickTime = util.formatDate(new Date());
         console.log("list--" + list.length)
+        var money = decodeURIComponent(option.payMoney)
         this.setData({
             date: pickTime,
             address: '请选择自提地址',
             storeManagerName: '请选择自提地址',
             storePhone: '请选择自提地址',
             goodsList: list,
-            payMoney: option.payMoney,
+            payMoney: money,
         })
     },
 
@@ -124,6 +125,6 @@ Page({
      */
     goToOrderDetail()
     {
-        app.WxService.navigateTo('/pages/order/detail/index?id=' + this.data.orderId + '&type=0')
+        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&type=0')
     }
 })

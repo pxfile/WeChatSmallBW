@@ -47,7 +47,7 @@ Page({
     clickPickBtn(e){
         const edata = e.currentTarget.dataset;
         wx.navigateTo({
-            url: '../confirm/index?id=' + edata.id + '&orderTime=' + edata.ordertime + '&address=' + edata.address + '&storeManagerName=' + edata.storemanagermame + '&storePhone=' + edata.storephone
+            url: '../confirm/index?id=' + encodeURIComponent(edata.id)
         })
     },
 })

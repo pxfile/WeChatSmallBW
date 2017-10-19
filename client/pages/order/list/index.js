@@ -146,7 +146,7 @@ Page({
     //立即支付
     clickPayBtn(e){
         wx.navigateTo({
-            url: '../confirm/index?id=' + e.target.dataset.id
+            url: '../confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
         })
     },
 

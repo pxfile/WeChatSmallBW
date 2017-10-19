@@ -14,11 +14,13 @@ Page({
     },
 
     onLoad(option) {
+        var id = decodeURIComponent(option.id)
+        var type = decodeURIComponent(option.type)
         this.setData({
-            id: option.id,
-            type: option.type,
-            icon_src: option.type == 0 ? '../../../assets/images/iconfont-complete.png' : '../../../assets/images/iconfont-warning.png',
-            pay_des: option.type == 0 ? '支付成功' : '支付失败',
+            id: id,
+            type: type,
+            icon_src: type == 0 ? '../../../assets/images/iconfont-complete.png' : '../../../assets/images/iconfont-warning.png',
+            pay_des: type == 0 ? '支付成功' : '支付失败',
         })
         this.fetchListData(this.data.id, this.data.type)
     },
