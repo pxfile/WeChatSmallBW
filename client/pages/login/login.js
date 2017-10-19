@@ -8,6 +8,8 @@ Page({
         authCode: '',
         infoMess: '',
         userInfo: {},
+        verifyCodeTime: '获取验证码',
+        buttonDisable: false,
     },
     onLoad() {
         this.getUserInfo()
@@ -63,9 +65,35 @@ Page({
      */
     sendAuthCode(mobile) {
         var that = this
-        if (this.data.phoneNumber.length == 0) {
+        if (that.data.buttonDisable) return;
+        if (mobile.length == 0) {
             util.showModel('温馨提示', '手机号不能为空！')
         } else {
+            var regMobile = /^1\d{10}$/;
+            if (!regMobile.test(mobile)) {
+                util.showModel('温馨提示', '手机号有误，请重新操作！');
+                that.setData({
+                    phoneNumber: ''
+                })
+                return;
+            }
+
+            var c = 60;
+            var intervalId = setInterval(function () {
+                c = c - 1;
+                that.setData({
+                    verifyCodeTime: c + 's后重发',
+                    buttonDisable: true
+                })
+                if (c == 0) {
+                    clearInterval(intervalId);
+                    that.setData({
+                        verifyCodeTime: '获取验证码',
+                        buttonDisable: false
+                    })
+                }
+            }, 1000)
+
             util.showBusy('正在发送验证码...')
             App.HttpService.sendCode({
                 mobile: mobile,
@@ -74,9 +102,9 @@ Page({
                 console.log(data)
                 if (data.code == 0) {
                     util.showSuccess(data.message)
-                    that.setData({
-                        authCode: data.data.verificationCode
-                    })
+                    // that.setData({
+                    //     authCode: data.data.verificationCode
+                    // })
                 } else {
                     util.showModel('正在发送验证码失败', data.message);
                     console.log('request fail', data.message);
