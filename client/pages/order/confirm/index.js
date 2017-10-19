@@ -6,6 +6,8 @@ var util = require('../../../utils/util.js')
 Page({
     data: {
         date: '',
+        startDate: '',
+        endDate: '',
         address: '',
         storeManagerName: '',
         storePhone: '',
@@ -30,8 +32,12 @@ Page({
     },
 
     onLoad(option) {
+        var startDate = util.formatDate(new Date());
+        var endTime = util.formatDate(new Date('2017-12-31'))
         this.setData({
             id: decodeURIComponent(option.id),
+            startDate: pickTime,
+            endDate: endTime,
         })
         this.fetchListData(this.data.id)
     },

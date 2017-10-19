@@ -6,6 +6,8 @@ var util = require('../../../utils/util.js')
 Page({
     data: {
         date: '',
+        startDate: '',
+        endDate: '',
         storeId: '',
         address: '',
         storeManagerName: '',
@@ -32,6 +34,7 @@ Page({
     onLoad(option) {
         var list = wx.getStorageSync('confirmGoods');
         var pickTime = util.formatDate(new Date());
+        var endTime = util.formatDate(new Date('2017-12-31'))
         console.log("list--" + list.length)
         var money = decodeURIComponent(option.payMoney)
         this.setData({
@@ -41,6 +44,8 @@ Page({
             storePhone: '请选择自提地址',
             goodsList: list,
             payMoney: money,
+            startDate: pickTime,
+            endDate: endTime,
         })
     },
 
