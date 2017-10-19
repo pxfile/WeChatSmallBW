@@ -36,7 +36,7 @@ Page({
         var endTime = util.formatDate(new Date('2017-12-31'))
         this.setData({
             id: decodeURIComponent(option.id),
-            startDate: pickTime,
+            startDate: startDate,
             endDate: endTime,
         })
         this.fetchListData(this.data.id)

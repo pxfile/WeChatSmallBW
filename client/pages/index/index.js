@@ -176,25 +176,36 @@ Page({
     //商品数目输入框事件
     numInput(e){
         console.log(e.detail.value)
+        this.setData({
+            buyCount: 0,
+            sumPrice: 0,
+        });
+
         var id = e.currentTarget.dataset.id;
         var goodNum = parseInt(e.detail.value)
-        var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
         var payCount = 0;
         var priceCount = 0;
-        for (var i = 0; i < allGoods.length; i++) {
-            if (allGoods[i].goodsId == id) {
-                var price = parseInt(allGoods[i].goodsPrice);
-                priceCount = priceCount + price * goodNum;
-                payCount = payCount + goodNum;
-                allGoods[i].num = goodNum;
+
+        var allTabs = this.data.tab_info;
+        for (var i = 0; i < allTabs.length; i++) {
+            var allGoods = wx.getStorageSync('shoppingcar' + allTabs[i].seriesId);
+            for (var j = 0; j < allGoods.length; j++) {
+                if (allGoods[j].goodsId == id) {
+                    allGoods[j].num = goodNum;
+                    wx.setStorageSync('shoppingcar' + allTabs[i].seriesId, allGoods);
+                }
+                var price = parseInt(allGoods[j].goodsPrice);
+                priceCount = priceCount + price * allGoods[j].num;
+                payCount = payCount + allGoods[j].num;
             }
         }
+
+        payCount = payCount + this.data.buyCount
+        priceCount = priceCount + this.data.sumPrice
         this.setData({
             buyCount: payCount,
             sumPrice: priceCount,
-            list: allGoods,
         });
-        wx.setStorageSync('shoppingcar' + this.data.showtabtype, allGoods);
     },
 
     /**
