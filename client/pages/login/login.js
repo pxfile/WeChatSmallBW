@@ -140,6 +140,9 @@ Page({
                 }
             })
         }
+        //todo 模拟登录
+        that.setStorageSyncData('adfiwenr', '15102273250', 'http://wx.qlogo.cn/mmhead/FMajU52WvbG9vWibAGb17egQxVt5UwiaUo1xxfY68Ticsq0uw7KpjRN5w/132', 'dafang')
+        that.goIndex()
     },
     /**
      * 保存用户信息

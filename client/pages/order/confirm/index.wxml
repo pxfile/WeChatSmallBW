@@ -1,54 +1,72 @@
 <import src="../../common/prompt.wxml"/>
 <template is="prompt" data="{{ prompt }}"/>
+
 <view class="container" hidden="{{ !prompt.hidden }}">
-    <!--自提地址-->
-    <view class="address-container-top">
-        <view class="address-container">
-            <view class="address-sub-container">
-                <view class="address-des">
-                    <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                    <text class="address-text">自提地址</text>
-                </view>
-                <view>{{address}}</view>
-                <view>
-                    <text>店长：{{storeManagerName}}\t\t\t</text>
-                    <text>{{storePhone}}</text>
-                </view>
-            </view>
+
+    <!--滑动tab-->
+    <view class="tab-display">
+        <view class="tab-nav">
+            <text wx:for="{{tab_info}}" bindtap="setTab" class="{{showtabtype==item.type?'active':''}}"
+                  data-tabindex="{{index}}" data-type="{{item.type}}" wx:key="{{item.type}}">{{item.name}}
+            </text>
+            <view class="tab-line" style="width:{{100/tabnav.tabnum}}%;transform:translateX({{100*showtab}}%);"></view>
         </view>
-        <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>
     </view>
-    <!--订单列表-->
-    <view class="goods-container">
-        <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
-            <view class="goods-item">
-                <view class="goods-item-left">
-                    <image src="{{item.goodsPic}}" class="goods-image"/>
-                </view>
-                <view>
-                    <text class="goods-item-title">{{item.goodsName}}</text>
-                    <view class="goods-item-bottom">
-                        <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
-                        <text class="goods-item-num">x {{item.goodsNum}}</text>
+
+    <!--自提地址-->
+    <scroll-view scroll-y="true" hidden="{{ !prompt.hidden }}">
+        <view class="address-container-top">
+            <view class="address-container">
+                <view class="address-sub-container">
+                    <view class="address-des">
+                        <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
+                        <text class="address-text">{{addressDes}}</text>
+                    </view>
+                    <view>{{showtabtype==0?freightAddress:address}}</view>
+                    <view>
+                        <text>{{managerNameDes}}：{{showtabtype==0?courierName:storeManagerName}}\t\t\t</text>
+                        <text>{{showtabtype==0?courierPhone:storePhone}}</text>
                     </view>
                 </view>
             </view>
-        </block>
-    </view>
-    <!--总价-->
-    <view class='goods-bottom-suspension'>
-        <view class="select-time" bindchange="bindDateChange">
-            <text class="goods-suspension-time-text">请选择自提时间</text>
-            <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
-                <text class='goods-suspension-time'>{{date}}</text>
-            </picker>
+            <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>
         </view>
-        <view class="price">
-            <view class="goods-suspension-time">
-                <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{goods_detail.payMoney}}</text>
+        <!--订单列表-->
+        <view class="goods-container">
+            <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
+                <view class="goods-item">
+                    <view class="goods-item-left">
+                        <image src="{{item.goodsPic}}" class="goods-image"/>
+                    </view>
+                    <view>
+                        <text class="goods-item-title">{{item.goodsName}}</text>
+                        <view class="goods-item-bottom">
+                            <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
+                            <text class="goods-item-num">x {{item.goodsNum}}</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <!--总价-->
+        <view class='goods-bottom-suspension'>
+            <view class="{{showtabtype==0 ? 'hidden' :'select-time'}}" bindchange="bindDateChange">
+                <text class="goods-suspension-time-text">请选择自提时间</text>
+                <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
+                    <text class='goods-suspension-time'>{{date}}</text>
+                </picker>
             </view>
-            <text class='goods-suspension-pay' bindtap="clickPay" data-id="{{goods_detail.orderId}}">立即支付</text>
+            <view class="{{showtabtype==1 ? 'hidden' :'select-time'}}">
+                <text class="goods-suspension-time-text">运费</text>
+                <text class='goods-suspension-freight'>+{{freightPrice}}</text>
+            </view>
+            <view class="price">
+                <view class="goods-suspension-time">
+                    <text>实付金额：</text>
+                    <text class="goods-suspension-price">¥{{showtabtype==0 ?goods_detail.payMoney+freightPrice:goods_detail.payMoney}}</text>
+                </view>
+                <text class='goods-suspension-pay' bindtap="clickPay" data-id="{{goods_detail.orderId}}">立即支付</text>
+            </view>
         </view>
-    </view>
+    </scroll-view>
 </view>

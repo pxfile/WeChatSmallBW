@@ -1,20 +1,30 @@
 <view class="container">
+    <!--选择取货方式-->
+    <view class="select-distribution">
+        <text class="text-des">请选择配送方式</text>
+    </view>
+    <radio-group class="radio-group" bindchange="radio">
+        <label class="radio" wx:for="{{radio_info}}" wx:key="index">
+            <radio value="{{item.name}}" bindtap='radio' data-id="{{item.type}}" checked="{{item.checked}}"/>
+            {{item.name}}
+        </label>
+    </radio-group>
     <!--自提地址-->
     <view class="address-container-top">
         <view class="address-container">
-            <view class="address-sub-container {{selectAddress ? 'hidden' :''}}">
+            <view class="address-sub-container {{type==0?(selectFreightAddress? 'hidden' :''):(selectAddress ? 'hidden' :'')}}">
                 <view class="address-des">
                     <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                    <text class="address-text">自提地址</text>
+                    <text class="address-text">{{addressDes}}</text>
                 </view>
-                <view>{{address}}</view>
+                <view>{{type==0?freightAddress:address}}</view>
                 <view>
-                    <text>店长：{{storeManagerName}}\t\t\t</text>
-                    <text>{{storePhone}}</text>
+                    <text>{{managerNameDes}}：{{type==0?courierName:storeManagerName}}\t\t\t</text>
+                    <text>{{type==0?courierPhone:storePhone}}</text>
                 </view>
             </view>
-            <view class="address-sub-container {{!selectAddress ? 'hidden' :''}}">
-                请选择自提地址
+            <view class="address-sub-container {{type==0?(!selectFreightAddress? 'hidden' :''):(!selectAddress ? 'hidden' :'')}}">
+                {{addressDes}}
             </view>
         </view>
         <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>
@@ -38,16 +48,20 @@
     </view>
     <!--总价-->
     <view class='goods-bottom-suspension'>
-        <view class="select-time" bindchange="bindDateChange">
+        <view class="{{type==0 ? 'hidden' :'select-time'}}" bindchange="bindDateChange">
             <text class="goods-suspension-time-text">请选择自提时间</text>
             <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
                 <text class='goods-suspension-time'>{{date}}</text>
             </picker>
         </view>
+        <view class="{{type==0 && freightPrice>0? 'select-time' :'hidden'}}">
+            <text class="goods-suspension-time-text">运费</text>
+            <text class='goods-suspension-freight'>+{{freightPrice}}</text>
+        </view>
         <view class="price">
             <view class="goods-suspension-time">
                 <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{payMoney}}</text>
+                <text class="goods-suspension-price">¥{{type==0 ?payMoney+freightPrice:payMoney}}</text>
             </view>
             <text class='goods-suspension-pay' bindtap="getConfirmOrder" data-id="{{item.orderId}}">立即下单</text>
         </view>

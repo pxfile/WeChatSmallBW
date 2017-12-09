@@ -105,6 +105,11 @@ function accDiv(a, b) {
     }
     return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), c / d * Math.pow(10, f - e);
 }
+//JS获取n至m随机整数
+function rd(n, m) {
+    var c = m - n + 1;
+    return Math.floor(Math.random() * c + n);
+}
 module.exports = {
     formatTime,
     formatDate,
@@ -114,5 +119,6 @@ module.exports = {
     accMul: accMul,
     accAdd: accAdd,
     accDiv: accDiv,
-    accSub: accSub
+    accSub: accSub,
+    rd
 }

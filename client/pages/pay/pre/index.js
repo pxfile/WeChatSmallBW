@@ -5,11 +5,14 @@ var util = require('../../../utils/util.js')
 
 Page({
     data: {
+        type: 0,
         date: '',
         startDate: '',
         endDate: '',
         storeId: '',
+        addressDes: '请选择快递地址',
         address: '',
+        managerNameDes: '快递员',
         storeManagerName: '',
         storePhone: '',
         showPickView: false,
@@ -18,7 +21,12 @@ Page({
         payMoney: 0,
         orderId: '',
         price: '',
-        selectAddress: true
+        freightAddress: '',//快递地址
+        courierName: '',//收件人名称
+        courierPhone: '',//收件人电话号码
+        freightPrice: 0,//运费
+        selectAddress: true,//选择自提地址
+        selectFreightAddress: true//选择快递地址
     },
 
     /**
@@ -36,17 +44,35 @@ Page({
         var pickTime = util.formatDate(new Date());
         var endTime = util.formatDate(new Date('2017-12-31'))
         console.log("list--" + list.length)
-        var money = decodeURIComponent(option.payMoney)
+        var money = parseInt(decodeURIComponent(option.payMoney))
         this.setData({
             date: pickTime,
-            address: '请选择自提地址',
-            storeManagerName: '请选择自提地址',
-            storePhone: '请选择自提地址',
             goodsList: list,
             payMoney: money,
             startDate: pickTime,
             endDate: endTime,
+            radio_info: [
+                {
+                    "type": 0,
+                    "name": "快递",
+                    'checked': true
+                },
+                {
+                    "type": 1,
+                    "name": "自提",
+                    "checked": false
+                }],
         })
+    },
+
+    //选择取货方式 获取该组件的id
+    radio(e) {
+        this.setData({
+            type: e.currentTarget.dataset.id,
+            addressDes: e.currentTarget.dataset.id == 0 ? '请选择快递地址' : '请选择自提地址',
+            managerNameDes: e.currentTarget.dataset.id == 0 ? '快递员' : '店长',
+        })
+        console.log(e.currentTarget.dataset.id)
     },
 
     //选择自提时间
@@ -59,7 +85,7 @@ Page({
     //选择自提地址
     selectAddress(e){
         wx.navigateTo({
-            url: '/pages/address/index'
+            url: '/pages/address/index?type=' + this.data.type
         })
     },
 
@@ -123,13 +149,17 @@ Page({
                 console.log('request fail', data.message);
             }
         })
+        //todo 模拟预下单
+        that.setData({
+            orderId: 'Oc990efaba62e430d8d8ecca3cab97fc4'
+        })
+        that.goToOrderDetail()
     }
     ,
     /**
      * 跳转订单详情
      */
-    goToOrderDetail()
-    {
+    goToOrderDetail(){
         app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&type=0')
     }
 })

@@ -56,6 +56,11 @@
     margin-top: 5px;
 }
 
+.detail-message .timeout-detail-text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .detail-message .detail-button {
     font-size: 16px;
     margin: 15px auto;

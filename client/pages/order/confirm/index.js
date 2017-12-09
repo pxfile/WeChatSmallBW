@@ -5,16 +5,30 @@ var util = require('../../../utils/util.js')
 
 Page({
     data: {
+        showtab: 0,  //顶部选项卡索引
+        showtabtype: '0', //选中类型
+        tab_info: {},
+        tabnav: {},  //顶部选项卡数据
+        startx: 0,  //开始的位置x
+        endx: 0, //结束的位置x
+        critical: 100, //触发切换标签的临界值
+        marginleft: 0,  //滑动距离
         date: '',
         startDate: '',
         endDate: '',
+        addressDes: '',
         address: '',
+        managerNameDes: '',
         storeManagerName: '',
         storePhone: '',
         showPickView: false,
         goods_detail: {},
         orderId: '',
         price: '',
+        freightAddress: '',//快递地址
+        courierName: '',//收件人名称
+        courierPhone: '',//收件人电话号码
+        freightPrice: '',//运费
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -35,6 +49,29 @@ Page({
         var startDate = util.formatDate(new Date());
         var endTime = util.formatDate(new Date('2017-12-31'))
         this.setData({
+            tab_info: [
+                {
+                    "type": 0,
+                    "name": "快递"
+                },
+                {
+                    "type": 1,
+                    "name": "自提"
+                }],
+            tabnav: {
+                tabnum: 2,
+                tabitem: [
+                    {
+                        "type": 0,
+                        "name": "快递"
+                    },
+                    {
+                        "type": 1,
+                        "name": "自提"
+                    }],
+            },
+            addressDes: '快递地址',
+            managerNameDes: '快递员',
             id: decodeURIComponent(option.id),
             startDate: startDate,
             endDate: endTime,
@@ -60,7 +97,12 @@ Page({
                     storePhone: data.data.storePhone,
                     goods_detail: data.data,
                     orderId: data.data.orderId,
-                    price: data.data.payMoney,
+                    price: that.showtabtype == 1 ? data.data.payMoney : data.data.payMoney + data.data.payMoney,
+                    //todo 模拟快递
+                    freightAddress: '张家窝社会山花园三区201',//快递地址
+                    courierName: '张三快递员',//快递员人名称
+                    courierPhone: '15303374560',//快递员电话号码
+                    freightPrice: data.data.payMoney,//运费
                 })
             } else {
                 util.showModel('加载失败', data.message);
@@ -82,7 +124,7 @@ Page({
     //选择自提地址
     selectAddress(e){
         wx.navigateTo({
-            url: '/pages/address/index'
+            url: '/pages/address/index?type=' + this.data.showtabtype
         })
     },
 
@@ -217,5 +259,60 @@ Page({
         wx.navigateTo({
             url: '/pages/pay/confirm/index?id=' + encodeURIComponent(orderId) + "&type=" + encodeURIComponent(type)
         })
-    }
+    },
+
+    //------------------------------------------------------TAB------------------------------------------------------------------
+    setTab: function (e) { //设置选项卡选中索引
+        const edata = e.currentTarget.dataset;
+        console.log("edata" + edata);
+        this.setData({
+            addressDes: edata.type == 0 ? '快递地址' : '自提地址',
+            managerNameDes: edata.type == 0 ? '快递员' : '店长',
+            showtab: Number(edata.tabindex),
+            showtabtype: edata.type,
+        })
+    },
+    scrollTouchstart: function (e) {
+        let px = e.touches[0].pageX;
+        this.setData({
+            startx: px
+        })
+    },
+    scrollTouchmove: function (e) {
+        let px = e.touches[0].pageX;
+        let d = this.data;
+        this.setData({
+            endx: px,
+        })
+        if (px - d.startx < d.critical && px - d.startx > -d.critical) {
+            this.setData({
+                marginleft: px - d.startx
+            })
+        }
+    },
+    scrollTouchend: function (e) {
+        // let d = this.data;
+        // if (d.endx - d.startx > d.critical && d.showtab > 0) {
+        //     console.log("scrollTouchend--1");
+        //     this.setData({
+        //         start_num: 0,
+        //         showtab: d.showtab - 1,
+        //         showtabtype: d.tab_info[d.showtab - 1].type,
+        //     });
+        //     this.fetchListData(d.showtabtype, false);
+        // } else if (d.endx - d.startx < -d.critical && d.showtab < this.data.tabnav.tabnum - 1) {
+        //     console.log("scrollTouchend--2");
+        //     this.setData({
+        //         start_num: 0,
+        //         showtab: d.showtab + 1,
+        //         showtabtype: d.tab_info[d.showtab + 1].type,
+        //     });
+        //     this.fetchListData(d.showtabtype, false);
+        // }
+        // this.setData({
+        //     startx: 0,
+        //     endx: 0,
+        //     marginleft: 0
+        // })
+    },
 })
