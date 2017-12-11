@@ -15,20 +15,21 @@ Page({
 
     onLoad(option) {
         this.setData({
-            id: decodeURIComponent(option.id),
+            orderId: decodeURIComponent(option.id),
+            price: decodeURIComponent(option.price),
             type: option.type
         })
-        this.fetchListData(this.data.id, this.data.type)
+        this.fetchListData(this.data.orderId, this.data.type)
     },
 
     /**
      * 请求订单列表
      */
-    fetchListData(id, type) {
+    fetchListData(orderId, type) {
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getOrderDetail({
-            orderId: id,
+            orderId: orderId,
         }).then(res => {
             const data = res.data
             console.log(data)
@@ -72,11 +73,15 @@ Page({
         return num < 10 ? "0" + num : num
     },
 
-    //事件处理函数
+    //支付事件处理函数
     clickConfirmBtn(e){
-        wx.navigateTo({
-            url: '../confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
-        })
+        if (this.data.orderId.length == 0) {
+            util.showModel('温馨提示', '查无订单！');
+        } else {
+            // this.payOff()
+            //todo
+            this.fetchPayOrder(this.data.orderId, this.data.price)
+        }
     },
     //取消订单
     clickCancelBtn(e){
@@ -91,5 +96,128 @@ Page({
                 }
             }
         })
-    }
+    },
+    /**
+     * 登录发起支付
+     */
+    payOff() {
+        var that = this;
+        wx.login({
+            success: function (res) {
+                that.getOpenId(res.code);
+                console.log('登录发起支付：---》》' + JSON.stringify(res))
+            },
+            fail: (res)=> {
+                console.log('登录发起支付：---》》' + JSON.stringify(res))
+            },
+        });
+
+    },
+    //获取openid
+    getOpenId (code) {
+        var that = this;
+        wx.request({
+            url: 'https://www.see-source.com/weixinpay/GetOpenId',
+            method: 'POST',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {'code': code},
+            success (res) {
+                var openId = res.data.openid;
+                that.xiadan(openId);
+                console.log('发起支付：---》》' + JSON.stringify(res))
+            },
+            fail: (res)=> {
+                console.log('获取openid：---》》' + JSON.stringify(res))
+            },
+        })
+    },
+    //下单
+    xiadan (openId) {
+        var that = this;
+        wx.request({
+            url: 'https://www.see-source.com/weixinpay/xiadan',
+            method: 'POST',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {'openid': openId},
+            success (res) {
+                var prepay_id = res.data.prepay_id;
+                console.log("统一下单返回 prepay_id:" + prepay_id);
+                that.sign(prepay_id);
+            },
+            fail: (res)=> {
+                console.log('下单：---》》' + JSON.stringify(res))
+            },
+        })
+    },
+    //签名
+    sign (prepay_id) {
+        var that = this;
+        wx.request({
+            url: 'https://www.see-source.com/weixinpay/sign',
+            method: 'POST',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {'repay_id': prepay_id},
+            success (res) {
+                that.requestPayment(res.data);
+                console.log('发起支付：---》》' + JSON.stringify(res))
+            },
+            fail: (res)=> {
+                console.log('签名：---》》' + JSON.stringify(res))
+            },
+        })
+    },
+    //申请支付
+    requestPayment (obj) {
+        var that = this
+        wx.requestPayment({
+            'timeStamp': obj.timeStamp,
+            'nonceStr': obj.nonceStr,
+            'package': obj.package,
+            'signType': obj.signType,
+            'paySign': obj.paySign,
+            'success' (res) {
+                that.fetchPayOrder(this.data.orderId, this.data.price);
+            },
+            'fail': function (res) {
+                console.log('申请支付：---》》' + JSON.stringify(res))
+            },
+            complete: ()=> {
+                that.fetchPayOrder(this.data.orderId, this.data.price);
+            }
+        })
+    },
+
+    /**
+     * 订单支付
+     */
+    fetchPayOrder(orderId, price) {
+        util.showBusy('正在加载...')
+        var that = this
+        app.HttpService.getPayOrder({
+            orderId: orderId,
+            price: price,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
+            that.goToPaySuccess(orderId, data.code)
+        })
+    },
+
+    goToPaySuccess(orderId, type){
+        wx.navigateTo({
+            url: '/pages/pay/confirm/index?id=' + encodeURIComponent(orderId) + "&type=" + encodeURIComponent(type)
+        })
+    },
 })

@@ -1,6 +1,10 @@
 {
 	"client": "./client",
 	"svr": "./server",
-	"appid": "touristappid",
-	"projectname": "BW"
+	"appid": "wxfc2624f5aa6f0217",
+	"projectname": "BW",
+	"setting": {
+		"newFeature": true
+	},
+	"condition": {}
 }

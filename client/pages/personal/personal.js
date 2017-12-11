@@ -58,6 +58,9 @@ Page({
         const path = e.currentTarget.dataset.path
 
         switch (index) {
+            case 0:
+                app.WxService.switchTab(path)
+                break
             case 2:
                 app.WxService.makePhoneCall({
                     phoneNumber: path

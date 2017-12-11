@@ -149,17 +149,13 @@ Page({
                 console.log('request fail', data.message);
             }
         })
-        //todo 模拟预下单
-        that.setData({
-            orderId: 'Oc990efaba62e430d8d8ecca3cab97fc4'
-        })
-        that.goToOrderDetail()
     }
     ,
     /**
      * 跳转订单详情
      */
     goToOrderDetail(){
-        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&type=0')
+        var price = this.data.type == 0 ? this.data.payMoney + this.data.freightPrice : this.data.payMoney
+        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&price=' + encodeURIComponent(price) + '&type=0')
     }
 })

@@ -17,12 +17,12 @@
     <scroll-view scroll-y="true" hidden="{{ !prompt.hidden }}">
         <view class="goods-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
               bindtouchend="scrollTouchend">
-            <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
+            <block wx:for="{{showtabtype==0?orderPayList:(showtabtype==1?deliveryList:orderCompleteList)}}" wx:for-index="index" wx:key="index">
                 <view class="goods-item-list">
                     <!--下单时间-->
                     <view class="top-order-time">
                         <text class="top-order-time-text">下单时间：{{item.orderTime}}</text>
-                        <view class="{{showtabtype==1 ? 'hidden' :''}}">
+                        <view class="{{showtabtype!=0 ? 'hidden' :''}}">
                             <text class="top-order-hint-time-text">温馨提示：请在15分钟内完成支付，否则自动取消</text>
                         </view>
                     </view>
@@ -50,10 +50,9 @@
                             <text class="goods-item-count-price">¥ {{item.totalPrice}}</text>
                             <text class="goods-item-count-num">共{{item.goodsList.length}}件商品，实付</text>
                         </view>
-                        <view class="{{showtabtype==1 ? 'hidden' :''}}">
+                        <view class="{{showtabtype==2 ? 'hidden' :''}}">
                             <view class="goods-item-bottom goods-item-bottom-btn">
-                                <text class="goods-btn-pick-goods" data-id="{{ item.orderId }}" bindtap="clickPayBtn">立即支付
-                                </text>
+                                <text class="goods-btn-pick-goods" data-id="{{ item.orderId }}" bindtap="clickBtn">立即{{btnText}}</text>
                             </view>
                         </view>
                     </view>

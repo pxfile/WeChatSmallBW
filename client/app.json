@@ -37,10 +37,10 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/pickGoods/list/pickGoods",
+        "pagePath": "pages/order/list/index",
         "iconPath": "assets/images/iconfont-list.png",
         "selectedIconPath": "assets/images/iconfont-list-active.png",
-        "text": "取货"
+        "text": "订单"
       },
       {
         "pagePath": "pages/personal/personal",

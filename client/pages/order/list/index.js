@@ -6,8 +6,11 @@ Page({
     data: {
         start_num: 0,
         list: [],
+        orderPayList: [],
+        deliveryList: [],
+        orderCompleteList: [],
         showtab: 0,  //顶部选项卡索引
-        showtabtype: '0', //选中类型
+        showtabtype: 0, //选中类型
         tab_info: {},
         tabnav: {},  //顶部选项卡数据
         startx: 0,  //开始的位置x
@@ -16,6 +19,7 @@ Page({
         marginleft: 0,  //滑动距离
         onpulldownrefresh: '下拉刷新...',
         onreachbottom: '上拉加载更多...',
+        btnText: '支付',
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -31,10 +35,14 @@ Page({
                 },
                 {
                     "type": 1,
+                    "name": "待取货"
+                },
+                {
+                    "type": 2,
                     "name": "已完成"
                 }],
             tabnav: {
-                tabnum: 2,
+                tabnum: 3,
                 tabitem: [
                     {
                         "type": 0,
@@ -42,6 +50,10 @@ Page({
                     },
                     {
                         "type": 1,
+                        "name": "待取货"
+                    },
+                    {
+                        "type": 2,
                         "name": "已完成"
                     }],
             },
@@ -64,10 +76,27 @@ Page({
      * 上拉加载更多
      */
     onReachBottom() {
+        var list;
+        switch (this.data.showtabtype) {
+            case 0:
+                //待付款订单列表
+                list = this.data.orderPayList
+                break;
+            case 1:
+                //待取货订单列表
+                list = this.data.deliveryList
+                break;
+            case 2:
+                //已完成订单列表
+                list = this.data.orderCompleteList
+                break
+            default:
+                break;
+        }
         this.setData({
-            start_num: this.data.list.length,
+            start_num: list.length,
         }),
-            this.fetchListDataMore(this.data.showtabtype);
+            this.fetchListDataMore(this.data.showtabtype, list);
     },
 
     /**
@@ -78,75 +107,146 @@ Page({
     fetchListData(tabType, isReachBottom) {
         util.showBusy('正在加载...')
         var that = this
-        if (tabType > 0) {
-            //完成订单列表
-            app.HttpService.getOrderCompleteList({
-                userId: app.WxService.getStorageSync('user_id'),
-            }).then(res => {
-                const data = res.data
-                console.log(data)
-                if (data.code == 0) {
-                    if (isReachBottom) {
-                        that.setData({
-                            list: that.data.list.concat(data.data),
-                        })
-                    } else {
-                        that.setData({
-                            list: data.data,
-                            'prompt.hidden': data.data.length,
-                        })
-                    }
-                } else {
-                    util.showModel('加载失败', data.message);
-                    console.log('request fail', data.message);
-                    that.setData({
-                        'prompt.hidden': 0 && !isReachBottom,
-                    })
-                }
-            })
-        } else {
-            //待付款列表
-            app.HttpService.getOrderPayList({
-                userId: app.WxService.getStorageSync('user_id'),
-            }).then(res => {
-                const data = res.data
-                console.log(data)
-                if (data.code == 0) {
-                    if (isReachBottom) {
-                        that.setData({
-                            list: that.data.list.concat(data.data),
-                        })
-                    } else {
-                        that.setData({
-                            list: data.data,
-                            'prompt.hidden': data.data.length,
-                        })
-                    }
-                } else {
-                    util.showModel('加载失败', data.message);
-                    console.log('request fail', data.message);
-                    that.setData({
-                        'prompt.hidden': 0 && !isReachBottom,
-                    })
-                }
-            })
+        var userId = app.WxService.getStorageSync('user_id')
+        switch (tabType) {
+            case 0:
+                //待付款订单列表
+                that.getOrderPayList(that, userId, isReachBottom)
+                break;
+            case 1:
+                //待取货订单列表
+                that.getDeliveryList(that, userId, isReachBottom)
+                break;
+            case 2:
+                //已完成订单列表
+                that.getOrderCompleteList(that, userId, isReachBottom)
+                break
+            default:
+                break;
         }
+    },
 
+    /**
+     * 待付款订单列表
+     */
+    getOrderPayList(that, userId, isReachBottom){
+        app.HttpService.getOrderPayList({
+            userId: userId,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        orderPayList: that.data.orderPayList.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        orderPayList: data.data,
+                        'prompt.hidden': data.data.length,
+                    })
+                }
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+                that.setData({
+                    'prompt.hidden': 0 && !isReachBottom,
+                })
+            }
+        })
+    },
+
+    /**
+     *待取货订单列表
+     */
+    getDeliveryList(that, userId, isReachBottom){
+        app.HttpService.getDeliveryList({
+            userId: userId,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        deliveryList: that.data.deliveryList.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        deliveryList: data.data,
+                        'prompt.hidden': data.data.length,
+                    })
+                }
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+                that.setData({
+                    'prompt.hidden': 0 && !isReachBottom,
+                })
+            }
+        })
+    },
+
+    /**
+     * 已完成订单列表
+     */
+    getOrderCompleteList(that, userId, isReachBottom){
+        app.HttpService.getOrderCompleteList({
+            userId: userId,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        orderCompleteList: that.data.orderCompleteList.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        orderCompleteList: data.data,
+                        'prompt.hidden': data.data.length,
+                    })
+                }
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+                that.setData({
+                    'prompt.hidden': 0 && !isReachBottom,
+                })
+            }
+        })
     },
 
     /**
      * 上拉加载更多
      * @param tabtype
      */
-    fetchListDataMore(tabType) {
-        if (this.data.list.length === 0) return
+    fetchListDataMore(tabType, list) {
+        if (list.length === 0) return
         this.fetchListData(tabType, true)
+    },
+
+    /**
+     * 点击btn按钮
+     * @param e
+     */
+    clickBtn(e){
+        console.log('start')
+        this.data.showtabtype == 0 ? this.clickPayBtn(e) : this.clickPickBtn(e)
     },
 
     //立即支付
     clickPayBtn(e){
+        console.log('clickPayBtn')
         wx.navigateTo({
             url: '../confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
+        })
+    },
+
+    //事件处理函数
+    clickPickBtn(e){
+        console.log('clickPickBtn')
+        wx.navigateTo({
+            url: '/pages/pickGoods/confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
         })
     },
 
@@ -158,6 +258,7 @@ Page({
             start_num: 0,
             showtab: Number(edata.tabindex),
             showtabtype: edata.type,
+            btnText: edata.type == 0 ? '支付' : '取货'
         })
         this.fetchListData(edata.type, false);
     },

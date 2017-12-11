@@ -133,7 +133,9 @@ Page({
         if (this.data.orderId.length == 0 || this.data.price.length == 0) {
             util.showModel('温馨提示', '查无订单！');
         } else {
-            this.payOff()
+            // this.payOff()
+            //todo
+            this.fetchPayOrder(this.data.orderId, this.data.price)
         }
     },
 
