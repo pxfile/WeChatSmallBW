@@ -1,0 +1,39 @@
+<view class="container">
+    <view class="sub-container-code">
+        <text class="text-view">收货人：</text>
+        <input type="text" bindinput="nameInput" value="{{name}}"/>
+    </view>
+    <view class="sub-container-code">
+        <text class="text-view">联系方式：</text>
+        <input type="tel" bindinput="mobileInput" value="{{mobile}}"/>
+    </view>
+    <view class="sub-container-code">
+        <text class="text-view">所在地区：</text>
+        <view class="select-area" bindtap="chooseLocation">
+            <text bindinput="autoCodeInput" style="width: 100%;align-content: center">{{area}} {{area}}</text>
+            <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"></image>
+        </view>
+    </view>
+    <view class="sub-container-code">
+        <text class="text-view">详细地址：</text>
+        <input type="text" bindinput="addressInput" value="{{address}}"/>
+    </view>
+    <view class="sub-container" wx:if="{{ !is_def || type==0 }}">
+        <view class="text-address-default">
+            <text class="text-view">设置默认地址</text>
+            <text class="hint-text">注：每次下单时会使用该地址</text>
+        </view>
+        <view class="switch-default">
+            <switch name="is_def" checked="{{is_def }}" bindchange="listenerSwitch"/>
+        </view>
+    </view>
+
+    <view class="btn-operation">
+        <view class="btn-login-view">
+            <button class="btn-confirm" formType="submit" bindtap="save">保存并使用</button>
+        </view>
+        <view class="btn-login-view" wx:if="{{type!=0}}">
+            <button class="btn-delete" bindtap="delete">删除</button>
+        </view>
+    </view>
+</view>

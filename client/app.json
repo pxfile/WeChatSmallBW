@@ -12,7 +12,9 @@
     "pages/order/confirm/index",
     "pages/order/detail/index",
     "pages/logs/logs",
-    "pages/address/index",
+    "pages/address/list/index",
+    "pages/address/userList/index",
+    "pages/address/edit/index",
     "pages/pay/confirm/index",
     "pages/pay/pre/index",
     "pages/changeAccount/index"

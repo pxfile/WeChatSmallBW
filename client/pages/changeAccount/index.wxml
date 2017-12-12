@@ -2,7 +2,7 @@
     <view class="container">
         <view class="sub-container">
             <text class="text-view">手机号</text>
-            <input type="number" bindinput="phoneInput" value="{{phoneNumber}}"/>
+            <input type="tel" bindinput="phoneInput" value="{{phoneNumber}}"/>
             <button class="send-auth-code" bindtap="sendCode" disabled="{{buttonDisable}}">{{verifyCodeTime}}</button>
         </view>
         <view class="sub-container-code">

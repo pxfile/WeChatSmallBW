@@ -85,7 +85,7 @@ Page({
     //选择自提地址
     selectAddress(e){
         wx.navigateTo({
-            url: '/pages/address/index?type=' + this.data.type
+            url: '/pages/address/list/index?type=' + this.data.type
         })
     },
 

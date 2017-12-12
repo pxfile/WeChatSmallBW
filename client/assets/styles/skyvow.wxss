@@ -70,7 +70,7 @@ page{
     font-size: 18px;
     text-align: center;
     text-decoration: none;
-    color: #479de6;
+    color: #FF0000;
     background-color: #fff;
     line-height: 2.55555556;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

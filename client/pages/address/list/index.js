@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var util = require('../../utils/util.js')
+var util = require('../../../utils/util.js')
 Page({
     data: {
         latitude: "",
@@ -11,6 +11,7 @@ Page({
         list: [],
         prompt: {
             hidden: !0,
+            icon: '../../../assets/images/iconfont-empty.png',
         },
     },
 

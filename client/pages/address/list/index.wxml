@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<import src="../common/prompt.wxml"/>
+<import src="../../common/prompt.wxml"/>
 <template is="prompt" data="{{ prompt }}"/>
 <view class="container" hidden="{{ !prompt.hidden }}">
     <!--list列表-->

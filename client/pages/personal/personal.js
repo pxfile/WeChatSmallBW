@@ -8,25 +8,23 @@ Page({
         phone: '',
         items: [
             {
-                icon: '../../assets/images/iconfont-order.png',
-                text: '我的订单',
-                path: '/pages/order/list/index'
+                icon: '../../assets/images/iconfont-addr.png',
+                text: '收货地址',
+                path: '/pages/address/userList/index?type=0',
+                type: 0
             },
             {
                 icon: '../../assets/images/iconfont-help.png',
                 text: '更换账号',
-                path: '/pages/changeAccount/index'
+                path: '/pages/changeAccount/index',
+                type: 0
             },
             {
                 icon: '../../assets/images/iconfont-kefu.png',
                 text: '联系客服',
                 path: '4001999',
+                type: 1
             },
-            // {
-            //     icon: '../../assets/images/iconfont-addr.png',
-            //     text: '收货地址',
-            //     path: '/pages/address/list/index'
-            // },
             // {
             //     icon: '../../assets/images/iconfont-help.png',
             //     text: '常见问题',
@@ -54,14 +52,11 @@ Page({
         this.getStorageInfo()
     },
     navigateTo(e) {
-        const index = e.currentTarget.dataset.index
+        const type = e.currentTarget.dataset.type
         const path = e.currentTarget.dataset.path
 
-        switch (index) {
-            case 0:
-                app.WxService.switchTab(path)
-                break
-            case 2:
+        switch (type) {
+            case 1:
                 app.WxService.makePhoneCall({
                     phoneNumber: path
                 })
