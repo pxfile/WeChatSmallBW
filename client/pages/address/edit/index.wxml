@@ -10,7 +10,7 @@
     <view class="sub-container-code">
         <text class="text-view">所在地区：</text>
         <view class="select-area" bindtap="chooseLocation">
-            <text bindinput="autoCodeInput" style="width: 100%;align-content: center">{{area}} {{area}}</text>
+            <text bindinput="autoCodeInput" style="width: 100%;align-content: center">{{area}}</text>
             <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"></image>
         </view>
     </view>

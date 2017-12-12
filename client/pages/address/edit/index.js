@@ -9,7 +9,7 @@ Page({
         address: '',
         isdefault: '',
         type: 0,
-        is_def: !0,
+        is_def: 0,
     },
     onLoad(option) {
         if (decodeURIComponent(option.type) > 0) {

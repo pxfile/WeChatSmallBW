@@ -16,10 +16,6 @@
                         <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                         <text class="address-text">{{item.address}}</text>
                     </view>
-                    <image src="../../../assets/images/iconfont-edit.png" class="{{type==0?'address-icon':'hidden'}}" bindtap="toAddressEdit"
-                           data-id="{{item.id}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
-                           data-address="{{ item.address }}"
-                           data-isdefault="{{item.isDefault}}"/>
                 </view>
                 <view class="item-info">
                     <view class="{{type==0 && index!=0 ? 'default-address':'hidden'}}" bindtap="setDefaultAddress"
@@ -48,7 +44,7 @@
         </block>
     </view>
 
-    <view class="{{type==0?'btn-plus':'hidden'}}" bindtap="toAddressAdd">
+    <view class="btn-plus" bindtap="toAddressAdd" wx:if="{{type==0}}">
         <image class="icon" src="../../../assets/images/iconfont-plus-circle.png"/>
         <text>新增地址</text>
     </view>
