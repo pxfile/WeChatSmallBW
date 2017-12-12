@@ -78,9 +78,7 @@ Page({
         if (this.data.orderId.length == 0) {
             util.showModel('温馨提示', '查无订单！');
         } else {
-            // this.payOff()
-            //todo
-            this.fetchPayOrder(this.data.orderId, this.data.price)
+            this.payOff()
         }
     },
     //取消订单
@@ -115,61 +113,112 @@ Page({
     },
     //获取openid
     getOpenId (code) {
-        var that = this;
-        wx.request({
-            url: 'https://www.see-source.com/weixinpay/GetOpenId',
-            method: 'POST',
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {'code': code},
-            success (res) {
-                var openId = res.data.openid;
+        // var that = this;
+        // wx.request({
+        //     url: 'https://www.see-source.com/weixinpay/GetOpenId',
+        //     method: 'POST',
+        //     header: {
+        //         'content-type': 'application/x-www-form-urlencoded'
+        //     },
+        //     data: {'code': code},
+        //     success (res) {
+        //         var openId = res.data.openid;
+        //         that.xiadan(openId);
+        //         console.log('发起支付：---》》' + JSON.stringify(res))
+        //     },
+        //     fail: (res)=> {
+        //         console.log('获取openid：---》》' + JSON.stringify(res))
+        //     },
+        // })
+
+        var that = this
+        app.HttpService.getOpenId({
+            code: code,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                var openId = data.data.openid;
+                //下单
                 that.xiadan(openId);
-                console.log('发起支付：---》》' + JSON.stringify(res))
-            },
-            fail: (res)=> {
-                console.log('获取openid：---》》' + JSON.stringify(res))
-            },
+                console.log('发起支付：---》》' + JSON.stringify(data))
+            } else {
+                console.log('获取openid：---》》' + JSON.stringify(data))
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
     //下单
     xiadan (openId) {
-        var that = this;
-        wx.request({
-            url: 'https://www.see-source.com/weixinpay/xiadan',
-            method: 'POST',
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {'openid': openId},
-            success (res) {
-                var prepay_id = res.data.prepay_id;
+        // var that = this;
+        // wx.request({
+        //     url: 'https://www.see-source.com/weixinpay/xiadan',
+        //     method: 'POST',
+        //     header: {
+        //         'content-type': 'application/x-www-form-urlencoded'
+        //     },
+        //     data: {'openid': openId},
+        //     success (res) {
+        //         var prepay_id = res.data.prepay_id;
+        //         console.log("统一下单返回 prepay_id:" + prepay_id);
+        //         that.sign(prepay_id);
+        //     },
+        //     fail: (res)=> {
+        //         console.log('下单：---》》' + JSON.stringify(res))
+        //     },
+        // })
+
+        var that = this
+        app.HttpService.payResult({
+            msg: openId,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                var prepay_id = data.data.prepay_id;
                 console.log("统一下单返回 prepay_id:" + prepay_id);
                 that.sign(prepay_id);
-            },
-            fail: (res)=> {
-                console.log('下单：---》》' + JSON.stringify(res))
-            },
+            } else {
+                console.log('下单：---》》' + JSON.stringify(data))
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
     //签名
     sign (prepay_id) {
-        var that = this;
-        wx.request({
-            url: 'https://www.see-source.com/weixinpay/sign',
-            method: 'POST',
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {'repay_id': prepay_id},
-            success (res) {
-                that.requestPayment(res.data);
+        // var that = this;
+        // wx.request({
+        //     url: 'https://www.see-source.com/weixinpay/sign',
+        //     method: 'POST',
+        //     header: {
+        //         'content-type': 'application/x-www-form-urlencoded'
+        //     },
+        //     data: {'repay_id': prepay_id},
+        //     success (res) {
+        //         that.requestPayment(res.data);
+        //         console.log('发起支付：---》》' + JSON.stringify(res))
+        //     },
+        //     fail: (res)=> {
+        //         console.log('签名：---》》' + JSON.stringify(res))
+        //     },
+        // })
+
+        var that = this
+        app.HttpService.paySign({
+            repay_id: prepay_id,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                that.requestPayment(data.data);
                 console.log('发起支付：---》》' + JSON.stringify(res))
-            },
-            fail: (res)=> {
+            } else {
                 console.log('签名：---》》' + JSON.stringify(res))
-            },
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
     //申请支付

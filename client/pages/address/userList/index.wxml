@@ -27,19 +27,19 @@
                           data-address="{{ item.address }}"
                           data-isdefault="{{item.isDefault}}">设为默认
                     </view>
-                    <view class="item-operation">
+                    <view class="{{type==0?'item-operation':'hidden'}}">
                         <view bindtap="toAddressEdit"
                               data-id="{{item.id}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
                               data-address="{{ item.address }}"
                               data-isdefault="{{item.isDefault}}">
-                            <image src="../../../assets/images/iconfont-edit.png" class="{{type==0?'operation-icon':'hidden'}}"/>
+                            <image src="../../../assets/images/iconfont-edit.png" class="operation-icon"/>
                             <text class="text-des">编辑</text>
                         </view>
                         <view bindtap="toAddressDelete"
                               data-id="{{item.id}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
                               data-address="{{ item.address }}"
                               data-isdefault="{{item.isDefault}}">
-                            <image src="../../../assets/images/iconfont-clear.png" class="{{type==0?'operation-icon':'hidden'}}"/>
+                            <image src="../../../assets/images/iconfont-clear.png" class="operation-icon"/>
                             <text class="text-des">删除</text>
                         </view>
                     </view>

@@ -20,9 +20,13 @@ class HttpService extends WxRequest {
             confirm_order: '/order/confirmOrder',
             pay_order: '/order/payOrder',
             get_qr_code: '/order/getQrCode',
-            send_code: 'user/sendCode',
-            user_login: 'user/userLogin',
-            user_logout: 'user/userLogout',
+            send_code: '/user/sendCode',
+            user_login: '/user/userLogin',
+            user_logout: '/user/userLogout',
+            get_open_id: '/payBridge/getOpenId',
+            pay_result: '/payBridge/payResult',
+            pay_sign: '/payBridge/sign',
+
 
         }
         this.interceptors.use({
@@ -172,6 +176,27 @@ class HttpService extends WxRequest {
     //用户退出登录
     userLogout(params) {
         return this.postRequest(this.$$path.user_logout, {
+            data: params,
+        })
+    }
+
+    //获取open id
+    getOpenId(params) {
+        return this.postRequest(this.$$path.get_open_id, {
+            data: params,
+        })
+    }
+
+    //payResult
+    payResult(params) {
+        return this.postRequest(this.$$path.pay_result, {
+            data: params,
+        })
+    }
+
+    //pay_sign
+    paySign(params) {
+        return this.poastRequest(this.$$path.pay_sign, {
             data: params,
         })
     }

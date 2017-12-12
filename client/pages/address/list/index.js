@@ -7,7 +7,6 @@ Page({
         latitude: "",
         longitude: "",
         start_num: 0,
-        type: '0',
         list: [],
         prompt: {
             hidden: !0,
@@ -16,9 +15,6 @@ Page({
     },
 
     onLoad(option) {
-        this.setData({
-            type: option.type
-        })
         var that = this
         wx.getLocation({
             type: 'wgs84',
@@ -32,7 +28,7 @@ Page({
                     latitude: latitude,
                     longitude: longitude,
                 })
-                that.fetchListData(latitude, longitude, false, that.data.type);
+                that.fetchListData(latitude, longitude, false);
             }
         })
     },
@@ -44,7 +40,7 @@ Page({
         this.setData({
             start_num: 0,
         }),
-            this.fetchListData(this.data.latitude, this.data.longitude, false, this.data.type),
+            this.fetchListData(this.data.latitude, this.data.longitude, false),
             wx.stopPullDownRefresh();
     },
 
@@ -55,7 +51,7 @@ Page({
         this.setData({
             start_num: this.data.list.length,
         }),
-            this.fetchListDataMore(this.data.latitude, this.data.longitude, this.data.type);
+            this.fetchListDataMore(this.data.latitude, this.data.longitude);
     },
 
     /**
@@ -63,7 +59,7 @@ Page({
      * @param tabType
      * @param showLoading
      */
-    fetchListData(latitude, longitude, isReachBottom, type) {
+    fetchListData(latitude, longitude, isReachBottom) {
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getAllStore({
@@ -98,7 +94,7 @@ Page({
      */
     fetchListDataMore(longitude, dimension) {
         if (this.data.list.length === 0) return
-        this.fetchListData(longitude, dimension, true, this.data.type)
+        this.fetchListData(longitude, dimension, true)
     },
 
     //选择地址
@@ -108,28 +104,15 @@ Page({
         var currPage = pages[pages.length - 1];   //当前页面
         var prevPage = pages[pages.length - 2];  //上一个页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-        if (0 == this.data.type) {
-            //快递地址
-            prevPage.setData({
-                storeId: edata.storeid,
-                freightAddress: edata.address,
-                courierName: edata.storemanagermame,
-                courierPhone: edata.storephone,
-                //todo
-                // freightPrice: edata.freightprice,//运费
-                freightPrice: util.rd(10, 50),
-                selectFreightAddress: false
-            })
-        } else {
-            //自提地址
-            prevPage.setData({
-                storeId: edata.storeid,
-                address: edata.address,
-                storeManagerName: edata.storemanagermame,
-                storePhone: edata.storephone,
-                selectAddress: false
-            })
-        }
+
+        //自提地址
+        prevPage.setData({
+            storeId: edata.storeid,
+            address: edata.address,
+            storeManagerName: edata.storemanagermame,
+            storePhone: edata.storephone,
+            selectAddress: false
+        })
         wx.navigateBack()
     },
 })

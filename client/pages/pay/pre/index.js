@@ -12,7 +12,7 @@ Page({
         storeId: '',
         addressDes: '请选择快递地址',
         address: '',
-        managerNameDes: '快递员',
+        managerNameDes: '收件人',
         storeManagerName: '',
         storePhone: '',
         showPickView: false,
@@ -70,7 +70,7 @@ Page({
         this.setData({
             type: e.currentTarget.dataset.id,
             addressDes: e.currentTarget.dataset.id == 0 ? '请选择快递地址' : '请选择自提地址',
-            managerNameDes: e.currentTarget.dataset.id == 0 ? '快递员' : '店长',
+            managerNameDes: e.currentTarget.dataset.id == 0 ? '收件人' : '店长',
         })
         console.log(e.currentTarget.dataset.id)
     },
@@ -84,8 +84,9 @@ Page({
 
     //选择自提地址
     selectAddress(e){
+        var url = this.data.type == 0 ? '/pages/address/userList/index?type=1' : '/pages/address/list/index'
         wx.navigateTo({
-            url: '/pages/address/list/index?type=' + this.data.type
+            url: url
         })
     },
 

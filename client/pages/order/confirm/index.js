@@ -71,7 +71,7 @@ Page({
                     }],
             },
             addressDes: '快递地址',
-            managerNameDes: '快递员',
+            managerNameDes: '收件人',
             id: decodeURIComponent(option.id),
             startDate: startDate,
             endDate: endTime,
@@ -123,8 +123,9 @@ Page({
 
     //选择自提地址
     selectAddress(e){
+        var url = this.data.showtabtype == 0 ? '/pages/address/userList/index?type=1' : '/pages/address/list/index'
         wx.navigateTo({
-            url: '/pages/address/list/index?type=' + this.data.showtabtype
+            url: url
         })
     },
 
@@ -269,7 +270,7 @@ Page({
         console.log("edata" + edata);
         this.setData({
             addressDes: edata.type == 0 ? '快递地址' : '自提地址',
-            managerNameDes: edata.type == 0 ? '快递员' : '店长',
+            managerNameDes: edata.type == 0 ? '收件人' : '店长',
             showtab: Number(edata.tabindex),
             showtabtype: edata.type,
         })
