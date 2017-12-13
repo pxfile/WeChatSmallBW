@@ -102,11 +102,10 @@ Page({
         //快递地址
         prevPage.setData({
             storeId: edata.storeid,
-            freightAddress: edata.address,
-            courierName: edata.storemanagermame,
-            courierPhone: edata.storephone,
+            recipientAddress: edata.address,
+            recipient: edata.storemanagermame,
+            recipientPhone: edata.storephone,
             //todo
-            // freightPrice: edata.freightprice,//运费
             freightPrice: util.rd(10, 50),
             selectFreightAddress: false
         })

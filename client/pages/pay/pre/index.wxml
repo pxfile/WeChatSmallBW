@@ -17,10 +17,10 @@
                     <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                     <text class="address-text">{{addressDes}}</text>
                 </view>
-                <view>{{type==0?freightAddress:address}}</view>
+                <view>{{type==0?recipientAddress:address}}</view>
                 <view>
-                    <text>{{managerNameDes}}：{{type==0?courierName:storeManagerName}}\t\t\t</text>
-                    <text>{{type==0?courierPhone:storePhone}}</text>
+                    <text>{{managerNameDes}}：{{type==0?recipient:storeManagerName}}\t\t\t</text>
+                    <text>{{type==0?recipientPhone:storePhone}}</text>
                 </view>
             </view>
             <view class="address-sub-container {{type==0?(!selectFreightAddress? 'hidden' :''):(!selectAddress ? 'hidden' :'')}}">

@@ -22,7 +22,7 @@ Page({
             {
                 icon: '../../assets/images/iconfont-kefu.png',
                 text: '联系客服',
-                path: '4001999',
+                path: '400-1999',
                 type: 1
             },
             // {

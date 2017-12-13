@@ -40,6 +40,8 @@ Page({
     onPullDownRefresh() {
         this.setData({
             start_num: 0,
+            buyCount: 0,
+            sumPrice: 0,
         }),
             this.fetchListData(this.data.showtabtype, true, false),
             wx.stopPullDownRefresh();
@@ -202,10 +204,12 @@ Page({
 
         payCount = payCount + this.data.buyCount
         priceCount = priceCount + this.data.sumPrice
-        this.setData({
-            buyCount: payCount,
-            sumPrice: priceCount,
-        });
+        if (payCount && priceCount) {
+            this.setData({
+                buyCount: payCount,
+                sumPrice: priceCount,
+            });
+        }
     },
 
     /**
@@ -278,11 +282,13 @@ Page({
                 }
             }
         }
-        this.setData({
-            buyCount: payCount,
-            sumPrice: priceCount,
-            // selectList: selectGoods,
-        });
+        if (payCount && priceCount) {
+            this.setData({
+                buyCount: payCount,
+                sumPrice: priceCount,
+                // selectList: selectGoods,
+            });
+        }
         // console.log("selectList--" + this.data.selectList.length)
         // wx.setStorageSync('confirmGoods', this.data.selectList);
     },

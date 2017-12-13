@@ -21,9 +21,9 @@ Page({
         payMoney: 0,
         orderId: '',
         price: '',
-        freightAddress: '',//快递地址
-        courierName: '',//收件人名称
-        courierPhone: '',//收件人电话号码
+        recipientAddress: '',//快递地址
+        recipient: '',//收件人名称
+        recipientPhone: '',//收件人电话号码
         freightPrice: 0,//运费
         selectAddress: true,//选择自提地址
         selectFreightAddress: true//选择快递地址

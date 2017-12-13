@@ -25,10 +25,10 @@ Page({
         goods_detail: {},
         orderId: '',
         price: '',
-        freightAddress: '',//快递地址
-        courierName: '',//收件人名称
-        courierPhone: '',//收件人电话号码
-        freightPrice: '',//运费
+        recipientAddress: '',//快递地址
+        recipient: '',//收件人名称
+        recipientPhone: '',//收件人电话号码
+        freightPrice: 0,//运费
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -99,10 +99,10 @@ Page({
                     orderId: data.data.orderId,
                     price: that.showtabtype == 1 ? data.data.payMoney : data.data.payMoney + data.data.payMoney,
                     //todo 模拟快递
-                    freightAddress: '张家窝社会山花园三区201',//快递地址
-                    courierName: '张三快递员',//快递员人名称
-                    courierPhone: '15303374560',//快递员电话号码
-                    freightPrice: data.data.payMoney,//运费
+                    recipientAddress: '张家窝社会山花园三区201',//快递地址
+                    recipient: '张三快递员',//快递员人名称
+                    recipientPhone: '15303374560',//快递员电话号码
+                    freightPrice: util.rd(10, 50),//运费
                 })
             } else {
                 util.showModel('加载失败', data.message);
