@@ -1,7 +1,7 @@
 <import src="../../common/prompt.wxml"/>
 <template is="prompt" data="{{ prompt }}"/>
 
-<view class="container" hidden="{{ !prompt.hidden }}">
+<view class="container-width" hidden="{{ !prompt.hidden }}">
 
     <!--滑动tab-->
     <view class="tab-display">

@@ -1016,3 +1016,225 @@ icon {
   color: #09BB07;
   white-space: nowrap;
 }
+
+/*.hidden {*/
+    /*display: none;*/
+/*}*/
+
+.line-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    font-size: 16px;
+    color: #5E5E5E;
+}
+
+.line-sub-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    background-color: #ffffff;
+    margin-bottom: 1px;
+    padding: 10px 20px;
+}
+
+.line-sub-container-right {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    margin-bottom: 2px;
+    padding: 6px 20px;
+}
+
+.line-sub-text {
+    margin: 0 15px;
+    width: auto;
+}
+
+.line-btn-view {
+    width: 270px;
+    height: 38px;
+}
+
+.address-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.switch-view {
+    width: 60px;
+    height: 30px;
+}
+
+.address-list-container {
+    width: auto;
+    color: #797979;
+    font-size: 16px;
+}
+
+.address-list-item-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.address-list-item-view {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #ffffff;
+    padding: 10px 15px 5px 15px;
+    margin-bottom: 2px;
+}
+
+.address-list-item-info {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.address-list-item-info .top {
+    margin-bottom: 5px;
+}
+
+.address-list-address-des {
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+}
+
+.address-list-address-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 5px;
+}
+
+.address-list-suggest-text {
+    color: #ff0000;
+    border: 1px #ff0000 solid;
+    padding: 0 4px;
+    font-size: 13px;
+}
+
+/*----------------------------------------------------------tab导航栏样式------------------------------------------------------------*/
+.tab-display {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    clear: both;
+    margin: 0 auto;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    clear: both;
+}
+
+.tab-nav {
+    height: 40px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    line-height: 40px;
+    position: relative;
+}
+
+.tab-nav text {
+    display: block;
+    flex: 1;
+    text-align: center;
+    width: 25%;
+    font-size: 14px;
+}
+
+.tab-nav text.active {
+    color: #ff0000;
+}
+
+.tab-line {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    background: #ff0000;
+    transition: all 0.3s;
+}
+
+.tab-content {
+    width: 400%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+}
+
+.tab-content .tab-panel {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    /* flex: 0 0 20%; */
+}
+
+.nav-tabs {
+    width: 100%;
+    height: 40px;
+    display: flex;
+}
+
+.tab-content {
+    flex: 1;
+}
+
+.default {
+    line-height: 40px;
+    text-align: center;
+    flex: 1;
+    border-bottom: 1px solid #eee;
+    color: #000;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.active {
+    line-height: 40px;
+    text-align: center;
+    color: #fc5558;
+    flex: 1;
+    border-bottom: 1px solid red;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.show {
+    display: block;
+    flex: 1;
+}
+
+.hidden {
+    display: none;
+    flex: 1;
+}
+/*----------------------------------------------------------tab导航栏样式------------------------------------------------------------*/
+
+.container-width {
+    width: 100%;
+}

@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container-width">
     <!--选择取货方式-->
     <view class="select-distribution">
         <text class="text-des">请选择配送方式</text>

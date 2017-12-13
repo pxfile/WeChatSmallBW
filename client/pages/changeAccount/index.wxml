@@ -1,16 +1,16 @@
 <view>
-    <view class="container">
-        <view class="sub-container">
-            <text class="text-view">手机号</text>
+    <view class="line-container account-container">
+        <view class="line-sub-container-right">
+            <text class="line-sub-text text-view">手机号</text>
             <input type="tel" bindinput="phoneInput" value="{{phoneNumber}}"/>
             <button class="send-auth-code" bindtap="sendCode" disabled="{{buttonDisable}}">{{verifyCodeTime}}</button>
         </view>
-        <view class="sub-container-code">
-            <text class="text-view">验证码</text>
+        <view class="line-sub-container">
+            <text class="line-sub-text text-view">验证码</text>
             <input type="number" bindinput="autoCodeInput"/>
         </view>
         <view class="hint-text">温馨提示：未注册的手机号，登录时将自动注册，且代表您已同意《用户注册协议</view>
-        <view class="btn-login-view">
+        <view class="line-btn-view btn-login-view">
             <button class="btn-login" bindtap="login" formType="submit" bindtap="loginBtnClick">登录</button>
         </view>
     </view>

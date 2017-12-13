@@ -1,37 +1,9 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    font-size: 16px;
-    color: #5E5E5E;
+.account-container {
     margin-top: 15px;
 }
 
-.sub-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff;
-    margin-bottom: 2px;
-    padding: 6px 20px;
-}
-
-.sub-container-code {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    background-color: #ffffff;
-    margin-bottom: 1px;
-    padding: 10px 20px;
-}
-
 .text-view {
-    margin: 0 15px;
-    width: 60px;
+    min-width: 60px;
 }
 
 .send-auth-code {
@@ -53,8 +25,6 @@
 }
 
 .btn-login-view {
-    width: 270px;
-    height: 38px;
     margin: 0 15px;
 }
 
@@ -76,5 +46,3 @@
     padding-top: 8px;
     margin: 5px 15px;
 }
-
-

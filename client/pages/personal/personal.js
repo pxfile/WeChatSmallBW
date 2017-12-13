@@ -118,7 +118,7 @@ Page({
     signOut() {
         util.showBusy('正在退出登录...')
         app.HttpService.userLogout({
-            mobile: mobile,
+            mobile: app.WxService.getStorageSync('mobile'),
         }).then(res => {
             const data = res.data
             console.log(data)

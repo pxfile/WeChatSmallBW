@@ -1,6 +1,6 @@
 <import src="../../common/prompt.wxml"/>
 <template is="prompt" data="{{ prompt }}"/>
-<view class="container" hidden="{{ !prompt.hidden }}">
+<view class="container-width" hidden="{{ !prompt.hidden }}">
     <!--待付款-->
     <view class="top-container {{type==1 ? 'hidden' :''}}">
         <view class="{{order_cancel?'hidden':'detail-message'}}">

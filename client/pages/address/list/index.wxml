@@ -1,22 +1,22 @@
 <!--index.wxml-->
 <import src="../../common/prompt.wxml"/>
 <template is="prompt" data="{{ prompt }}"/>
-<view class="container" hidden="{{ !prompt.hidden }}">
+<view class="address-list-container" hidden="{{ !prompt.hidden }}">
     <!--list列表-->
-    <view class="item-list-container">
+    <view class="address-list-item-container">
         <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
-            <view class="item-container" bindtap="selectAddress" data-storeid="{{item.storeId}}" data-address="{{ item.storeAddress }}"
+            <view class="address-list-item-view" bindtap="selectAddress" data-storeid="{{item.storeId}}" data-address="{{ item.storeAddress }}"
                   data-storemanagermame="{{item.storeManagerName}}" data-storephone="{{item.storePhone}}" data-freightprice="{{item.distance}}">
-                <view class="item-info">
+                <view class="address-list-item-info">
                     <text>店长：{{item.storeManagerName}}\t\t\t\t\t{{item.storePhone}}</text>
                     <text class="top">{{item.distance}}</text>
                 </view>
-                <view class="item-info">
-                    <view class="address-des">
+                <view class="address-list-item-info">
+                    <view class="address-list-address-des">
                         <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                        <text class="address-text">{{item.storeAddress}}</text>
+                        <text class="address-list-address-text">{{item.storeAddress}}</text>
                     </view>
-                    <text class="item-suggest {{index!=0 ? 'hidden' :''}}">推荐</text>
+                    <text class="address-list-suggest-text {{index!=0 ? 'hidden' :''}}">推荐</text>
                 </view>
             </view>
         </block>
