@@ -11,7 +11,7 @@
                   data-isdefault="{{item.isDef}}">
                 <view class="address-list-item-info">
                     <text>{{item.name}}\t\t\t\t\t{{item.mobile}}</text>
-                    <text class="address-list-suggest-text {{index!=0 ? 'hidden' :''}}">默认</text>
+                    <text class="address-list-suggest-text {{item.isDef!=0 ? 'hidden' :''}}">默认</text>
                 </view>
                 <view class="address-list-item-info-top">
                     <view class="address-des">

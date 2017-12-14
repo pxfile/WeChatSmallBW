@@ -16,6 +16,9 @@ Page({
         this.setData({
             type: option.type//0,查看我的地址，1选择我的地址
         })
+    },
+
+    onShow(){
         this.fetchListData(false);
     },
 

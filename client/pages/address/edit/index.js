@@ -78,7 +78,6 @@ Page({
             if (this.data.type > 0) {
                 //编辑地址
                 app.HttpService.updateUserAddress({
-                    userId: app.WxService.getStorageSync('user_id'),
                     addressId: that.data.id,
                     name: that.data.name,
                     mobile: that.data.mobile,
