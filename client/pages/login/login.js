@@ -1,5 +1,5 @@
 var util = require('../../utils/util.js')
-const App = getApp()
+const app = getApp()
 
 Page({
     data: {
@@ -18,7 +18,7 @@ Page({
      * 获取用户信息
      */
     getUserInfo() {
-        const userInfo = App.globalData.userInfo
+        const userInfo = app.globalData.userInfo
 
         if (userInfo) {
             this.setData({
@@ -27,7 +27,7 @@ Page({
             return
         }
 
-        App.getUserInfo()
+        app.getUserInfo()
             .then(data => {
                 console.log(data)
                 this.setData({
@@ -95,7 +95,7 @@ Page({
             }, 1000)
 
             util.showBusy('正在发送验证码...')
-            App.HttpService.sendCode({
+            app.HttpService.sendCode({
                 mobile: mobile,
             }).then(res => {
                 const data = res.data
@@ -122,7 +122,7 @@ Page({
             util.showModel('温馨提示', '手机号或验证码不能为空！')
         } else {
             util.showBusy('正在登录...')
-            App.HttpService.userLogin({
+            app.HttpService.userLogin({
                 mobile: mobile,
                 verificationCode: verificationCode,
                 userName: userName,
@@ -145,15 +145,15 @@ Page({
      * 保存用户信息
      */
     setStorageSyncData(userId, mobile, userPic, userName){
-        App.WxService.setStorageSync('user_id', userId)
-        App.WxService.setStorageSync('mobile', mobile)
-        App.WxService.setStorageSync('userPic', userPic)
-        App.WxService.setStorageSync('userName', userName)
+        app.WxService.setStorageSync('user_id', userId)
+        app.WxService.setStorageSync('mobile', mobile)
+        app.WxService.setStorageSync('userPic', userPic)
+        app.WxService.setStorageSync('userName', userName)
     },
     /**
      * 跳转首页
      */
     goIndex() {
-        App.WxService.switchTab('/pages/index/index')
+        app.WxService.switchTab('/pages/index/index')
     },
 })

@@ -24,7 +24,7 @@
             <text class="hint-text">注：每次下单时会使用该地址</text>
         </view>
         <view class="switch-view">
-            <switch name="is_def" checked="{{is_def }}" bindchange="listenerSwitch"/>
+            <switch name="is_def" checked="{{isdefault==0 }}" bindchange="listenerSwitch"/>
         </view>
     </view>
 

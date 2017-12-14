@@ -1,4 +1,4 @@
-const App = getApp()
+const app = getApp()
 var util = require('../../../utils/util.js')
 Page({
     data: {
@@ -7,9 +7,8 @@ Page({
         mobile: '',
         area: '',
         address: '',
-        isdefault: '',
+        isdefault: 0,
         type: 0,
-        is_def: 0,
     },
     onLoad(option) {
         if (decodeURIComponent(option.type) > 0) {
@@ -21,7 +20,6 @@ Page({
                 address: decodeURIComponent(option.address),
                 isdefault: decodeURIComponent(option.isdefault),
                 type: decodeURIComponent(option.type),
-                is_def: decodeURIComponent(option.isdefault) == 0,
             })
         }
     },
@@ -67,87 +65,116 @@ Page({
      * @returns {boolean}
      */
     save(e) {
-        // const params = e.detail.value
-        // const id = this.data.id
-        //
-        // console.log(params)
-        //
-        // if (!this.WxValidate.checkForm(e)) {
-        //     const error = this.WxValidate.errorList[0]
-        //     App.WxService.showModal({
-        //         title: '友情提示',
-        //         content: `${error.param} : ${error.msg}`,
-        //         showCancel: !1,
-        //     })
-        //     return false
-        // }
-        //
-        // // App.HttpService.putAddress(id, params)
-        // this.address.updateAsync({id: id}, params)
-        //     .then(res => {
-        //         const data = res.data
-        //         console.log(data)
-        //         if (data.meta.code == 0) {
-        //             this.showToast(data.meta.message)
-        //         }
-        //     })
         if (this.data.name.length == 0) {
             util.showModel('温馨提示', '联系人不能为空！')
         } else if (this.data.mobile.length == 0) {
             util.showModel('温馨提示', '联系方式不能为空！')
         } else if (this.data.area.length == 0) {
-            console.log('area-----', this.data.area);
             util.showModel('温馨提示', '所在地区不能为空！')
         } else if (this.data.address.length == 0) {
             util.showModel('温馨提示', '详细地址不能为空！')
         } else {
+            var that = this
             if (this.data.type > 0) {
                 //编辑地址
+                app.HttpService.updateUserAddress({
+                    userId: app.WxService.getStorageSync('user_id'),
+                    addressId: that.data.id,
+                    name: that.data.name,
+                    mobile: that.data.mobile,
+                    area: that.data.area,
+                    address: that.data.address,
+                    isDef: that.data.isdefault
+                }).then(res => {
+                    const data = res.data
+                    console.log(data)
+                    if (data.code == 0) {
+                        util.showSuccess(data.message)
+                        that.showToast('修改地址成功')
+                    } else {
+                        util.showModel('修改地址失败', data.message);
+                        console.log('request fail', data.message);
+                    }
+                })
             } else {
                 //添加地址
+                app.HttpService.addUserAddress({
+                    userId: app.WxService.getStorageSync('user_id'),
+                    name: that.data.name,
+                    mobile: that.data.mobile,
+                    area: that.data.area,
+                    address: that.data.address,
+                    isDef: that.data.isdefault
+                }).then(res => {
+                    const data = res.data
+                    console.log(data)
+                    if (data.code == 0) {
+                        util.showSuccess(data.message)
+                        that.showToast('添加地址成功')
+                    } else {
+                        util.showModel('添加地址失败', data.message);
+                        console.log('request fail', data.message);
+                    }
+                })
             }
-            // var userAddress = new this.UserAddress(this.data.id, this.data.name, this.data.mobile, this.data.area, this.data.address, this.data.isdefault)
-            this.showToast('保存成功')
         }
     },
     /**
      * 删除
      */
     delete(e) {
-        // this.address.deleteAsync({id: this.data.id})
-        //     .then(res => {
-        //         const data = res.data
-        //         console.log(data)
-        //         if (data.meta.code == 0) {
-        //             this.showToast(data.meta.message)
-        //         }
-        //     })
         var that = this
         wx.showModal({
             title: '温馨提示',
             content: '确定要删除吗?',
             success: function (res) {
                 if (res.confirm) {
-                    that.showToast('删除成功')
+                    that.deleteAddress()
                 } else if (res.cancel) {
                     console.log('用户点击取消')
                 }
             }
         })
     },
+
+    /**
+     * 删除地址
+     */
+    deleteAddress(){
+        var that = this
+        app.HttpService.deleteUserAddress({
+            addressId: that.data.id,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+                that.showToast('删除地址成功')
+            } else {
+                util.showModel('删除地址失败', data.message);
+                console.log('request fail', data.message);
+            }
+        })
+    },
+
+    /**
+     * show Toast and navigate back
+     * @param message
+     */
     showToast(message) {
-        App.WxService.showToast({
+        app.WxService.showToast({
             title: message,
             icon: 'success',
             duration: 1500,
         })
-            .then(() => App.WxService.navigateBack())
+            .then(() => app.WxService.navigateBack())
     },
+
     /**
      * 选择所在地区
      */
     chooseLocation() {
-        App.WxService.chooseLocation()
+        app.WxService.chooseLocation()
             .then(data => {
                 console.log(data)
                 if (data.address) {

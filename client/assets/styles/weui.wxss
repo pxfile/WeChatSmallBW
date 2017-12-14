@@ -1103,6 +1103,15 @@ icon {
     margin-top: 5px;
 }
 
+.address-list-item-info-top {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 5px;
+}
+
 .address-list-item-info .top {
     margin-bottom: 5px;
 }
@@ -1236,5 +1245,21 @@ icon {
 /*----------------------------------------------------------tab导航栏样式------------------------------------------------------------*/
 
 .container-width {
-    width: 100%;
+  width: 100%;
+}
+
+/*-----------------------单行溢出显示省略号-----------------------*/
+.single-line-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/*-----------------------单行溢出显示省略号-----------------------*/
+.multi-line-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }

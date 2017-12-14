@@ -26,8 +26,11 @@ class HttpService extends WxRequest {
             get_open_id: '/payBridge/getOpenId',
             pay_result: '/payBridge/payResult',
             pay_sign: '/payBridge/sign',
-
-
+            get_user_address: '/address/getAddress',
+            add_user_address: '/address/addAddress',
+            update_user_address: '/address/modifyAddress',
+            delete_user_address: '/address/deleteAddress',
+            set_def_address: '/address/changeDef',
         }
         this.interceptors.use({
             request(request) {
@@ -196,7 +199,42 @@ class HttpService extends WxRequest {
 
     //pay_sign
     paySign(params) {
-        return this.poastRequest(this.$$path.pay_sign, {
+        return this.postRequest(this.$$path.pay_sign, {
+            data: params,
+        })
+    }
+
+    //获取收获地址列表
+    getUserAddress(params) {
+        return this.postRequest(this.$$path.get_user_address, {
+            data: params,
+        })
+    }
+
+    //添加收货地址
+    addUserAddress(params) {
+        return this.postRequest(this.$$path.add_user_address, {
+            data: params,
+        })
+    }
+
+    //修改收货地址
+    updateUserAddress(params) {
+        return this.postRequest(this.$$path.update_user_address, {
+            data: params,
+        })
+    }
+
+    //删除收货地址
+    deleteUserAddress(params) {
+        return this.postRequest(this.$$path.delete_user_address, {
+            data: params,
+        })
+    }
+
+    //设置默认的收货地址
+    setAddressDef(params) {
+        return this.postRequest(this.$$path.set_def_address, {
             data: params,
         })
     }
@@ -229,9 +267,9 @@ class HttpService extends WxRequest {
         })
     }
 
-    deleteAddress(id, params) {
-        return this.deleteRequest(`${this.$$path.address}/${id}`)
-    }
+    // deleteAddress(id, params) {
+    //     return this.deleteRequest(`${this.$$path.address}/${id}`)
+    // }
 
     getDefalutAddress() {
         return this.getRequest(`${this.$$path.address}/default`)

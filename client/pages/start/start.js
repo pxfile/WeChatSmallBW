@@ -1,4 +1,4 @@
-const App = getApp()
+const app = getApp()
 
 Page({
     data: {
@@ -14,12 +14,12 @@ Page({
     onShow() {
     },
     bindload(e) {
-        setTimeout(App.WxService.getStorageSync('user_id') ? this.goIndex : this.goLogin, 3000)
+        setTimeout(app.WxService.getStorageSync('user_id') ? this.goIndex : this.goLogin, 3000)
     },
     goIndex() {
-        App.WxService.switchTab('/pages/index/index')
+        app.WxService.switchTab('/pages/index/index')
     },
     goLogin() {
-        App.WxService.redirectTo('/pages/login/login')
+        app.WxService.redirectTo('/pages/login/login')
     },
 })

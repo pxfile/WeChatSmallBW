@@ -4,37 +4,39 @@
 <view class="address-list-container" hidden="{{ !prompt.hidden }}">
     <!--list列表-->
     <view class="address-list-item-container">
-        <block wx:for="{{lists}}" wx:for-index="index" wx:key="index">
-            <view class="address-list-item-view" bindtap="selectAddress" data-storeid="{{item.id}}" data-address="{{ item.address }}"
-                  data-storemanagermame="{{item.name}}" data-storephone="{{item.mobile}}" data-freightprice="{{item.distance}}">
+        <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
+            <view class="address-list-item-view" bindtap="selectAddress" data-id="{{ item.addressId }}" data-name="{{item.name}}" data-mobile="{{item.mobile}}"
+                  data-area="{{item.area}}"
+                  data-address="{{ item.address }}"
+                  data-isdefault="{{item.isDef}}">
                 <view class="address-list-item-info">
                     <text>{{item.name}}\t\t\t\t\t{{item.mobile}}</text>
                     <text class="address-list-suggest-text {{index!=0 ? 'hidden' :''}}">默认</text>
                 </view>
-                <view class="address-list-item-info">
+                <view class="address-list-item-info-top">
                     <view class="address-des">
-                        <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                        <text class="address-text">{{item.address}}</text>
+                        <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon user-address-icon"/>
                     </view>
+                    <text class="single-line-text">{{item.area}}\t\t\t\t\t{{item.address}}</text>
                 </view>
                 <view class="address-list-item-info">
-                    <view class="{{type==0 && index!=0 ? 'default-address':'hidden'}}" bindtap="setDefaultAddress"
-                          data-id="{{ item.id }}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
+                    <view class="default-address" bindtap="setDefaultAddress"
+                          data-id="{{ item.addressId }}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
                           data-address="{{ item.address }}"
-                          data-isdefault="{{item.isDefault}}">设为默认
+                          data-isdefault="{{item.isDef}}" wx:if="{{item.isDef}}">设为默认
                     </view>
                     <view class="{{type==0?'item-operation':'hidden'}}">
                         <view bindtap="toAddressEdit"
-                              data-id="{{item.id}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
+                              data-id="{{item.addressId}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
                               data-address="{{ item.address }}"
-                              data-isdefault="{{item.isDefault}}">
+                              data-isdefault="{{item.isDef}}">
                             <image src="../../../assets/images/iconfont-edit.png" class="operation-icon"/>
                             <text class="text-des">编辑</text>
                         </view>
                         <view bindtap="toAddressDelete"
-                              data-id="{{item.id}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
+                              data-id="{{item.addressId}}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
                               data-address="{{ item.address }}"
-                              data-isdefault="{{item.isDefault}}">
+                              data-isdefault="{{item.isDef}}">
                             <image src="../../../assets/images/iconfont-clear.png" class="operation-icon"/>
                             <text class="text-des">删除</text>
                         </view>

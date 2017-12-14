@@ -19,8 +19,12 @@
     margin-top: 5px;
 }
 
-.item-operation .text-des{
+.item-operation .text-des {
     font-size: 13px;
     margin-left: 5px;
     align-content: center;
+}
+
+.user-address-icon {
+    margin-right: 5px;
 }

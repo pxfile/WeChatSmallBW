@@ -6,7 +6,6 @@ Page({
     data: {
         start_num: 0,
         list: [],
-        lists: [],
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -50,9 +49,8 @@ Page({
         util.showBusy('正在加载...')
 
         var that = this
-        app.HttpService.getAllStore({
-            lat: '41.046854',
-            lng: '127.070082'
+        app.HttpService.getUserAddress({
+            userId: app.WxService.getStorageSync('user_id')
         }).then(res => {
             const data = res.data
             console.log(data)
@@ -66,7 +64,6 @@ Page({
                         list: data.data,
                     })
                 }
-                that.getUserAddress();
             } else {
                 // util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
@@ -101,11 +98,10 @@ Page({
         //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
         //快递地址
         prevPage.setData({
-            storeId: edata.storeid,
-            recipientAddress: edata.address,
-            recipient: edata.storemanagermame,
-            recipientPhone: edata.storephone,
-            //todo
+            storeId: edata.id,
+            recipientAddress: edata.area + edata.address,
+            recipient: edata.name,
+            recipientPhone: edata.mobile,
             freightPrice: util.rd(10, 50),
             selectFreightAddress: false
         })
@@ -150,35 +146,36 @@ Page({
         if (this.data.type != 0) {
             return
         }
+        var that = this
         const id = e.currentTarget.dataset.id
-        app.HttpService.setDefalutAddress(id)
-            .then(res => {
-                const data = res.data
-                console.log(data)
-                if (data.meta.code == 0) {
-                    this.onPullDownRefresh()
-                }
-            })
+        app.HttpService.setAddressDef({
+            userId: app.WxService.getStorageSync('user_id'),
+            addressId: id,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+                that.onPullDownRefresh()
+            } else {
+                util.showModel('设置默认失败', data.message);
+                console.log('request fail', data.message);
+            }
+        })
     },
+
     /**
      * 删除
      */
     toAddressDelete(e) {
-        // this.address.deleteAsync({id: this.data.id})
-        //     .then(res => {
-        //         const data = res.data
-        //         console.log(data)
-        //         if (data.meta.code == 0) {
-        //             this.showToast(data.meta.message)
-        //         }
-        //     })
         var that = this
+        const id = e.currentTarget.dataset.id
         wx.showModal({
             title: '温馨提示',
             content: '确定要删除吗?',
             success: function (res) {
                 if (res.confirm) {
-                    that.onPullDownRefresh()
+                    that.deleteAddress(id)
                 } else if (res.cancel) {
                     console.log('用户点击取消')
                 }
@@ -186,25 +183,21 @@ Page({
         })
     },
 
-    getUserAddress(){
-        var allList = this.data.list;
-        var tempList = [];
-        for (var i = 0; i < allList.length; i++) {
-            var goodsParam = new this.UserAddress(allList[i].storeId, allList[i].storeManagerName, allList[i].storePhone, allList[i].storeAddress, allList[i].storeAddress, parseInt(i % 2))
-            tempList.push(goodsParam)
-        }
-
-        this.setData({
-            lists: tempList
+    /**
+     * 删除地址
+     */
+    deleteAddress(id){
+        app.HttpService.deleteUserAddress({
+            addressId: id,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+            } else {
+                util.showModel('删除地址失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
-
-    UserAddress(id, name, mobile, area, address, isDefault){
-        this.id = id;
-        this.name = name;
-        this.mobile = mobile;
-        this.area = area;
-        this.address = address;
-        this.isDefault = isDefault;
-    }
 })
