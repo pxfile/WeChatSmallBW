@@ -24,7 +24,7 @@ class HttpService extends WxRequest {
             user_login: '/user/userLogin',
             user_logout: '/user/userLogout',
             get_open_id: '/payBridge/getOpenId',
-            pay_result: '/payBridge/payResult',
+            pay_get_order: '/payBridge/getOrder',
             pay_sign: '/payBridge/sign',
             get_user_address: '/address/getAddress',
             add_user_address: '/address/addAddress',
@@ -191,8 +191,8 @@ class HttpService extends WxRequest {
     }
 
     //payResult
-    payResult(params) {
-        return this.postRequest(this.$$path.pay_result, {
+    payGetOrder(params) {
+        return this.postRequest(this.$$path.pay_get_order, {
             data: params,
         })
     }

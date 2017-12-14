@@ -5,7 +5,7 @@ var util = require('../../../utils/util.js')
 
 Page({
     data: {
-        type: 0,
+        type: 0,//0:收货地址，1：自提地址
         date: '',
         startDate: '',
         endDate: '',
@@ -21,6 +21,7 @@ Page({
         payMoney: 0,
         orderId: '',
         price: '',
+        addressId: '',
         recipientAddress: '',//快递地址
         recipient: '',//收件人名称
         recipientPhone: '',//收件人电话号码
@@ -92,14 +93,19 @@ Page({
 
     //确认订单
     getConfirmOrder(e){
-        if (this.data.storeId.length == 0) {
+        if (this.data.type != 0 && this.data.storeId.length == 0) {
             util.showModel('温馨提示', '自提地址不能为空！');
+        } else if (this.data.type == 0 && this.data.addressId.length == 0) {
+            util.showModel('温馨提示', '收货地址不能为空！');
         } else {
             this.getSelectGoods()
-            this.fetchConfirmOrder(this.data.storeId, app.WxService.getStorageSync('user_id'), this.data.date, JSON.stringify(this.data.selectGoods));
+            this.fetchConfirmOrder(this.data.storeId, app.WxService.getStorageSync('user_id'), this.data.date, JSON.stringify(this.data.selectGoods), this.data.freightPrice, this.data.addressId);
         }
     },
 
+    /**
+     * 获取所选商品
+     */
     getSelectGoods(){
         var allGoods = this.data.goodsList;
         var selectList = [];
@@ -127,15 +133,16 @@ Page({
     /**
      * 预下单
      */
-    fetchConfirmOrder(storeId, userId, pickTime, goodsList)
-    {
+    fetchConfirmOrder(storeId, userId, pickTime, goodsList, freightPrice, addressId){
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getConfirmOrder({
             storeId: storeId,
             userId: userId,
             pickTime: pickTime,
-            goodsList: goodsList
+            goodsList: goodsList,
+            freightPrice: freightPrice,
+            addressId: addressId
         }).then(res => {
             const data = res.data
             console.log(data)

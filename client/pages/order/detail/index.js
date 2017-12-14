@@ -170,8 +170,10 @@ Page({
         // })
 
         var that = this
-        app.HttpService.payResult({
-            msg: openId,
+        app.HttpService.payGetOrder({
+            openId: openId,
+            totFee: that.data.price,
+            body: '百威-啤酒'
         }).then(res => {
             const data = res.data
             console.log(data)
@@ -207,7 +209,7 @@ Page({
 
         var that = this
         app.HttpService.paySign({
-            repay_id: prepay_id,
+            repayId: prepay_id,
         }).then(res => {
             const data = res.data
             console.log(data)

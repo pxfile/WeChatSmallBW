@@ -98,11 +98,10 @@ Page({
                     goods_detail: data.data,
                     orderId: data.data.orderId,
                     price: that.showtabtype == 1 ? data.data.payMoney : data.data.payMoney + data.data.payMoney,
-                    //todo 模拟快递
-                    recipientAddress: '张家窝社会山花园三区201',//快递地址
-                    recipient: '张三快递员',//快递员人名称
-                    recipientPhone: '15303374560',//快递员电话号码
-                    freightPrice: util.rd(10, 50),//运费
+                    recipientAddress: data.data.recipientAddress,//快递地址
+                    recipient: data.data.recipient,//快递员人名称
+                    recipientPhone: data.data.recipientPhone,//快递员电话号码
+                    freightPrice: data.data.freightPrice,//运费
                 })
             } else {
                 util.showModel('加载失败', data.message);

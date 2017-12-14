@@ -101,7 +101,7 @@ Page({
         //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
         //快递地址
         prevPage.setData({
-            storeId: edata.id,
+            addressId: edata.id,
             recipientAddress: edata.area + edata.address,
             recipient: edata.name,
             recipientPhone: edata.mobile,
