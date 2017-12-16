@@ -6,7 +6,7 @@ var util = require('../../../utils/util.js')
 Page({
     data: {
         showtab: 0,  //顶部选项卡索引
-        showtabtype: '0', //选中类型
+        showtabtype: 0, //选中类型
         tab_info: {},
         tabnav: {},  //顶部选项卡数据
         startx: 0,  //开始的位置x
@@ -16,6 +16,7 @@ Page({
         date: '',
         startDate: '',
         endDate: '',
+        selectAddressDes: '',
         addressDes: '',
         address: '',
         managerNameDes: '',
@@ -75,6 +76,7 @@ Page({
             id: decodeURIComponent(option.id),
             startDate: startDate,
             endDate: endTime,
+            selectAddressDes: '请选择快递地址'
         })
         this.fetchListData(this.data.id)
     },
@@ -133,9 +135,7 @@ Page({
         if (this.data.orderId.length == 0 || this.data.price.length == 0) {
             util.showModel('温馨提示', '查无订单！');
         } else {
-            // this.payOff()
-            //todo
-            this.fetchPayOrder(this.data.orderId, this.data.price)
+            this.payOff()
         }
     },
 
@@ -157,61 +157,61 @@ Page({
     },
     //获取openid
     getOpenId (code) {
-        var that = this;
-        wx.request({
-            url: 'https://www.see-source.com/weixinpay/GetOpenId',
-            method: 'POST',
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {'code': code},
-            success (res) {
-                var openId = res.data.openid;
+        var that = this
+        app.HttpService.getOpenId({
+            code: code,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                var openId = data.data.openid;
+                //下单
                 that.xiadan(openId);
-                console.log('发起支付：---》》' + JSON.stringify(res))
-            },
-            fail: (res)=> {
-                console.log('获取openid：---》》' + JSON.stringify(res))
-            },
+                console.log('发起支付：---》》' + JSON.stringify(data))
+            } else {
+                console.log('获取openid：---》》' + JSON.stringify(data))
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
     //下单
     xiadan (openId) {
-        var that = this;
-        wx.request({
-            url: 'https://www.see-source.com/weixinpay/xiadan',
-            method: 'POST',
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {'openid': openId},
-            success (res) {
-                var prepay_id = res.data.prepay_id;
+        var that = this
+        app.HttpService.payGetOrder({
+            openId: openId,
+            totFee: that.data.price,
+            body: '百威-啤酒'
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                var prepay_id = data.data;
                 console.log("统一下单返回 prepay_id:" + prepay_id);
                 that.sign(prepay_id);
-            },
-            fail: (res)=> {
-                console.log('下单：---》》' + JSON.stringify(res))
-            },
+            } else {
+                console.log('下单：---》》' + JSON.stringify(data))
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
     //签名
     sign (prepay_id) {
-        var that = this;
-        wx.request({
-            url: 'https://www.see-source.com/weixinpay/sign',
-            method: 'POST',
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {'repay_id': prepay_id},
-            success (res) {
-                that.requestPayment(res.data);
+        var that = this
+        app.HttpService.paySign({
+            repayId: prepay_id,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                that.requestPayment(data.data);
                 console.log('发起支付：---》》' + JSON.stringify(res))
-            },
-            fail: (res)=> {
+            } else {
                 console.log('签名：---》》' + JSON.stringify(res))
-            },
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
         })
     },
     //申请支付
@@ -230,7 +230,7 @@ Page({
                 console.log('申请支付：---》》' + JSON.stringify(res))
             },
             complete: ()=> {
-                that.fetchPayOrder(this.data.orderId, this.data.price);
+                console.log('申请支付结束')
             }
         })
     },
@@ -249,11 +249,11 @@ Page({
             console.log(data)
             if (data.code == 0) {
                 util.showSuccess(data.message)
+                that.goToPaySuccess(orderId, data.code)
             } else {
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
-            that.goToPaySuccess(orderId, data.code)
         })
     },
 
@@ -270,6 +270,7 @@ Page({
         this.setData({
             addressDes: edata.type == 0 ? '快递地址' : '自提地址',
             managerNameDes: edata.type == 0 ? '收件人' : '店长',
+            selectAddressDes: edata.type == 0 ? '请选择快递地址' : '请选择自提地址',
             showtab: Number(edata.tabindex),
             showtabtype: edata.type,
         })

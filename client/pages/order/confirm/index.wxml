@@ -17,7 +17,7 @@
     <scroll-view scroll-y="true" hidden="{{ !prompt.hidden }}">
         <view class="address-container-top">
             <view class="address-container">
-                <view class="address-sub-container">
+                <view class="address-sub-container" wx:if="{{showtabtype==0?recipientAddress:address}}">
                     <view class="address-des">
                         <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
                         <text class="address-text">{{addressDes}}</text>
@@ -27,6 +27,9 @@
                         <text>{{managerNameDes}}：{{showtabtype==0?recipient:storeManagerName}}\t\t\t</text>
                         <text>{{showtabtype==0?recipientPhone:storePhone}}</text>
                     </view>
+                </view>
+                <view class="address-sub-container" wx:if="{{!(showtabtype==0?recipientAddress:address)}}">
+                    {{selectAddressDes}}
                 </view>
             </view>
             <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>

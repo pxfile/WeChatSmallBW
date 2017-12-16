@@ -7,6 +7,8 @@ Page({
         count_down_pay: '30:00',//等待支付倒计时文案显示
         order_cancel: false,//超时订单取消
         goods_detail: {},
+        addressDes: '',
+        managerNameDes: '',
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -19,13 +21,13 @@ Page({
             price: decodeURIComponent(option.price),
             type: option.type
         })
-        this.fetchListData(this.data.orderId, this.data.type)
+        this.fetchListData(this.data.orderId)
     },
 
     /**
      * 请求订单列表
      */
-    fetchListData(orderId, type) {
+    fetchListData(orderId) {
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getOrderDetail({
@@ -36,6 +38,8 @@ Page({
             if (data.code == 0) {
                 that.setData({
                     goods_detail: data.data,
+                    addressDes: data.data.storeAddress ? '自提地址' : '收货地址',
+                    managerNameDes: data.data.storeAddress ? '店长：' : '收件人：',
                 })
                 that.countDownPayTime()
             } else {
@@ -113,24 +117,6 @@ Page({
     },
     //获取openid
     getOpenId (code) {
-        // var that = this;
-        // wx.request({
-        //     url: 'https://www.see-source.com/weixinpay/GetOpenId',
-        //     method: 'POST',
-        //     header: {
-        //         'content-type': 'application/x-www-form-urlencoded'
-        //     },
-        //     data: {'code': code},
-        //     success (res) {
-        //         var openId = res.data.openid;
-        //         that.xiadan(openId);
-        //         console.log('发起支付：---》》' + JSON.stringify(res))
-        //     },
-        //     fail: (res)=> {
-        //         console.log('获取openid：---》》' + JSON.stringify(res))
-        //     },
-        // })
-
         var that = this
         app.HttpService.getOpenId({
             code: code,
@@ -151,24 +137,6 @@ Page({
     },
     //下单
     xiadan (openId) {
-        // var that = this;
-        // wx.request({
-        //     url: 'https://www.see-source.com/weixinpay/xiadan',
-        //     method: 'POST',
-        //     header: {
-        //         'content-type': 'application/x-www-form-urlencoded'
-        //     },
-        //     data: {'openid': openId},
-        //     success (res) {
-        //         var prepay_id = res.data.prepay_id;
-        //         console.log("统一下单返回 prepay_id:" + prepay_id);
-        //         that.sign(prepay_id);
-        //     },
-        //     fail: (res)=> {
-        //         console.log('下单：---》》' + JSON.stringify(res))
-        //     },
-        // })
-
         var that = this
         app.HttpService.payGetOrder({
             openId: openId,
@@ -178,7 +146,7 @@ Page({
             const data = res.data
             console.log(data)
             if (data.code == 0) {
-                var prepay_id = data.data.prepay_id;
+                var prepay_id = data.data;
                 console.log("统一下单返回 prepay_id:" + prepay_id);
                 that.sign(prepay_id);
             } else {
@@ -190,23 +158,6 @@ Page({
     },
     //签名
     sign (prepay_id) {
-        // var that = this;
-        // wx.request({
-        //     url: 'https://www.see-source.com/weixinpay/sign',
-        //     method: 'POST',
-        //     header: {
-        //         'content-type': 'application/x-www-form-urlencoded'
-        //     },
-        //     data: {'repay_id': prepay_id},
-        //     success (res) {
-        //         that.requestPayment(res.data);
-        //         console.log('发起支付：---》》' + JSON.stringify(res))
-        //     },
-        //     fail: (res)=> {
-        //         console.log('签名：---》》' + JSON.stringify(res))
-        //     },
-        // })
-
         var that = this
         app.HttpService.paySign({
             repayId: prepay_id,
@@ -239,7 +190,7 @@ Page({
                 console.log('申请支付：---》》' + JSON.stringify(res))
             },
             complete: ()=> {
-                that.fetchPayOrder(this.data.orderId, this.data.price);
+                console.log('申请支付结束')
             }
         })
     },
@@ -258,11 +209,11 @@ Page({
             console.log(data)
             if (data.code == 0) {
                 util.showSuccess(data.message)
+                that.goToPaySuccess(orderId, data.code)
             } else {
                 util.showModel('加载失败', data.message);
                 console.log('request fail', data.message);
             }
-            that.goToPaySuccess(orderId, data.code)
         })
     },
 

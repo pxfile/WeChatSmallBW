@@ -14,17 +14,17 @@
         <view class="address-sub-container">
             <view class="address-des">
                 <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                <text class="address-text">自提地址</text>
+                <text class="address-text">{{addressDes}}</text>
             </view>
-            <view>{{goods_detail.storeAddress}}</view>
+            <view>{{goods_detail.storeAddress?goods_detail.storeAddress:goods_detail.recipientAddress}}</view>
             <view>
-                <text>店长：{{goods_detail.storeManagerName}}\t\t\t</text>
-                <text>{{goods_detail.storePhone}}</text>
+                <text>{{managerNameDes}}{{goods_detail.storeManagerName?goods_detail.storeManagerName:goods_detail.recipient}}\t\t\t</text>
+                <text>{{goods_detail.storePhone?goods_detail.storePhone:goods_detail.recipientPhone}}</text>
             </view>
         </view>
     </view>
     <!--自提时间-->
-    <view class="address-container">
+    <view class="address-container" wx:if="{{goods_detail.storeAddress}}">
         <view class="address-sub-container">
             <view class="address-des">
                 <image src="../../../assets/images/iconfont-about.png" class="address-icon"/>

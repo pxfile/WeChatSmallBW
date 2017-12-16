@@ -54,6 +54,9 @@ Page({
      */
     listenerSwitch(e){
         console.log('switch类型开关当前状态-----', e.detail.value);
+        if (e.detail.value) {
+            this.setDefaultAddress()
+        }
         this.setData({
             isdefault: e.detail.value ? 0 : 1
         })
@@ -151,6 +154,25 @@ Page({
                 that.showToast('删除地址成功')
             } else {
                 util.showModel('删除地址失败', data.message);
+                console.log('request fail', data.message);
+            }
+        })
+    },
+
+    /**
+     * 设置默认地址
+     */
+    setDefaultAddress() {
+        app.HttpService.setAddressDef({
+            userId: app.WxService.getStorageSync('user_id'),
+            addressId: this.data.id,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                util.showSuccess(data.message)
+            } else {
+                util.showModel('设置默认失败', data.message);
                 console.log('request fail', data.message);
             }
         })

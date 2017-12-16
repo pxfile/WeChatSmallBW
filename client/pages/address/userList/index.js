@@ -190,6 +190,7 @@ Page({
      * 删除地址
      */
     deleteAddress(id){
+        var that = this
         app.HttpService.deleteUserAddress({
             addressId: id,
         }).then(res => {
@@ -197,6 +198,7 @@ Page({
             console.log(data)
             if (data.code == 0) {
                 util.showSuccess(data.message)
+                that.onPullDownRefresh()
             } else {
                 util.showModel('删除地址失败', data.message);
                 console.log('request fail', data.message);
