@@ -203,7 +203,7 @@ Page({
         }
 
         payCount = payCount + this.data.buyCount
-        priceCount = priceCount + this.data.sumPrice
+        priceCount = util.accAdd(priceCount, this.data.sumPrice)
         if (payCount && priceCount) {
             this.setData({
                 buyCount: payCount,
@@ -217,7 +217,10 @@ Page({
      * @param e
      */
     decrease(e) {
-        this.jiaj(e, false)
+        var index = e.currentTarget.dataset.index;
+        if (this.data.list[index].num) {
+            this.jiaj(e, false)
+        }
     },
     /**
      * 加
@@ -261,36 +264,24 @@ Page({
         var allGoods = wx.getStorageSync('shoppingcar' + this.data.showtabtype);
         var payCount = this.data.buyCount;
         var priceCount = this.data.sumPrice;
-        // var selectGoods = this.data.selectList;
         for (var i = 0; i < allGoods.length; i++) {
             if (allGoods[i].goodsId == id) {
                 var price = allGoods[i].goodsPrice;
                 if (boo) {
-                    priceCount = priceCount + price;
+                    priceCount = util.accAdd(priceCount, price);
                     payCount = payCount + 1;
-                    // selectGoods = this.data.selectList.concat(allGoods[i]);
+                    console.log("priceCount-->" + priceCount)
                 } else if (payCount > 0 && priceCount > 0) {
-                    priceCount = priceCount - price;
+                    priceCount = util.accSub(priceCount, price);
                     payCount = payCount - 1;
-                    if (allGoods[i].num > 1) {
-                        // selectGoods.pop()
-                    } else {
-                        // selectGoods = []
-                        // payCount = 0
-                        // priceCount = 0
-                    }
+                    console.log("priceCount-2->" + priceCount)
                 }
             }
         }
-        if (payCount && priceCount) {
-            this.setData({
-                buyCount: payCount,
-                sumPrice: priceCount,
-                // selectList: selectGoods,
-            });
-        }
-        // console.log("selectList--" + this.data.selectList.length)
-        // wx.setStorageSync('confirmGoods', this.data.selectList);
+        this.setData({
+            buyCount: payCount,
+            sumPrice: priceCount,
+        });
     },
 
     /**

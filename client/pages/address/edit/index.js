@@ -54,7 +54,7 @@ Page({
      */
     listenerSwitch(e){
         console.log('switch类型开关当前状态-----', e.detail.value);
-        if (e.detail.value) {
+        if (e.detail.value && this.data.id) {
             this.setDefaultAddress()
         }
         this.setData({
