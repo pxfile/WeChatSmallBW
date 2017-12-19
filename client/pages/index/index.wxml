@@ -28,7 +28,7 @@
                             <text class="news-item-expiration-days">已过期{{item.expirationTime}}天</text>
                             <view class='news-item-bottom-right'>
                                 <text class="news-item-num-operation" bindtap="decrease" data-id="{{ item.goodsId }}" data-index="{{index}}">-</text>
-                                <input class="news-item-num" type="number" data-id="{{ item.goodsId }}" placeholder="{{item.num}}" bindblur="numInput" maxlength="4"/>
+                                <text class="news-item-num" type="number" data-id="{{ item.goodsId }}" placeholder="{{item.num}}" bindblur="numInput" maxlength="4">{{item.num}}</text>
                                 <text class="news-item-num-operation" bindtap="increase" data-id="{{ item.goodsId }}" data-index="{{index}}">+</text>
                             </view>
                         </view>

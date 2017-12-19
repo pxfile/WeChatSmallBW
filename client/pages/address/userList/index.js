@@ -116,10 +116,6 @@ Page({
      * @param e
      */
     toAddressEdit(e) {
-        if (this.data.type != 0) {
-            return
-        }
-        console.log(e)
         app.WxService.navigateTo('/pages/address/edit/index?id=' +
             encodeURIComponent(e.currentTarget.dataset.id) + '&name=' +
             encodeURIComponent(e.currentTarget.dataset.name) + '&mobile=' +
@@ -134,10 +130,6 @@ Page({
      * @param e
      */
     toAddressAdd(e) {
-        if (this.data.type != 0) {
-            return
-        }
-        console.log(e)
         app.WxService.navigateTo('/pages/address/edit/index?type=0')
     },
 
@@ -146,9 +138,6 @@ Page({
      * @param e
      */
     setDefaultAddress(e) {
-        if (this.data.type != 0) {
-            return
-        }
         var that = this
         const id = e.currentTarget.dataset.id
         app.HttpService.setAddressDef({
