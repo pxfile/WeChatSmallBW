@@ -71,6 +71,6 @@
     <!--总价-->
     <view class='goods-bottom-suspension'>
         <text class="goods-suspension-price-text">实付金额：</text>
-        <text class='goods-suspension-price'>¥{{goods_detail.payMoney}}</text>
+        <text class='goods-suspension-price'>¥{{price?price:goods_detail.payMoney}}</text>
     </view>
 </view>

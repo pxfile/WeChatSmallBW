@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <import src="../../common/prompt.wxml"/>
 <template is="prompt" data="{{ prompt }}"/>
-<view class="address-list-container" hidden="{{ !prompt.hidden }}">
+<view class="address-list-container user-address-margin" hidden="{{ !prompt.hidden }}">
     <!--list列表-->
     <view class="address-list-item-container">
         <block wx:for="{{list}}" wx:for-index="index" wx:key="index">
@@ -23,7 +23,7 @@
                     <view class="default-address" bindtap="setDefaultAddress"
                           data-id="{{ item.addressId }}" data-name="{{item.name}}" data-mobile="{{item.mobile}}" data-area="{{item.area}}"
                           data-address="{{ item.address }}"
-                          data-isdefault="{{item.isDef}}" wx:if="{{item.isDef}}">设为默认
+                          data-isdefault="{{item.isDef}}" wx:if="{{item.isDef && type==0}}">设为默认
                     </view>
                     <view class="{{type==0?'item-operation':'hidden'}}">
                         <view bindtap="toAddressEdit"

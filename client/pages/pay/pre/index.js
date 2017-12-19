@@ -27,7 +27,8 @@ Page({
         recipientPhone: '',//收件人电话号码
         freightPrice: 0,//运费
         selectAddress: true,//选择自提地址
-        selectFreightAddress: true//选择快递地址
+        selectFreightAddress: true,//选择快递地址
+        payAllPrice: 0
     },
 
     /**
@@ -45,11 +46,12 @@ Page({
         var pickTime = util.formatDate(new Date());
         var endTime = util.formatDate(new Date('2017-12-31'))
         console.log("list--" + list.length)
-        var money = parseInt(decodeURIComponent(option.payMoney))
+        var money = decodeURIComponent(option.payMoney)
         this.setData({
             date: pickTime,
             goodsList: list,
             payMoney: money,
+            payAllPrice: money,
             startDate: pickTime,
             endDate: endTime,
             radio_info: [
@@ -85,7 +87,7 @@ Page({
 
     //选择自提地址
     selectAddress(e){
-        var url = this.data.type == 0 ? '/pages/address/userList/index?type=1' : '/pages/address/list/index'
+        var url = this.data.type == 0 ? '/pages/address/userList/index?type=1&price=' + encodeURIComponent(this.data.payMoney) : '/pages/address/list/index'
         wx.navigateTo({
             url: url
         })
@@ -163,7 +165,6 @@ Page({
      * 跳转订单详情
      */
     goToOrderDetail(){
-        var price = this.data.type == 0 ? this.data.payMoney + this.data.freightPrice : this.data.payMoney
-        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&price=' + encodeURIComponent(price) + '&type=0')
+        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&price=' + encodeURIComponent(this.data.payAllPrice) + '&type=0')
     }
 })

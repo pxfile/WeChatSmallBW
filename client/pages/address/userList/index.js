@@ -14,7 +14,8 @@ Page({
 
     onLoad(option) {
         this.setData({
-            type: option.type//0,查看我的地址，1选择我的地址
+            type: decodeURIComponent(option.type),//0,查看我的地址，1选择我的地址
+            price: decodeURIComponent(option.price)
         })
     },
 
@@ -36,12 +37,12 @@ Page({
     /**
      * 上拉加载更多
      */
-    onReachBottom() {
-        this.setData({
-            start_num: this.data.list.length,
-        }),
-            this.fetchListDataMore();
-    },
+    // onReachBottom() {
+    //     this.setData({
+    //         start_num: this.data.list.length,
+    //     }),
+    //         this.fetchListDataMore();
+    // },
 
     /**
      * 请求自提地址列表
@@ -100,13 +101,15 @@ Page({
         var prevPage = pages[pages.length - 2];  //上一个页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
         //快递地址
+        var freightPrice = util.rd(10, 50)
         prevPage.setData({
             addressId: edata.id,
             recipientAddress: edata.area + edata.address,
             recipient: edata.name,
             recipientPhone: edata.mobile,
-            freightPrice: util.rd(10, 50),
-            selectFreightAddress: false
+            freightPrice: freightPrice,
+            selectFreightAddress: false,
+            payAllPrice: util.accAdd(util.fMoney(this.data.price, 2), util.fMoney(freightPrice, 2))
         })
         wx.navigateBack()
     },

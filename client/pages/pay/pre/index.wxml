@@ -61,7 +61,7 @@
         <view class="price">
             <view class="goods-suspension-time">
                 <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{type==0 ?payMoney+freightPrice:payMoney}}</text>
+                <text class="goods-suspension-price">¥{{type==0 ?payAllPrice:payMoney}}</text>
             </view>
             <text class='goods-suspension-pay' bindtap="getConfirmOrder" data-id="{{item.orderId}}">立即下单</text>
         </view>

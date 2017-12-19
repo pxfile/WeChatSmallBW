@@ -28,3 +28,7 @@
 .user-address-icon {
     margin-right: 5px;
 }
+
+.user-address-margin {
+    padding-bottom: 46px;
+}

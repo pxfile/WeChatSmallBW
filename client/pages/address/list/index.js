@@ -47,12 +47,12 @@ Page({
     /**
      * 上拉加载更多
      */
-    onReachBottom() {
-        this.setData({
-            start_num: this.data.list.length,
-        }),
-            this.fetchListDataMore(this.data.latitude, this.data.longitude);
-    },
+    // onReachBottom() {
+    //     this.setData({
+    //         start_num: this.data.list.length,
+    //     }),
+    //         this.fetchListDataMore(this.data.latitude, this.data.longitude);
+    // },
 
     /**
      * 请求自提地址列表

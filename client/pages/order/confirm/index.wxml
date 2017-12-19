@@ -61,12 +61,12 @@
             </view>
             <view class="{{showtabtype==1 ? 'hidden' :'select-time'}}">
                 <text class="goods-suspension-time-text">运费</text>
-                <text class='goods-suspension-freight'>+{{freightPrice}}</text>
+                <text class='goods-suspension-freight'>+{{freightPriceSame}}</text>
             </view>
             <view class="price">
                 <view class="goods-suspension-time">
                     <text>实付金额：</text>
-                    <text class="goods-suspension-price">¥{{showtabtype==0 ?goods_detail.payMoney+freightPrice:goods_detail.payMoney}}</text>
+                    <text class="goods-suspension-price">¥{{price}}</text>
                 </view>
                 <text class='goods-suspension-pay' bindtap="clickPay" data-id="{{goods_detail.orderId}}">立即支付</text>
             </view>

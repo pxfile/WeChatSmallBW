@@ -6,6 +6,7 @@ Page({
     data: {
         count_down_pay: '30:00',//等待支付倒计时文案显示
         order_cancel: false,//超时订单取消
+        price: 0,
         goods_detail: {},
         addressDes: '',
         managerNameDes: '',

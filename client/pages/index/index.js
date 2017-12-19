@@ -50,12 +50,12 @@ Page({
     /**
      * 上拉加载更多
      */
-    onReachBottom() {
-        this.setData({
-            start_num: this.data.list.length,
-        }),
-            this.fetchListDataMore(this.data.showtabtype);
-    },
+    // onReachBottom() {
+    //     this.setData({
+    //         start_num: this.data.list.length,
+    //     }),
+    //         this.fetchListDataMore(this.data.showtabtype);
+    // },
 
     /**
      * 请求TAB数据
@@ -203,11 +203,11 @@ Page({
         }
 
         payCount = payCount + this.data.buyCount
-        priceCount = util.accAdd(priceCount, this.data.sumPrice)
+        priceCount = util.accAdd(util.fMoney(priceCount, 2), util.fMoney(this.data.sumPrice, 2))
         if (payCount && priceCount) {
             this.setData({
                 buyCount: payCount,
-                sumPrice: priceCount,
+                sumPrice: util.fMoney(priceCount, 2),
             });
         }
     },
@@ -268,7 +268,7 @@ Page({
             if (allGoods[i].goodsId == id) {
                 var price = allGoods[i].goodsPrice;
                 if (boo) {
-                    priceCount = util.accAdd(priceCount, price);
+                    priceCount = util.accAdd(util.fMoney(priceCount, 2), util.fMoney(price, 2));
                     payCount = payCount + 1;
                     console.log("priceCount-->" + priceCount)
                 } else if (payCount > 0 && priceCount > 0) {
@@ -280,7 +280,7 @@ Page({
         }
         this.setData({
             buyCount: payCount,
-            sumPrice: priceCount,
+            sumPrice: util.fMoney(priceCount, 2),
         });
     },
 

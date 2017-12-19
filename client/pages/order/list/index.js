@@ -75,29 +75,29 @@ Page({
     /**
      * 上拉加载更多
      */
-    onReachBottom() {
-        var list;
-        switch (this.data.showtabtype) {
-            case 0:
-                //待付款订单列表
-                list = this.data.orderPayList
-                break;
-            case 1:
-                //待取货订单列表
-                list = this.data.deliveryList
-                break;
-            case 2:
-                //已完成订单列表
-                list = this.data.orderCompleteList
-                break
-            default:
-                break;
-        }
-        this.setData({
-            start_num: list.length,
-        }),
-            this.fetchListDataMore(this.data.showtabtype, list);
-    },
+    // onReachBottom() {
+    //     var list;
+    //     switch (this.data.showtabtype) {
+    //         case 0:
+    //             //待付款订单列表
+    //             list = this.data.orderPayList
+    //             break;
+    //         case 1:
+    //             //待取货订单列表
+    //             list = this.data.deliveryList
+    //             break;
+    //         case 2:
+    //             //已完成订单列表
+    //             list = this.data.orderCompleteList
+    //             break
+    //         default:
+    //             break;
+    //     }
+    //     this.setData({
+    //         start_num: list.length,
+    //     }),
+    //         this.fetchListDataMore(this.data.showtabtype, list);
+    // },
 
     /**
      * 请求订单列表

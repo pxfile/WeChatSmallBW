@@ -25,11 +25,12 @@ Page({
         showPickView: false,
         goods_detail: {},
         orderId: '',
-        price: '',
+        payMoney: 0,
+        price: 0,
         recipientAddress: '',//快递地址
         recipient: '',//收件人名称
         recipientPhone: '',//收件人电话号码
-        freightPrice: 0,//运费
+        freightPriceSame: 0,//运费
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -99,11 +100,12 @@ Page({
                     storePhone: data.data.storePhone,
                     goods_detail: data.data,
                     orderId: data.data.orderId,
-                    price: that.showtabtype == 1 ? data.data.payMoney : data.data.payMoney + data.data.payMoney,
                     recipientAddress: data.data.recipientAddress,//快递地址
                     recipient: data.data.recipient,//快递员人名称
                     recipientPhone: data.data.recipientPhone,//快递员电话号码
-                    freightPrice: data.data.freightPrice,//运费
+                    freightPriceSame: data.data.freightPrice,//运费
+                    payMoney: data.data.payMoney,
+                    price: that.data.showtabtype == 0 ? util.accAdd(util.fMoney(data.data.payMoney, 2), util.fMoney(data.data.freightPrice, 2)) : util.fMoney(data.data.payMoney, 2),
                 })
             } else {
                 util.showModel('加载失败', data.message);
@@ -132,7 +134,7 @@ Page({
 
     //支付成功
     clickPay(e){
-        if (this.data.orderId.length == 0 || this.data.price.length == 0) {
+        if (this.data.orderId.length == 0 || this.data.price == 0) {
             util.showModel('温馨提示', '查无订单！');
         } else {
             this.payOff()
@@ -273,7 +275,9 @@ Page({
             selectAddressDes: edata.type == 0 ? '请选择快递地址' : '请选择自提地址',
             showtab: Number(edata.tabindex),
             showtabtype: edata.type,
+            price: edata.type == 0 ? util.accAdd(util.fMoney(this.data.payMoney, 2), util.fMoney(this.data.freightPriceSame, 2)) : util.fMoney(this.data.payMoney, 2),
         })
+        console.log("price-->" + this.data.price);
     },
     scrollTouchstart: function (e) {
         let px = e.touches[0].pageX;
