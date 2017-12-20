@@ -10,7 +10,7 @@
         </label>
     </radio-group>
     <!--自提地址-->
-    <view class="address-container-top">
+    <view class="address-container-top" bindtap="selectAddress">
         <view class="address-container">
             <view class="address-sub-container {{type==0?(selectFreightAddress? 'hidden' :''):(selectAddress ? 'hidden' :'')}}">
                 <view class="address-des">
@@ -27,7 +27,7 @@
                 {{addressDes}}
             </view>
         </view>
-        <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon" bindtap="selectAddress"/>
+        <image src="../../../assets/images/iconfont-arrow-right.png" class="arrow-icon"/>
     </view>
     <!--订单列表-->
     <view class="goods-container">

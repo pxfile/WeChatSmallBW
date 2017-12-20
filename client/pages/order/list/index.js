@@ -230,24 +230,29 @@ Page({
      * @param e
      */
     clickBtn(e){
-        console.log('start')
-        this.data.showtabtype == 0 ? this.clickPayBtn(e) : this.clickPickBtn(e)
-    },
-
-    //立即支付
-    clickPayBtn(e){
-        console.log('clickPayBtn')
-        wx.navigateTo({
-            url: '../confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
-        })
-    },
-
-    //事件处理函数
-    clickPickBtn(e){
-        console.log('clickPickBtn')
-        wx.navigateTo({
-            url: '/pages/pickGoods/confirm/index?id=' + encodeURIComponent(e.target.dataset.id)
-        })
+        var id = e.currentTarget.dataset.id
+        switch (this.data.showtabtype) {
+            case 0:
+                //待付款订单列表
+                wx.navigateTo({
+                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=0'
+                })
+                break;
+            case 1:
+                //待取货订单列表
+                wx.navigateTo({
+                    url: '/pages/pickGoods/confirm/index?id=' + encodeURIComponent(id)
+                })
+                break;
+            case 2:
+                //已完成订单列表
+                wx.navigateTo({
+                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=1'
+                })
+                break
+            default:
+                break;
+        }
     },
 
     //------------------------------------------------------TAB------------------------------------------------------------------

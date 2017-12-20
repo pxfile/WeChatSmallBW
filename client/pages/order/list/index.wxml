@@ -18,7 +18,7 @@
         <view class="goods-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
               bindtouchend="scrollTouchend">
             <block wx:for="{{showtabtype==0?orderPayList:(showtabtype==1?deliveryList:orderCompleteList)}}" wx:for-index="index" wx:key="index">
-                <view class="goods-item-list">
+                <view class="goods-item-list" data-id="{{ item.orderId }}" bindtap="clickBtn">
                     <!--下单时间-->
                     <view class="top-order-time">
                         <text class="top-order-time-text">下单时间：{{item.orderTime}}</text>
@@ -28,20 +28,18 @@
                     </view>
                     <!--商品列表-->
                     <block wx:for="{{item.goodsList}}" wx:for-index="index" wx:key="index">
-                        <navigator url="../detail/index?id={{item.goodsId}}&type={{showtabtype}}">
-                            <view class="goods-item">
-                                <view class="goods-item-left">
-                                    <image src="{{item.goodsPic}}" class="goods-image"/>
-                                </view>
-                                <view>
-                                    <text class="goods-item-title">{{item.goodsName}}</text>
-                                    <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
-                                    <view class="goods-item-bottom">
-                                        <text class="goods-item-num">x {{item.goodsNum}}</text>
-                                    </view>
+                        <view class="goods-item">
+                            <view class="goods-item-left">
+                                <image src="{{item.goodsPic}}" class="goods-image"/>
+                            </view>
+                            <view>
+                                <text class="goods-item-title">{{item.goodsName}}</text>
+                                <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
+                                <view class="goods-item-bottom">
+                                    <text class="goods-item-num">x {{item.goodsNum}}</text>
                                 </view>
                             </view>
-                        </navigator>
+                        </view>
                     </block>
 
                     <!--商品总数，价格-->
@@ -52,7 +50,7 @@
                         </view>
                         <view class="{{showtabtype==2 ? 'hidden' :''}}">
                             <view class="goods-item-bottom goods-item-bottom-btn">
-                                <text class="goods-btn-pick-goods" data-id="{{ item.orderId }}" bindtap="clickBtn">立即{{btnText}}</text>
+                                <text class="goods-btn-pick-goods">立即{{btnText}}</text>
                             </view>
                         </view>
                     </view>

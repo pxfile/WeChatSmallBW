@@ -139,12 +139,12 @@ Page({
         util.showBusy('正在加载...')
         var that = this
         app.HttpService.getConfirmOrder({
-            storeId: storeId,
+            storeId: this.data.type != 0 ? storeId : '',
             userId: userId,
             pickTime: pickTime,
             goodsList: goodsList,
-            freightPrice: freightPrice,
-            addressId: addressId
+            freightPrice: this.data.type != 0 ? 0 : freightPrice,
+            addressId: this.data.type != 0 ? '' : addressId
         }).then(res => {
             const data = res.data
             console.log(data)
@@ -165,6 +165,6 @@ Page({
      * 跳转订单详情
      */
     goToOrderDetail(){
-        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&price=' + encodeURIComponent(this.data.payAllPrice) + '&type=0')
+        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&type=0')
     }
 })

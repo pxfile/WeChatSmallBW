@@ -7,6 +7,7 @@ Page({
         count_down_pay: '30:00',//等待支付倒计时文案显示
         order_cancel: false,//超时订单取消
         price: 0,
+        payMoney: 0,
         goods_detail: {},
         addressDes: '',
         managerNameDes: '',
@@ -19,8 +20,7 @@ Page({
     onLoad(option) {
         this.setData({
             orderId: decodeURIComponent(option.id),
-            price: decodeURIComponent(option.price),
-            type: option.type
+            type: option.type,//0待付款，1已完成
         })
         this.fetchListData(this.data.orderId)
     },
@@ -41,6 +41,8 @@ Page({
                     goods_detail: data.data,
                     addressDes: data.data.storeAddress ? '自提地址' : '收货地址',
                     managerNameDes: data.data.storeAddress ? '店长：' : '收件人：',
+                    payMoney: data.data.payMoney,
+                    price: !data.data.storeAddress ? util.accAdd(util.fMoney(data.data.payMoney, 2), util.fMoney(data.data.freightPrice, 2)) : util.fMoney(data.data.payMoney, 2),
                 })
                 that.countDownPayTime()
             } else {
