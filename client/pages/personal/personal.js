@@ -45,6 +45,12 @@ Page({
         ]
     },
     onLoad() {
+        if (!app.WxService.getStorageSync('user_id')) {
+            wx.reLaunch({
+                url: '/pages/login/login'
+            })
+            return
+        }
         this.setData({
             phone: app.WxService.getStorageSync('mobile')
         })
@@ -126,7 +132,7 @@ Page({
                 util.showSuccess(data.message)
                 app.WxService.removeStorageSync('user_id')
                 app.WxService.removeStorageSync('token')
-                app.WxService.redirectTo('/pages/login/login')
+                app.WxService.redirectTo('/pages/index/index')
             } else {
                 util.showModel('退出登录失败', data.message);
                 console.log('request fail', data.message);

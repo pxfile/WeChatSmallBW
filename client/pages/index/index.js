@@ -43,7 +43,7 @@ Page({
             buyCount: 0,
             sumPrice: 0,
         }),
-            this.fetchListData(this.data.showtabtype, true, false),
+            this.fetchListData(this.data.showtabtype, false),
             wx.stopPullDownRefresh();
     },
 
@@ -77,7 +77,7 @@ Page({
                         showtabtype: data.data[0].seriesId
                     })
                     that.removeStorageData();
-                    that.fetchListData(that.data.tab_info[0].seriesId, false, false)
+                    that.fetchListData(that.data.tab_info[0].seriesId, false)
                 }
                 // that.setData({
                 //     prompt: {
@@ -102,7 +102,7 @@ Page({
     fetchListDataMore(tabType) {
         console.log(this.data.start_num + tabType);
         if (this.data.list.length === 0) return
-        this.fetchListData(tabType, true, false)
+        this.fetchListData(tabType, false)
     },
 
     /**
@@ -110,10 +110,7 @@ Page({
      * @param tabType
      * @param showLoading
      */
-    fetchListData(tabType, showLoading, isReachBottom) {
-        if (showLoading) {
-            util.showBusy('正在加载...')
-        }
+    fetchListData(tabType, isReachBottom) {
         var that = this
         app.HttpService.getGoodsList({
             seriesId: tabType,
@@ -144,9 +141,8 @@ Page({
     /**
      * 获取每个TAB下的数据
      * @param tabType
-     * @param showLoading
      */
-    fetchTabListData(tabType, showLoading) {
+    fetchTabListData(tabType) {
         this.setData({
             list: [],
         });
@@ -160,7 +156,7 @@ Page({
                 'prompt.hidden': this.data.list.length,
             })
         } else {
-            this.fetchListData(tabType, showLoading, false)
+            this.fetchListData(tabType, false)
         }
     },
 
@@ -302,6 +298,10 @@ Page({
      * @param e
      */
     goToOrder(e) {
+        if (!app.WxService.getStorageSync('user_id')) {
+            app.WxService.navigateTo('/pages/login/login')
+            return
+        }
         if (this.data.sumPrice == 0) {
             util.showModel('温馨提示', '请选择您需要购买的商品！');
         } else {

@@ -13,14 +13,13 @@
     <view class="address-container-top" bindtap="selectAddress">
         <view class="address-container">
             <view class="address-sub-container {{type==0?(selectFreightAddress? 'hidden' :''):(selectAddress ? 'hidden' :'')}}">
+                <view style="margin-left: 25px;color: #333333">
+                    <text style="margin-right: 15px">{{type==0?recipient:storeManagerName}}</text>
+                    <text>{{type==0?recipientPhone:storePhone}}</text>
+                </view>
                 <view class="address-des">
                     <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                    <text class="address-text">{{addressDes}}</text>
-                </view>
-                <view>{{type==0?recipientAddress:address}}</view>
-                <view>
-                    <text>{{managerNameDes}}：{{type==0?recipient:storeManagerName}}\t\t\t</text>
-                    <text>{{type==0?recipientPhone:storePhone}}</text>
+                    <view style="font-size: 14px">{{type==0?recipientAddress:address}}</view>
                 </view>
             </view>
             <view class="address-sub-container {{type==0?(!selectFreightAddress? 'hidden' :''):(!selectAddress ? 'hidden' :'')}}">

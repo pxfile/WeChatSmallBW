@@ -4,9 +4,11 @@
     <!--待付款-->
     <view class="top-container {{type==1 ? 'hidden' :''}}">
         <view class="{{order_cancel?'hidden':'detail-message'}}">
-            <image src="../../../assets/images/iconfont-about.png" class="detail-icon"/>
-            <text>等待时间</text>
-            <text class="detail-waiting-time">{{count_down_pay}}</text>
+            <view class="top-container-icon">
+                <image src="../../../assets/images/iconfont-about.png" class="detail-icon"/>
+                <text>等待时间</text>
+                <text class="detail-waiting-time">{{count_down_pay}}</text>
+            </view>
             <view class="detail-text">请在30分钟内完成支付，否则自动取消</view>
             <view class="detail-button">
                 <text class="cancel" bindtap="clickCancelBtn">取消订单</text>
@@ -29,22 +31,21 @@
     <!--自提地址-->
     <view class="address-container">
         <view class="address-sub-container">
+            <view style="margin-left: 25px;color: #333333">
+                <text style="margin-right: 15px">{{goods_detail.storeManagerName?goods_detail.storeManagerName:goods_detail.recipient}}\t\t\t</text>
+                <text>{{goods_detail.storePhone?goods_detail.storePhone:goods_detail.recipientPhone}}</text>
+            </view>
             <view class="address-des">
                 <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
-                <text class="address-text">{{addressDes}}</text>
-            </view>
-            <view>{{goods_detail.storeAddress?goods_detail.storeAddress:goods_detail.recipientAddress}}</view>
-            <view>
-                <text>{{managerNameDes}}{{goods_detail.storeManagerName?goods_detail.storeManagerName:goods_detail.recipient}}\t\t\t</text>
-                <text>{{goods_detail.storePhone?goods_detail.storePhone:goods_detail.recipientPhone}}</text>
+                <text style="font-size: 14px">{{goods_detail.storeAddress?goods_detail.storeAddress:goods_detail.recipientAddress}}</text>
             </view>
         </view>
     </view>
     <!--自提时间-->
     <view class="address-container" wx:if="{{goods_detail.storeAddress}}">
         <view class="address-sub-container">
-            <view class="address-des">
-                <image src="../../../assets/images/iconfont-about.png" class="address-icon"/>
+            <view class="address-des bottom-container-icon">
+                <image src="../../../assets/images/iconfont-about.png" class="address-icon-small"/>
                 <text class="address-text">自提时间</text>
             </view>
             <view>{{goods_detail.pickTime}}</view>

@@ -27,6 +27,12 @@ Page({
     },
 
     onLoad() {
+        if (!app.WxService.getStorageSync('user_id')) {
+            wx.reLaunch({
+                url: '/pages/login/login'
+            })
+            return
+        }
         this.setData({
             tab_info: [
                 {

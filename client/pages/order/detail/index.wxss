@@ -25,14 +25,28 @@
     margin-bottom: 10px;
 }
 
+.top-container-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.bottom-container-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
 .detail-message {
     margin-top: 10px;
     text-align: center;
 }
 
-.detail-message .detail-icon {
-    width: 20px;
-    height: 20px;
+.detail-icon {
+    width: 19px;
+    height: 19px;
     margin-right: 5px;
 }
 
@@ -92,14 +106,15 @@
     margin: 10px 15px;
 }
 
-.address-des {
-    display: flex;
-    flex-direction: row;
-}
-
 .address-icon {
     width: 20px;
     height: 20px;
+    margin-right: 5px;
+}
+
+.address-icon-small {
+    width: 18px;
+    height: 18px;
     margin-right: 5px;
 }
 
