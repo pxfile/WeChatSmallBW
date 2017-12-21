@@ -106,16 +106,24 @@
     margin: 10px 15px;
 }
 
+.address-ad-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
 .address-icon {
     width: 20px;
     height: 20px;
     margin-right: 5px;
+    margin-bottom: 3px;
 }
 
 .address-icon-small {
     width: 18px;
     height: 18px;
     margin-right: 5px;
+    margin-bottom: 3px;
 }
 
 .address-text {

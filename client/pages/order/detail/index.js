@@ -21,7 +21,9 @@ Page({
         this.setData({
             orderId: decodeURIComponent(option.id),
             type: option.type,//0待付款，1已完成
+            from: option.from,//0来自预下单，1来自订单列表
         })
+        console.log("from" + option.from)
         this.fetchListData(this.data.orderId)
     },
 
@@ -58,7 +60,8 @@ Page({
     //支付等待时间的倒计时处理
     countDownPayTime(){
         var that = this;
-        var c = 30 * 60;//等待30分钟
+        var c = this.data.from === 0 ? 30 * 60 : this.getCountDownPayTime() * 60;//等待30分钟
+        console.log("倒计时：" + c)
         var intervalId = setInterval(function () {
             c = c - 1;
             var min = that.fillZeroPrefix(Math.floor(c / 60))
@@ -73,6 +76,19 @@ Page({
                 })
             }
         }, 1000)
+    },
+
+    /**
+     * 获取当前时间-下单时间=订单倒计时
+     * @returns {number}
+     */
+    getCountDownPayTime(){
+        console.log("orderTime" + this.data.goods_detail.orderTime)
+        var stringTime = this.data.goods_detail.orderTime;
+        var currentDate = new Date();
+        var differTime = currentDate.getTime() - new Date(stringTime).getTime()
+        var remainTime = 30 - Math.floor(differTime / (60 * 1000))
+        return remainTime > 0 ? remainTime : 30
     },
 
     // 位数不足补零

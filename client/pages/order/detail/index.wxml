@@ -36,7 +36,7 @@
                 <text>{{goods_detail.storePhone?goods_detail.storePhone:goods_detail.recipientPhone}}</text>
             </view>
             <view class="address-des">
-                <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon"/>
+                <image src="../../../assets/images/iconfont-addr-default.png" class="address-ad-icon"/>
                 <text style="font-size: 14px">{{goods_detail.storeAddress?goods_detail.storeAddress:goods_detail.recipientAddress}}</text>
             </view>
         </view>

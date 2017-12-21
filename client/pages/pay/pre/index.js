@@ -43,9 +43,9 @@ Page({
 
     onLoad(option) {
         var list = wx.getStorageSync('confirmGoods');
-        var pickTime = util.formatDate(new Date());
-        var endTime = util.formatDate(new Date('2017-12-31'))
-        console.log("list--" + list.length)
+        var pickTime = util.formatTime(new Date());
+        var endTime = util.formatTime(new Date('2017-12-31'))
+        console.log("pickTime--" + pickTime)
         var money = decodeURIComponent(option.payMoney)
         this.setData({
             date: pickTime,
@@ -165,6 +165,6 @@ Page({
      * 跳转订单详情
      */
     goToOrderDetail(){
-        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&type=0')
+        app.WxService.navigateTo('/pages/order/detail/index?id=' + encodeURIComponent(this.data.orderId) + '&type=0&from=0')
     }
 })

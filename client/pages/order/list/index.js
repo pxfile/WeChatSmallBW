@@ -241,7 +241,7 @@ Page({
             case 0:
                 //待付款订单列表
                 wx.navigateTo({
-                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=0'
+                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=0&from=1'
                 })
                 break;
             case 1:
