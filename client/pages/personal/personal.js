@@ -45,6 +45,12 @@ Page({
         ]
     },
     onLoad() {
+        if (!app.WxService.getStorageSync('user_id')) {
+            wx.redirectTo({
+                url: '/pages/login/login'
+            })
+            return
+        }
         this.setData({
             phone: app.WxService.getStorageSync('mobile')
         })

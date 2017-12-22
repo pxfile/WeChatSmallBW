@@ -24,9 +24,16 @@ Page({
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
         },
+        goToIndex:false,//跳转到首页
     },
 
     onLoad() {
+        if (!app.WxService.getStorageSync('user_id')) {
+            wx.redirectTo({
+                url: '/pages/login/login'
+            })
+            return
+        }
         this.setData({
             tab_info: [
                 {

@@ -31,6 +31,7 @@ Page({
     },
 
     onLoad() {
+        this.getUserInfo();
         this.fetchTabData();
     },
 
@@ -56,6 +57,25 @@ Page({
     //     }),
     //         this.fetchListDataMore(this.data.showtabtype);
     // },
+
+    getUserInfo() {
+        const userInfo = app.globalData.userInfo
+
+        if (userInfo) {
+            this.setData({
+                userInfo: userInfo
+            })
+            return
+        }
+
+        app.getUserInfo()
+            .then(data => {
+                console.log(data)
+                this.setData({
+                    userInfo: data
+                })
+            })
+    },
 
     /**
      * 请求TAB数据
@@ -298,6 +318,10 @@ Page({
      * @param e
      */
     goToOrder(e) {
+        if (!app.WxService.getStorageSync('user_id')) {
+            app.WxService.navigateTo('/pages/login/login')
+            return
+        }
         if (this.data.sumPrice == 0) {
             util.showModel('温馨提示', '请选择您需要购买的商品！');
         } else {
