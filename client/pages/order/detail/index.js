@@ -4,7 +4,7 @@ var app = getApp()
 var util = require('../../../utils/util.js')
 Page({
     data: {
-        count_down_pay: '30:00',//等待支付倒计时文案显示
+        count_down_pay: '15:00',//等待支付倒计时文案显示
         order_cancel: false,//超时订单取消
         price: 0,
         payMoney: 0,
@@ -60,7 +60,7 @@ Page({
     //支付等待时间的倒计时处理
     countDownPayTime(){
         var that = this;
-        var c = this.data.from === 0 ? 30 * 60 : this.getCountDownPayTime() * 60;//等待30分钟
+        var c = this.data.from === 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待30分钟
         console.log("倒计时：" + c)
         var intervalId = setInterval(function () {
             c = c - 1;
@@ -87,8 +87,8 @@ Page({
         var stringTime = this.data.goods_detail.orderTime;
         var currentDate = new Date();
         var differTime = currentDate.getTime() - new Date(stringTime).getTime()
-        var remainTime = 30 - Math.floor(differTime / (60 * 1000))
-        return remainTime > 0 ? remainTime : 30
+        var remainTime = 15 - Math.floor(differTime / (60 * 1000))
+        return remainTime > 0 ? remainTime : 15
     },
 
     // 位数不足补零

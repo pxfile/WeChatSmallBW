@@ -298,10 +298,6 @@ Page({
      * @param e
      */
     goToOrder(e) {
-        if (!app.WxService.getStorageSync('user_id')) {
-            app.WxService.navigateTo('/pages/login/login')
-            return
-        }
         if (this.data.sumPrice == 0) {
             util.showModel('温馨提示', '请选择您需要购买的商品！');
         } else {

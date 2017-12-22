@@ -113,7 +113,7 @@
 }
 
 .address-icon {
-    width: 20px;
+    width: 50rpx;
     height: 20px;
     margin-right: 5px;
     margin-bottom: 3px;
