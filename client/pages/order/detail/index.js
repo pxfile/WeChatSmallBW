@@ -60,7 +60,7 @@ Page({
     //支付等待时间的倒计时处理
     countDownPayTime(){
         var that = this;
-        var c = this.data.from === 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待30分钟
+        var c = this.data.from === 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待15分钟
         console.log("倒计时：" + c)
         var intervalId = setInterval(function () {
             c = c - 1;
@@ -160,7 +160,8 @@ Page({
         app.HttpService.payGetOrder({
             openId: openId,
             totFee: that.data.price,
-            body: '百威-啤酒'
+            body: '百威-啤酒',
+            orderId:that.data.orderId
         }).then(res => {
             const data = res.data
             console.log(data)

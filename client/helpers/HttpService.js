@@ -31,6 +31,7 @@ class HttpService extends WxRequest {
             update_user_address: '/address/modifyAddress',
             delete_user_address: '/address/deleteAddress',
             set_def_address: '/address/changeDef',
+            get_default_address: 'address/getDefaultAddress',
         }
         this.interceptors.use({
             request(request) {
@@ -235,6 +236,13 @@ class HttpService extends WxRequest {
     //设置默认的收货地址
     setAddressDef(params) {
         return this.postRequest(this.$$path.set_def_address, {
+            data: params,
+        })
+    }
+
+    //获取默认地址
+    getDefaultAddress(params) {
+        return this.postRequest(this.$$path.get_default_address, {
             data: params,
         })
     }

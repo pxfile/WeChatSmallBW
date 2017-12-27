@@ -183,7 +183,8 @@ Page({
         app.HttpService.payGetOrder({
             openId: openId,
             totFee: that.data.price,
-            body: '百威-啤酒'
+            body: '百威-啤酒',
+            orderId: that.data.orderId
         }).then(res => {
             const data = res.data
             console.log(data)

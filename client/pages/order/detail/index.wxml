@@ -9,7 +9,7 @@
                 <text>等待时间</text>
                 <text class="detail-waiting-time">{{count_down_pay}}</text>
             </view>
-            <view class="detail-text">请在30分钟内完成支付，否则自动取消</view>
+            <view class="detail-text">请在15分钟内完成支付，否则自动取消</view>
             <view class="detail-button">
                 <text class="cancel" bindtap="clickCancelBtn">取消订单</text>
                 <text class="confirm" data-id="{{ goods_detail.orderId }}" bindtap="clickConfirmBtn">立即支付</text>
@@ -18,7 +18,7 @@
         <view class="{{order_cancel?'detail-message':'hidden'}}">
             <image src="../../../assets/images/iconfont-warning-small.png" class="detail-icon"/>
             <text>支付等待超时</text>
-            <view class="timeout-detail-text">30分钟内没有完成支付，订单已自动取消</view>
+            <view class="timeout-detail-text">15分钟内没有完成支付，订单已自动取消</view>
         </view>
     </view>
     <!--已完成-->

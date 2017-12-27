@@ -1,7 +1,7 @@
 {
 	"client": "./client",
 	"svr": "./server",
-	"appid": "xxxxxxxxxx",
+	"appid": "wxf0ca4ef56b8bbcf5",
 	"projectname": "BW",
 	"setting": {
 		"newFeature": true

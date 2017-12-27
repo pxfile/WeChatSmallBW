@@ -66,6 +66,37 @@ Page({
                     "checked": false
                 }],
         })
+        this.getDefaultAddress()
+    },
+
+    //获取默认地址
+    getDefaultAddress(){
+        util.showBusy('正在加载...')
+        var that = this
+        app.HttpService.getDefaultAddress({
+            userId: app.WxService.getStorageSync('user_id'),
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            var freightPrice = util.rd(10, 20)
+            if (data.code == 0) {
+                that.setData({
+                    selectFreightAddress: false,
+                    addressId: data.data.addressId,
+                    recipientAddress: data.data.area + data.data.address,
+                    recipient: data.data.name,
+                    recipientPhone: data.data.mobile,
+                    freightPrice: freightPrice,
+                    payAllPrice: util.accAdd(util.fMoney(that.data.payMoney, 2), util.fMoney(freightPrice, 2)),
+                })
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+            }
+            that.setData({
+                'prompt.hidden': !data.code,
+            })
+        })
     },
 
     //选择取货方式 获取该组件的id

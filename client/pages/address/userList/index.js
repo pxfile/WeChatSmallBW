@@ -101,7 +101,7 @@ Page({
         var prevPage = pages[pages.length - 2];  //上一个页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
         //快递地址
-        var freightPrice = util.rd(10, 50)
+        var freightPrice = util.rd(10, 20)
         prevPage.setData({
             addressId: edata.id,
             recipientAddress: edata.area + edata.address,
