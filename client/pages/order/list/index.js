@@ -248,7 +248,7 @@ Page({
             case 1:
                 //待取货订单列表
                 wx.navigateTo({
-                    url: '/pages/pickGoods/confirm/index?id=' + encodeURIComponent(id)
+                    url: '/pages/pickGoods/detail/index?id=' + encodeURIComponent(id)
                 })
                 break;
             case 2:

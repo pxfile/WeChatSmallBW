@@ -33,7 +33,7 @@
         <block wx:for="{{goodsList}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
-                    <image src="{{item.goodsPic}}" class="goods-image"/>
+                    <image src="{{item.goodsPic}}" class="gm-nothumb" mode="widthFix" lazy-load="true"/>
                 </view>
                 <view>
                     <text class="goods-item-title">{{item.goodsName}}</text>

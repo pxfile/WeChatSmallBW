@@ -115,16 +115,6 @@
     padding: 10px 15px 5px 15px;
 }
 
-.goods-item-left {
-    width: 50px;
-    height: 50px;
-}
-
-.goods-image {
-    width: 50px;
-    height: 50px;
-}
-
 .goods-item-title {
     font-size: 13px;
     word-break: break-all;
@@ -153,7 +143,7 @@
     float: right;
 }
 
-.goods-item-bottom-view{
+.goods-item-bottom-view {
     padding-left: 8px;
     padding-right: 8px;
 }
@@ -205,8 +195,6 @@
     height: 45px;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
 }
 
 .goods-suspension-time-text {
@@ -223,8 +211,7 @@
 .goods-suspension-time {
     line-height: 45px;
     margin-right: 15px;
-    text-align: center;
-    width: auto;
+    width: 100%;
     height: 45px;
     font-size: 16px;
     margin-left: 15px;
@@ -248,9 +235,8 @@
     color: #ffffff;
     background-color: #ff0000;
     line-height: 45px;
-    text-align: center;
-    width: auto;
     height: 45px;
+    width: 130px;
+    text-align: center;
     font-size: 16px;
-    padding: 0 25px;
 }

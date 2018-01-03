@@ -37,7 +37,7 @@
         <block wx:for="{{goods_detail.goodsList}}" wx:for-index="index" wx:key="index">
             <view class="goods-item">
                 <view class="goods-item-left">
-                    <image src="{{item.goodsPic}}" class="goods-image"/>
+                    <image src="{{item.goodsPic}}" class="gm-nothumb" mode="widthFix" lazy-load="true"/>
                 </view>
                 <view>
                     <text class="goods-item-title">{{item.goodsName}}</text>
@@ -54,7 +54,7 @@
         <view class="price">
             <view class="goods-suspension-time">
                 <text>实付金额：</text>
-                <text class="goods-suspension-price">¥{{goods_detail.payMoney}}</text>
+                <text class="goods-suspension-price">¥{{payMoney}}</text>
             </view>
             <text class='goods-suspension-pay' bindtap="clickPickBtn" data-id="{{goods_detail.orderId}}"
                   data-ordertime="{{goods_detail.orderTime}}"

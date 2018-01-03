@@ -10,7 +10,7 @@
 .news-item {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 15px;
     margin-top: 8px;
     background-color: #fff;
@@ -20,13 +20,12 @@
 }
 
 .news-item-left {
-    width: 80px;
-    height: 40px;
+    width: 50%;
+    height: 50%;
 }
 
-.news-image {
-    width: 80px;
-    height: 40px;
+.news-item-right{
+    width:100%;
 }
 
 .news-item-title {
@@ -50,16 +49,21 @@
     justify-content: space-between;
 }
 
+.news-item-expiration-days-view{
+    width: 100%;
+    height: 20px;
+}
+
 .news-item-expiration-days {
     color: #f00;
     border: 1px #f00 solid;
     text-align: center;
-    width: auto;
-    height: 20px;
+    width: 100%;
+    height: 100%;
     line-height: 20px;
     margin-right: 10px;
-    padding: 1px 10px;
-    font-size: 11px;
+    padding: 1px 5px;
+    font-size: 10px;
     margin-left: 10px;
     background-color: #FFFFFF;
 }

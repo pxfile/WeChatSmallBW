@@ -131,11 +131,6 @@
     padding: 10px 15px 5px 15px;
 }
 
-.goods-item-left {
-    width: 50px;
-    height: 50px;
-}
-
 .goods-image {
     width: 50px;
     height: 50px;
