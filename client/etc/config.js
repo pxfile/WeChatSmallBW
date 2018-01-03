@@ -3,6 +3,6 @@ export default {
     // basePath: 'https://www.skyvow.cn/api',
     // domain: 'https://www.skyvow.cn/',
     // 本地环境
-    basePath: 'https://www.zhiboerkeji.com/beer',
-    domain: 'https://www.zhiboerkeji.com/',
+    basePath: 'https://www.9laoye.cn/beer',
+    domain: 'https://www.9laoye.cn/',
 }
