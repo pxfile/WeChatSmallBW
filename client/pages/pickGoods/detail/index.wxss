@@ -109,7 +109,7 @@
 .goods-item {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 5px;
     background-color: #ffffff;
     padding: 10px 15px 5px 15px;
@@ -152,7 +152,9 @@
     line-height: 1.5;
     width: 100%;
     padding-top: 5px;
-    float: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .goods-item-bottom-btn {

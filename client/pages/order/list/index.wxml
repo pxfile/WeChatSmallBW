@@ -32,10 +32,10 @@
                             <view class="goods-item-left">
                                 <image src="{{item.goodsPic}}" class="gm-nothumb" mode="widthFix" lazy-load="true"/>
                             </view>
-                            <view>
+                            <view class="goods-item-content">
                                 <text class="goods-item-title">{{item.goodsName}}</text>
-                                <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
-                                <view class="goods-item-bottom">
+                                <view class="goods-item-content-bottom">
+                                    <text class="goods-item-title-num">¥ {{item.goodsPrice}}</text>
                                     <text class="goods-item-num">x {{item.goodsNum}}</text>
                                 </view>
                             </view>
@@ -43,15 +43,13 @@
                     </block>
 
                     <!--商品总数，价格-->
-                    <view>
-                        <view class="goods-item-bottom">
-                            <text class="goods-item-count-price">¥ {{item.totalPrice}}</text>
+                    <view class="goods-item-pay">
+                        <view class="fr">
                             <text class="goods-item-count-num">共{{item.goodsList.length}}件商品，实付</text>
+                            <text class="goods-item-count-price">¥ {{item.totalPrice}}</text>
                         </view>
-                        <view class="{{showtabtype==2 ? 'hidden' :''}}">
-                            <view class="goods-item-bottom goods-item-bottom-btn">
-                                <text class="goods-btn-pick-goods">立即{{btnText}}</text>
-                            </view>
+                        <view class="fr" wx:if="{{showtabtype!=2}}">
+                            <text class="goods-btn-pick-goods">立即{{btnText}}</text>
                         </view>
                     </view>
                 </view>

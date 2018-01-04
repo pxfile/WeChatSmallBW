@@ -39,7 +39,7 @@
                 <view class="goods-item-left">
                     <image src="{{item.goodsPic}}" class="gm-nothumb" mode="widthFix" lazy-load="true"/>
                 </view>
-                <view>
+                <view class="goods-item-content">
                     <text class="goods-item-title">{{item.goodsName}}</text>
                     <view class="goods-item-bottom">
                         <text class="goods-item-expiration-days">¥ {{item.goodsPrice}}</text>
