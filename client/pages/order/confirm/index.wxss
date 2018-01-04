@@ -137,13 +137,13 @@
 }
 
 .goods-item-title {
-    font-size: 13px;
+    font-size: 14px;
     word-break: break-all;
     display: -webkit-box;
     -webkit-line-clamp: 2; /*限制在一个块元素显示的文本的行数*/
     -webkit-box-orient: vertical;
     overflow: hidden;
-    color: #666;
+    color: #000000;
     margin-left: 10px;
     width: 65%;
     line-height: 1.5;
