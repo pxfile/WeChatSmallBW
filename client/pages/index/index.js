@@ -219,7 +219,7 @@ Page({
         }
 
         payCount = payCount + this.data.buyCount
-        priceCount = util.accAdd(util.fMoney(priceCount, 2), util.fMoney(this.data.sumPrice, 2))
+        priceCount = util.accAdd(priceCount, this.data.sumPrice)
         if (payCount && priceCount) {
             this.setData({
                 buyCount: payCount,
@@ -284,19 +284,19 @@ Page({
             if (allGoods[i].goodsId == id) {
                 var price = allGoods[i].goodsPrice;
                 if (boo) {
-                    priceCount = util.accAdd(util.fMoney(priceCount, 2), util.fMoney(price, 2));
+                    var accPrice = util.accAdd(priceCount, price)
+                    priceCount = util.fMoney(accPrice, 2);
                     payCount = payCount + 1;
-                    console.log("priceCount-->" + priceCount)
                 } else if (payCount > 0 && priceCount > 0) {
                     priceCount = util.accSub(priceCount, price);
                     payCount = payCount - 1;
-                    console.log("priceCount-2->" + priceCount)
                 }
             }
         }
+        console.log("priceCount-->" + priceCount)
         this.setData({
             buyCount: payCount,
-            sumPrice: util.fMoney(priceCount, 2),
+            sumPrice: isNaN(priceCount) ? 0 : priceCount,
         });
     },
 

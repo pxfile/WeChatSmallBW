@@ -74,7 +74,7 @@ function accAdd(a, b) {
     } catch (f) {
         d = 0;
     }
-    return e = Math.pow(10, Math.max(c, d)), (a * e + b * e) / e;
+    return e = Math.pow(10, Math.max(c, d)), (accMul(a, e) + accMul(b, e)) / e;
 }
 //返回值：arg1减上arg2的精确结果
 function accSub(a, b) {
@@ -89,7 +89,7 @@ function accSub(a, b) {
     } catch (f) {
         d = 0;
     }
-    return e = Math.pow(10, Math.max(c, d)), (a * e - b * e) / e;
+    return e = Math.pow(10, Math.max(c, d)), (accMul(a, e) - accMul(b, e)) / e;
 }
 //返回值：arg1除以arg2的精确结果
 function accDiv(a, b) {
@@ -103,7 +103,7 @@ function accDiv(a, b) {
         f = b.toString().split(".")[1].length;
     } catch (g) {
     }
-    return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), c / d * Math.pow(10, f - e);
+    return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), accMul(c / d, Math.pow(10, f - e));
 }
 /**
  * 参数说明：
@@ -117,7 +117,7 @@ function fMoney(s, n) {
         r = s.split(".")[1];
     var t = "";
     for (var i = 0; i < l.length; i++) {
-        t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+        t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "" : "");
     }
     return t.split("").reverse().join("") + "." + r;
 }
@@ -137,5 +137,5 @@ module.exports = {
     accDiv: accDiv,
     accSub: accSub,
     rd,
-    fMoney: fMoney
+    fMoney: fMoney,
 }
