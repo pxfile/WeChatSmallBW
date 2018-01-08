@@ -111,7 +111,7 @@
     text-align: center;
     width: auto;
     height: 45px;
-    font-size: 15px;
+    font-size: 18px;
     line-height: 45px;
 }
 
@@ -123,13 +123,13 @@
     padding-right: 5px;
     width: auto;
     height: 45px;
-    font-size: 15px;
+    font-size: 16px;
     float: right;
     background-color: #f00;
 }
 
 .news-item-price {
-    font-size: 13px;
+    font-size: 16px;
     color: #f00;
     margin-top: 3px;
     margin-left: 10px;

@@ -1,7 +1,7 @@
-.go-index{
-    float: right;
-    color: #999;
-    font-size: 15px;
-    padding-top: 8px;
-    margin: 15px;
+.go-index {
+    width: 100%;
+    text-align: center;
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 15px;
 }
