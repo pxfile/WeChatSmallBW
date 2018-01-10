@@ -4,7 +4,7 @@ var app = getApp()
 var util = require('../../../utils/util.js')
 Page({
     data: {
-        count_down_pay: '15:00',//等待支付倒计时文案显示
+        count_down_pay: '',//等待支付倒计时文案显示
         order_cancel: false,//超时订单取消
         price: 0,
         payMoney: 0,
@@ -61,7 +61,7 @@ Page({
     countDownPayTime(){
         var that = this;
         var c = this.data.from === 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待15分钟
-        console.log("倒计时：" + c)
+        console.log("倒计时：" + c+'--form--'+this.data.from === 0)
         var intervalId = setInterval(function () {
             c = c - 1;
             var min = that.fillZeroPrefix(Math.floor(c / 60))
