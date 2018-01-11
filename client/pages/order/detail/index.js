@@ -11,6 +11,7 @@ Page({
         goods_detail: {},
         addressDes: '',
         managerNameDes: '',
+        statusDes: '',
         prompt: {
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
@@ -22,6 +23,7 @@ Page({
             orderId: decodeURIComponent(option.id),
             type: option.type,//0待付款，1已完成
             from: option.from,//0来自预下单，1来自订单列表
+            statusDes: option.type == 2 ? '派送中' : (option.type == 3 ? '已完成' : '')
         })
         console.log("from" + option.from)
         this.fetchListData(this.data.orderId)
@@ -61,14 +63,14 @@ Page({
     countDownPayTime(){
         var that = this;
         var c = this.data.from == 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待15分钟
-        console.log("倒计时：" + c + '--form--' + this.data.from == 0)
+        console.log("倒计时：" + c + '--form--' + this.data.from == 0);
         var intervalId = setInterval(function () {
             c = c - 1;
-            var min = that.fillZeroPrefix(Math.floor(c / 60))
-            var sec = that.fillZeroPrefix(Math.floor(c % 60))
+            var min = that.fillZeroPrefix(Math.floor(c / 60));
+            var sec = that.fillZeroPrefix(Math.floor(c % 60));
             that.setData({
                 count_down_pay: min + '：' + sec,//14：35
-            })
+            });
             if (c == 0) {
                 clearInterval(intervalId);
                 that.setData({

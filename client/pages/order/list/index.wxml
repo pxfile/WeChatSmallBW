@@ -17,7 +17,8 @@
     <scroll-view scroll-y="true" hidden="{{ !prompt.hidden }}">
         <view class="goods-item-container" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove"
               bindtouchend="scrollTouchend">
-            <block wx:for="{{showtabtype==0?orderPayList:(showtabtype==1?deliveryList:orderCompleteList)}}" wx:for-index="index" wx:key="index">
+            <block wx:for="{{showtabtype==0?orderPayList:(showtabtype==1?deliveryList:(showtabtype==2?orderSendingList:orderCompleteList))}}"
+                   wx:for-index="index" wx:key="index">
                 <view class="goods-item-list" data-id="{{ item.orderId }}" bindtap="clickBtn">
                     <!--下单时间-->
                     <view class="top-order-time">
@@ -48,7 +49,7 @@
                             <text class="goods-item-count-num">共{{item.goodsList.length}}件商品，实付</text>
                             <text class="goods-item-count-price">¥ {{item.totalPrice}}</text>
                         </view>
-                        <view class="fr" wx:if="{{showtabtype!=2}}">
+                        <view class="fr" wx:if="{{showtabtype<2}}">
                             <text class="goods-btn-pick-goods">立即{{btnText}}</text>
                         </view>
                     </view>

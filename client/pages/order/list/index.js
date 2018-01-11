@@ -9,6 +9,7 @@ Page({
         orderPayList: [],
         deliveryList: [],
         orderCompleteList: [],
+        orderSendingList: [],
         showtab: 0,  //顶部选项卡索引
         showtabtype: 0, //选中类型
         tab_info: {},
@@ -24,7 +25,7 @@ Page({
             hidden: !0,
             icon: '../../../assets/images/iconfont-empty.png',
         },
-        goToIndex:false,//跳转到首页
+        goToIndex: false,//跳转到首页
     },
 
     onLoad() {
@@ -46,10 +47,14 @@ Page({
                 },
                 {
                     "type": 2,
+                    "name": "派送中"
+                },
+                {
+                    "type": 3,
                     "name": "已完成"
                 }],
             tabnav: {
-                tabnum: 3,
+                tabnum: 4,
                 tabitem: [
                     {
                         "type": 0,
@@ -61,6 +66,10 @@ Page({
                     },
                     {
                         "type": 2,
+                        "name": "派送中"
+                    },
+                    {
+                        "type": 3,
                         "name": "已完成"
                     }],
             },
@@ -125,6 +134,10 @@ Page({
                 that.getDeliveryList(that, userId, isReachBottom)
                 break;
             case 2:
+                //派送中订单列表
+                that.getOrderSendingList(that, userId, isReachBottom)
+                break;
+            case 3:
                 //已完成订单列表
                 that.getOrderCompleteList(that, userId, isReachBottom)
                 break
@@ -194,6 +207,36 @@ Page({
     },
 
     /**
+     * 派送中订单列表
+     */
+    getOrderSendingList(that, userId, isReachBottom){
+        app.HttpService.getSendingOrder({
+            userId: userId,
+        }).then(res => {
+            const data = res.data
+            console.log(data)
+            if (data.code == 0) {
+                if (isReachBottom) {
+                    that.setData({
+                        orderSendingList: that.data.orderSendingList.concat(data.data),
+                    })
+                } else {
+                    that.setData({
+                        orderSendingList: data.data,
+                        'prompt.hidden': data.data.length,
+                    })
+                }
+            } else {
+                util.showModel('加载失败', data.message);
+                console.log('request fail', data.message);
+                that.setData({
+                    'prompt.hidden': 0 && !isReachBottom,
+                })
+            }
+        })
+    },
+
+    /**
      * 已完成订单列表
      */
     getOrderCompleteList(that, userId, isReachBottom){
@@ -242,21 +285,27 @@ Page({
             case 0:
                 //待付款订单列表
                 wx.navigateTo({
-                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=0&from=1'
-                })
+                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=0&from=0'
+                });
                 break;
             case 1:
                 //待取货订单列表
                 wx.navigateTo({
-                    url: '/pages/pickGoods/detail/index?id=' + encodeURIComponent(id)
-                })
+                    url: '/pages/pickGoods/detail/index?id=' + encodeURIComponent(id) + '&type=1'
+                });
                 break;
             case 2:
+                //派送中订单列表
+                wx.navigateTo({
+                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=2'
+                });
+                break;
+            case 3:
                 //已完成订单列表
                 wx.navigateTo({
-                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=1'
-                })
-                break
+                    url: '/pages/order/detail/index?id=' + encodeURIComponent(id) + '&type=3'
+                });
+                break;
             default:
                 break;
         }

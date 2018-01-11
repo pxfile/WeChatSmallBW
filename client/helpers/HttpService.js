@@ -32,6 +32,7 @@ class HttpService extends WxRequest {
             delete_user_address: '/address/deleteAddress',
             set_def_address: '/address/changeDef',
             get_default_address: 'address/getDefaultAddress',
+            order_sending_list: '/order/orderComplete'
         }
         this.interceptors.use({
             request(request) {
@@ -243,6 +244,13 @@ class HttpService extends WxRequest {
     //获取默认地址
     getDefaultAddress(params) {
         return this.postRequest(this.$$path.get_default_address, {
+            data: params,
+        })
+    }
+
+    //派送中订单列表
+    getSendingOrder(params) {
+        return this.postRequest(this.$$path.order_sending_list, {
             data: params,
         })
     }
