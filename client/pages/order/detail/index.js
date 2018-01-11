@@ -60,8 +60,8 @@ Page({
     //支付等待时间的倒计时处理
     countDownPayTime(){
         var that = this;
-        var c = this.data.from === 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待15分钟
-        console.log("倒计时：" + c+'--form--'+this.data.from === 0)
+        var c = this.data.from == 0 ? 15 * 60 : this.getCountDownPayTime() * 60;//等待15分钟
+        console.log("倒计时：" + c + '--form--' + this.data.from == 0)
         var intervalId = setInterval(function () {
             c = c - 1;
             var min = that.fillZeroPrefix(Math.floor(c / 60))
@@ -83,12 +83,21 @@ Page({
      * @returns {number}
      */
     getCountDownPayTime(){
-        console.log("orderTime" + this.data.goods_detail.orderTime)
-        var stringTime = this.data.goods_detail.orderTime;
-        var currentDate = new Date();
-        var differTime = currentDate.getTime() - new Date(stringTime).getTime()
-        var remainTime = 15 - Math.floor(differTime / (60 * 1000))
+        console.log(this.data.goods_detail.orderTime);
+        var stringTime = this.data.goods_detail.orderTime + '';
+        var differTime = (new Date().getTime()) - (this.strToDate(stringTime).getTime());
+        console.log("new date:", (new Date().getTime()));
+        console.log("stringTime:", (this.strToDate(stringTime).getTime()));
+        console.log('differTime', differTime)
+        var remainTime = 15 - Math.floor(differTime / (60 * 1000));
+        console.log(remainTime, remainTime);
         return remainTime > 0 ? remainTime : 15
+    },
+
+    strToDate(dateObj){
+        dateObj = dateObj.replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').replace(/(-)/g, '/')
+        dateObj = dateObj.slice(0, dateObj.indexOf("."))
+        return new Date(dateObj)
     },
 
     // 位数不足补零
@@ -161,7 +170,7 @@ Page({
             openId: openId,
             totFee: that.data.price,
             body: '百威-啤酒',
-            orderId:that.data.orderId
+            orderId: that.data.orderId
         }).then(res => {
             const data = res.data
             console.log(data)

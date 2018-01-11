@@ -195,14 +195,68 @@ Page({
      * 选择所在地区
      */
     chooseLocation() {
-        app.WxService.chooseLocation()
-            .then(data => {
-                console.log(data)
-                if (data.address) {
+        var _page = this;
+        wx.chooseLocation({
+            success: res=> {
+                console.log(res);
+                if (res.address) {
                     this.setData({
-                        area: data.address
+                        area: res.address
                     })
                 }
-            })
+            },
+            fail(){
+                _page.getSetting()
+            },
+            complete(){
+
+            }
+        })
     },
+
+    getSetting(){
+        var _page = this;
+        // 检查当前设置
+        wx.getSetting({
+            success(res) {
+                if (!res['scope.userLocation']) {
+                    console.log(res)
+                    // 设置询问
+                    _page.openSetting()
+                } else {
+                    _page.chooseAddress()
+                }
+            }
+        })
+    },
+
+    openSetting(){
+        var _page = this;
+        wx.openSetting({
+            success: function (res) {
+                if (!res.authSetting["scope.userLocation"]) {
+                    //这里是授权成功之后 填写你重新获取数据的js
+                    _page.chooseAddress()
+                }
+            }
+        })
+    },
+
+    chooseAddress(){
+        wx.chooseLocation({
+            success: res=> {
+                console.log(res);
+                if (res.address) {
+                    this.setData({
+                        area: res.address
+                    })
+                }
+            },
+            fail(){
+            },
+            complete(){
+
+            }
+        })
+    }
 })

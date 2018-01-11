@@ -7,9 +7,9 @@
         <text class="line-sub-text text-view">联系方式：</text>
         <input type="tel" bindinput="mobileInput" value="{{mobile}}"/>
     </view>
-    <view class="line-sub-container">
+    <view class="line-sub-container" bindtap="chooseLocation">
         <text class="line-sub-text text-view">所在地区：</text>
-        <view class="select-area" bindtap="chooseLocation">
+        <view class="select-area">
             <text bindinput="autoCodeInput" style="width: 100%;align-content: center">{{area}}</text>
             <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon edit-address-icon"></image>
         </view>
