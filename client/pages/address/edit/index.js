@@ -234,7 +234,7 @@ Page({
         var _page = this;
         wx.openSetting({
             success: function (res) {
-                if (!res.authSetting["scope.userLocation"]) {
+                if (res.authSetting["scope.userLocation"]) {
                     //这里是授权成功之后 填写你重新获取数据的js
                     _page.chooseAddress()
                 }

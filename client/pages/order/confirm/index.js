@@ -49,7 +49,7 @@ Page({
 
     onLoad(option) {
         var startDate = util.formatDate(new Date());
-        var endTime = util.formatDate(new Date('2025-12-31'))
+        var endTime = util.formatDate(new Date('2030-12-31'))
         this.setData({
             tab_info: [
                 {

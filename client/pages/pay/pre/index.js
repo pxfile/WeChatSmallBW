@@ -44,7 +44,7 @@ Page({
     onLoad(option) {
         var list = wx.getStorageSync('confirmGoods');
         var pickTime = util.formatTime(new Date());
-        var endTime = util.formatTime(new Date('2025-12-31'))
+        var endTime = util.formatTime(new Date('2030-12-31'))
         console.log("pickTime--" + pickTime)
         var money = decodeURIComponent(option.payMoney)
         this.setData({
