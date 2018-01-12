@@ -183,8 +183,8 @@ Page({
         app.HttpService.getDeliveryList({
             userId: userId,
         }).then(res => {
-            const data = res.data
-            console.log(data)
+            const data = res.data;
+            console.log(data);
             if (data.code == 0) {
                 if (isReachBottom) {
                     that.setData({

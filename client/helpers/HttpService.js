@@ -32,7 +32,7 @@ class HttpService extends WxRequest {
             delete_user_address: '/address/deleteAddress',
             set_def_address: '/address/changeDef',
             get_default_address: 'address/getDefaultAddress',
-            order_sending_list: '/order/orderComplete'
+            order_sending_list: '/order/takeDeliveryListByAny'
         }
         this.interceptors.use({
             request(request) {
