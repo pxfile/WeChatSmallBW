@@ -21,7 +21,7 @@ Page({
     onLoad(option) {
         this.setData({
             orderId: decodeURIComponent(option.id),
-            type: option.type,//0待付款，1已完成
+            type: option.type,//0待付款，2派送中，3已完成
             from: option.from,//0来自预下单，1来自订单列表
             statusDes: option.type == 2 ? '派送中' : (option.type == 3 ? '已完成' : '')
         })
@@ -96,6 +96,11 @@ Page({
         return remainTime > 0 ? remainTime : 15
     },
 
+    /**
+     * 微信小程序开发问题-ios的Date问题
+     * @param dateObj
+     * @returns {Date}
+     */
     strToDate(dateObj){
         dateObj = dateObj.replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').replace(/(-)/g, '/')
         dateObj = dateObj.slice(0, dateObj.indexOf("."))
