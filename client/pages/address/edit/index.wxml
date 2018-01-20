@@ -7,12 +7,18 @@
         <text class="line-sub-text text-view">联系方式：</text>
         <input type="tel" bindinput="mobileInput" value="{{mobile}}"/>
     </view>
-    <view class="line-sub-container" bindtap="chooseLocation">
-        <text class="line-sub-text text-view">所在地区：</text>
-        <view class="select-area">
-            <text bindinput="autoCodeInput" style="width: 100%;align-content: center">{{area}}</text>
-            <image src="../../../assets/images/iconfont-addr-default.png" class="address-icon edit-address-icon"></image>
-        </view>
+    <view class="line-sub-container-area">
+        <picker bindchange="bindAreaChange" value="{{index}}" range="{{areaArray}}" style="width: 100%;height: 100%">
+            <view class="line-sub-container-pick">
+                <!--<view class="select-area">-->
+                <!--<text bindinput="autoCodeInput" style="width: 100%;align-content: center">{{area}}</text>-->
+                <!--<image src="../../../assets/images/iconfont-addr-default.png" class="address-icon edit-address-icon"></image>-->
+                <!--</view>-->
+                <text class="line-sub-text text-view" bindchange="bindAreaChange">所在地区：</text>
+                <text class='goods-suspension-time single-line-text'>{{area}}</text>
+            </view>
+            <text class="hint-text">注：目前配送范围是天津市内六区</text>
+        </picker>
     </view>
     <view class="line-sub-container">
         <text class="line-sub-text text-view">详细地址：</text>

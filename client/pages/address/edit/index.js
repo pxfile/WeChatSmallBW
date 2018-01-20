@@ -5,6 +5,8 @@ Page({
         id: '',
         name: '',
         mobile: '',
+        areaArray: ['和平区', '河西区', '河东区', '红桥区', '南开区', '河北区 '],
+        index: 0,
         area: '',
         address: '',
         isdefault: 0,
@@ -258,5 +260,12 @@ Page({
 
             }
         })
-    }
+    },
+    bindAreaChange: function (e) {
+        console.log('picker发送选择改变，携带值为', e.detail.value)
+        this.setData({
+            index: e.detail.value,
+            area: this.data.areaArray[e.detail.value]
+        })
+    },
 })
